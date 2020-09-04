@@ -14,18 +14,14 @@ namespace RestaurantServices.Autenticacion.Api
     {
         public void Configuration(IAppBuilder app)
         {
-            //var config = new HttpConfiguration();
-            //WebApiConfig.Register(config);
-            //app.UseWebApi(config);
-            //ConfigureOAuth(app);
-            // Allow all origins
-            //app.UseCors(Microsoft.Owin.Cors.CorsOptions.AllowAll);
-
             var config = new HttpConfiguration();
             ConfigureOAuth(app);
             WebApiConfig.Register(config);
             app.UseCors(CorsOptions.AllowAll);
             app.UseWebApi(config);
+
+            // Allow all origins
+            //app.UseCors(Microsoft.Owin.Cors.CorsOptions.AllowAll);
         }
 
         public void ConfigureOAuth(IAppBuilder app)
