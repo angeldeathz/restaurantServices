@@ -1,13 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Net;
-using System.Net.Http;
-using System.Web.Http;
+﻿using System.Web.Http;
 
-namespace RestaurantServices.Autenticacion.Api.Controllers
+namespace RestaurantServices.Personas.Api.Controllers
 {
-    [Route("api/auth/autenticar")]
+    [Route("api/personas/autenticar")]
     public class AutenticarController : ApiController
     {
         [HttpGet, Authorize]

@@ -7,6 +7,20 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Autenticacion", "Autenticac
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RestaurantServices.Autenticacion.Api", "Autenticacion\RestaurantServices.Autenticacion.Api\RestaurantServices.Autenticacion.Api.csproj", "{E14F144B-C762-4834-B75D-A4BECD790845}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Usuarios", "Usuarios", "{C84B4A7A-9070-4A5C-8C5A-CEF980628F85}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Personas", "Personas", "{4A53E959-5491-4526-833E-AE64428E589B}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Test", "Test", "{A5216333-7F7D-40A2-9374-59AADAF2AC24}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Shared", "Shared", "{BFB719A4-E068-4532-B9FB-663C87DD11FE}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RestaurantServices.Shared.Modelo", "Shared\RestaurantServices.Shared.Modelo\RestaurantServices.Shared.Modelo.csproj", "{B8347E32-1A66-4C0F-B5BF-DF814F56A8A9}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RestaurantServices.Shared.Transversal", "Shared\RestaurantServices.Shared.Transversal\RestaurantServices.Shared.Transversal.csproj", "{BB132222-54B2-4A6A-80FD-D33FD0EC3EB6}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RestaurantServices.Personas.Api", "Personas\RestaurantServices.Personas.Api\RestaurantServices.Personas.Api.csproj", "{02F23EA2-60B2-4E99-8981-8B6F8CEE99CA}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -17,12 +31,27 @@ Global
 		{E14F144B-C762-4834-B75D-A4BECD790845}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{E14F144B-C762-4834-B75D-A4BECD790845}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{E14F144B-C762-4834-B75D-A4BECD790845}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B8347E32-1A66-4C0F-B5BF-DF814F56A8A9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B8347E32-1A66-4C0F-B5BF-DF814F56A8A9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B8347E32-1A66-4C0F-B5BF-DF814F56A8A9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B8347E32-1A66-4C0F-B5BF-DF814F56A8A9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BB132222-54B2-4A6A-80FD-D33FD0EC3EB6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BB132222-54B2-4A6A-80FD-D33FD0EC3EB6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BB132222-54B2-4A6A-80FD-D33FD0EC3EB6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BB132222-54B2-4A6A-80FD-D33FD0EC3EB6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{02F23EA2-60B2-4E99-8981-8B6F8CEE99CA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{02F23EA2-60B2-4E99-8981-8B6F8CEE99CA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{02F23EA2-60B2-4E99-8981-8B6F8CEE99CA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{02F23EA2-60B2-4E99-8981-8B6F8CEE99CA}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{E14F144B-C762-4834-B75D-A4BECD790845} = {AC043CBA-8009-4987-B06D-2A55A00F4ACC}
+		{B8347E32-1A66-4C0F-B5BF-DF814F56A8A9} = {BFB719A4-E068-4532-B9FB-663C87DD11FE}
+		{BB132222-54B2-4A6A-80FD-D33FD0EC3EB6} = {BFB719A4-E068-4532-B9FB-663C87DD11FE}
+		{02F23EA2-60B2-4E99-8981-8B6F8CEE99CA} = {4A53E959-5491-4526-833E-AE64428E589B}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {ABC9CD44-3152-4D74-884D-28968723E47B}

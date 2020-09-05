@@ -2,7 +2,7 @@
 using System.Threading.Tasks;
 using Microsoft.Owin.Security.OAuth;
 
-namespace RestaurantServices.Autenticacion.Api.Config
+namespace RestaurantServices.Personas.Api.Config
 {
     public class AuthConfig : OAuthAuthorizationServerProvider
     {

@@ -19,14 +19,11 @@ namespace RestaurantServices.Autenticacion.Api
             WebApiConfig.Register(config);
             app.UseCors(CorsOptions.AllowAll);
             app.UseWebApi(config);
-
-            // Allow all origins
-            //app.UseCors(Microsoft.Owin.Cors.CorsOptions.AllowAll);
         }
 
         public void ConfigureOAuth(IAppBuilder app)
         {
-            var oAuthServerOptions = new OAuthAuthorizationServerOptions()
+            var oAuthServerOptions = new OAuthAuthorizationServerOptions
             {
                 AllowInsecureHttp = true,
                 TokenEndpointPath = new PathString("/token"),
