@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace RestaurantServices.Shared.Transversal.Http
 {
-    public class RestClientHttp
+    public class RestClient
     {
         #region Get
 

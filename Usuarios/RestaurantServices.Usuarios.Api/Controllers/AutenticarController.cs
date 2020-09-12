@@ -2,19 +2,20 @@
 
 namespace RestaurantServices.Usuarios.Api.Controllers
 {
-    [Route("api/personas/autenticar")]
+    [Route("")]
     public class AutenticarController : ApiController
     {
-        [HttpGet, Authorize]
-        public IHttpActionResult Algo()
+        [HttpGet]
+        public IHttpActionResult ValidarSesion([FromUri] string rut, string contrasena)
         {
-            var a = new
+            if (rut == "a" && contrasena == "b")
             {
-                algo = "Prueba",
-                nombre = "david"
-            };
-
-            return Ok(a);
+                return Ok("Ha iniciado sesion");
+            }
+            else
+            {
+                return BadRequest("Credenciales Incorrectas");
+            }
         }
     }
 }

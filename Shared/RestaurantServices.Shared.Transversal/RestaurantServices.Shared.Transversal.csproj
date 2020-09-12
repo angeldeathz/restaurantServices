@@ -60,7 +60,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Http\RestClientHttp.cs" />
+    <Compile Include="Http\RestClient.cs" />
     <Compile Include="Http\RestClientResponse.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
