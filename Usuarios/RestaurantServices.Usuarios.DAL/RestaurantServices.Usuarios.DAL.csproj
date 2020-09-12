@@ -42,6 +42,13 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="UsuarioDal.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\Shared\RestaurantServices.Shared.Transversal\RestaurantServices.Shared.Transversal.csproj">
+      <Project>{BB132222-54B2-4A6A-80FD-D33FD0EC3EB6}</Project>
+      <Name>RestaurantServices.Shared.Transversal</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
