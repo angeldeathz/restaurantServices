@@ -27,7 +27,7 @@ namespace RestaurantServices.Autenticacion.Api
             {
                 AllowInsecureHttp = true,
                 TokenEndpointPath = new PathString("/token"),
-                AccessTokenExpireTimeSpan = TimeSpan.FromDays(1),
+                AccessTokenExpireTimeSpan = TimeSpan.FromHours(12),
                 Provider = new AuthConfig()
             };
 
