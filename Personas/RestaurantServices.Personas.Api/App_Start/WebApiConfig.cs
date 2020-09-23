@@ -9,10 +9,6 @@ namespace RestaurantServices.Personas.Api
     {
         public static void Register(HttpConfiguration config)
         {
-            // Configuración y servicios de API web
-            //config.Formatters.JsonFormatter.SupportedMediaTypes.Add(new MediaTypeHeaderValue("text/html"));
-
-            // Rutas de API web
             config.MapHttpAttributeRoutes();
 
             config.Routes.MapHttpRoute(
