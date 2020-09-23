@@ -9,11 +9,6 @@ namespace RestaurantServices.Personas.Api.Controllers
         [HttpPost]
         public IHttpActionResult Post([FromBody] Persona persona)
         {
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
-
             return Ok("Éxito");
         }
     }

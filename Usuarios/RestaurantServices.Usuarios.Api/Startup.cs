@@ -7,6 +7,7 @@ using Microsoft.Owin.Cors;
 using Microsoft.Owin.Security.OAuth;
 using Newtonsoft.Json.Serialization;
 using Owin;
+using RestaurantServices.Shared.Transversal.WebApiConfig;
 using RestaurantServices.Usuarios.Api;
 
 [assembly: OwinStartup(typeof(Startup))]
@@ -17,6 +18,7 @@ namespace RestaurantServices.Usuarios.Api
         public void Configuration(IAppBuilder app)
         {
             var config = new HttpConfiguration();
+            config.Filters.Add(new Interceptor());
             app.UseExternalSignInCookie();
             var oAuthServerOptions = new OAuthBearerAuthenticationOptions();
             app.UseOAuthBearerAuthentication(oAuthServerOptions);

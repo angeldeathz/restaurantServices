@@ -130,6 +130,10 @@
       <Project>{B8347E32-1A66-4C0F-B5BF-DF814F56A8A9}</Project>
       <Name>RestaurantServices.Shared.Modelo</Name>
     </ProjectReference>
+    <ProjectReference Include="..\..\Shared\RestaurantServices.Shared.Transversal\RestaurantServices.Shared.Transversal.csproj">
+      <Project>{BB132222-54B2-4A6A-80FD-D33FD0EC3EB6}</Project>
+      <Name>RestaurantServices.Shared.Transversal</Name>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup />
   <PropertyGroup>
