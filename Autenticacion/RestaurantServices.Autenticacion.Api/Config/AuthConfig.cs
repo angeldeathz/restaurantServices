@@ -2,7 +2,7 @@
 using System.Security.Claims;
 using System.Threading.Tasks;
 using Microsoft.Owin.Security.OAuth;
-using RestaurantServices.Shared.Transversal.Http;
+using RestaurantServices.Restaurant.Shared.Http;
 
 namespace RestaurantServices.Autenticacion.Api.Config
 {
@@ -34,7 +34,7 @@ namespace RestaurantServices.Autenticacion.Api.Config
         private async Task<bool> ValidarCredencialesUsuarioAsync(string rut, string contrasena)
         {
             var restClient = new RestClient();
-            var respuesta = await restClient.GetAsync($"http://localhost/usuarios?rut={rut}&contrasena={contrasena}");
+            var respuesta = await restClient.GetAsync($"http://localhost/restaurant/usuarios?rut={rut}&contrasena={contrasena}");
             return respuesta.StatusName == HttpStatusCode.OK;
         }
     }
