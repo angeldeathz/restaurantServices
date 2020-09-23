@@ -31,11 +31,45 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="FluentValidation, Version=8.0.0.0, Culture=neutral, PublicKeyToken=7de548da2fbae0f0, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\FluentValidation.8.6.3\lib\net45\FluentValidation.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Core" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Clases\Articulo.cs" />
+    <Compile Include="Clases\ArticuloPedido.cs" />
+    <Compile Include="Clases\Cliente.cs" />
+    <Compile Include="Clases\DetalleOrdenProveedor.cs" />
+    <Compile Include="Clases\DocumentoPago.cs" />
+    <Compile Include="Clases\EstadoArticulo.cs" />
+    <Compile Include="Clases\EstadoMesa.cs" />
+    <Compile Include="Clases\EstadoPedido.cs" />
+    <Compile Include="Clases\EstadoReserva.cs" />
+    <Compile Include="Clases\HorarioReserva.cs" />
+    <Compile Include="Clases\IngredientePlato.cs" />
+    <Compile Include="Clases\Insumo.cs" />
+    <Compile Include="Clases\Mesa.cs" />
+    <Compile Include="Clases\MetodoPago.cs" />
+    <Compile Include="Clases\MetodoPagoDocumento.cs" />
+    <Compile Include="Clases\OrdenProveedor.cs" />
+    <Compile Include="Clases\Pedido.cs" />
+    <Compile Include="Clases\Persona.cs" />
+    <Compile Include="Clases\Plato.cs" />
+    <Compile Include="Clases\Proveedor.cs" />
+    <Compile Include="Clases\Reserva.cs" />
+    <Compile Include="Clases\TipoConsumo.cs" />
+    <Compile Include="Clases\TipoDocumentoPago.cs" />
+    <Compile Include="Clases\TipoPreparacion.cs" />
+    <Compile Include="Clases\TipoUsuario.cs" />
+    <Compile Include="Clases\UnidadMedida.cs" />
+    <Compile Include="Clases\Usuario.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
