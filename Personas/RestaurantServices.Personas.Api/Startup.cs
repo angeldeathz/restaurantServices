@@ -1,7 +1,11 @@
-﻿using System.Web.Http;
+﻿using System.Linq;
+using System.Net.Http.Formatting;
+using System.Web.Http;
+using FluentValidation.WebApi;
 using Microsoft.Owin;
 using Microsoft.Owin.Cors;
 using Microsoft.Owin.Security.OAuth;
+using Newtonsoft.Json.Serialization;
 using Owin;
 using RestaurantServices.Personas.Api;
 
@@ -17,9 +21,27 @@ namespace RestaurantServices.Personas.Api
             var oAuthServerOptions = new OAuthBearerAuthenticationOptions();
             app.UseOAuthBearerAuthentication(oAuthServerOptions);
 
-            WebApiConfig.Register(config);
+            Register(config);
             app.UseCors(CorsOptions.AllowAll);
             app.UseWebApi(config);
+        }
+
+        private static void Register(HttpConfiguration config)
+        {
+            // Configure routes
+            config.MapHttpAttributeRoutes();
+            config.Routes.MapHttpRoute(
+                name: "DefaultApi",
+                routeTemplate: "api/{controller}/{id}",
+                defaults: new { id = RouteParameter.Optional }
+            );
+
+            // Configure Json formatter
+            var jsonFormatter = config.Formatters.OfType<JsonMediaTypeFormatter>().First();
+            jsonFormatter.SerializerSettings.ContractResolver = new CamelCasePropertyNamesContractResolver();
+
+            // Configure FluentValidation
+            FluentValidationModelValidatorProvider.Configure(config);
         }
     }
 }

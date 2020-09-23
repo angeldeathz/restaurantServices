@@ -1,5 +1,9 @@
-﻿namespace RestaurantServices.Shared.Modelo.Clases
+﻿using FluentValidation.Attributes;
+using RestaurantServices.Shared.Modelo.Validaciones;
+
+namespace RestaurantServices.Shared.Modelo.Clases
 {
+    [Validator(typeof(PersonaValidator))]
     public class Persona
     {
         public int Id { get; set; }

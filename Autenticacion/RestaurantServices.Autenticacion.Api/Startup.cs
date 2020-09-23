@@ -1,8 +1,11 @@
 ﻿using System;
+using System.Linq;
+using System.Net.Http.Formatting;
 using System.Web.Http;
 using Microsoft.Owin;
 using Microsoft.Owin.Cors;
 using Microsoft.Owin.Security.OAuth;
+using Newtonsoft.Json.Serialization;
 using Owin;
 using RestaurantServices.Autenticacion.Api;
 using RestaurantServices.Autenticacion.Api.Config;
@@ -16,12 +19,12 @@ namespace RestaurantServices.Autenticacion.Api
         {
             var config = new HttpConfiguration();
             ConfigureOAuth(app);
-            WebApiConfig.Register(config);
+            Register(config);
             app.UseCors(CorsOptions.AllowAll);
             app.UseWebApi(config);
         }
 
-        public void ConfigureOAuth(IAppBuilder app)
+        private void ConfigureOAuth(IAppBuilder app)
         {
             var oAuthServerOptions = new OAuthAuthorizationServerOptions
             {
@@ -34,6 +37,20 @@ namespace RestaurantServices.Autenticacion.Api
             // Token Generation
             app.UseOAuthAuthorizationServer(oAuthServerOptions);
             app.UseOAuthBearerAuthentication(new OAuthBearerAuthenticationOptions());
+        }
+
+        private static void Register(HttpConfiguration config)
+        {
+            config.MapHttpAttributeRoutes();
+
+            config.Routes.MapHttpRoute(
+                name: "DefaultApi",
+                routeTemplate: "api/{controller}/{id}",
+                defaults: new { id = RouteParameter.Optional }
+            );
+
+            var jsonFormatter = config.Formatters.OfType<JsonMediaTypeFormatter>().First();
+            jsonFormatter.SerializerSettings.ContractResolver = new CamelCasePropertyNamesContractResolver();
         }
     }
 }
