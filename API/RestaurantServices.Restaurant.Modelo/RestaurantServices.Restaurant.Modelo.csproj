@@ -71,6 +71,7 @@
     <Compile Include="Dto\UsuarioLogin.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Validaciones\PersonaValidator.cs" />
+    <Compile Include="Validaciones\UsuarioLoginValidator.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

@@ -35,7 +35,13 @@ namespace RestaurantServices.Restaurant.BLL.Negocio
         public async Task<Usuario> ValidaLoginAsync(UsuarioLogin usuarioLogin)
         {
             // codificar/decodificar contrasena encriptada?
-            return await _unitOfWork.UsuarioDal.ValidaLoginAsync(usuarioLogin.Rut, usuarioLogin.Contrasena);
+            var personaHelper = new Persona();
+            if (!personaHelper.ValidaRut(usuarioLogin.Rut))
+            {
+                return null;
+            }
+
+            return await _unitOfWork.UsuarioDal.ValidaLoginAsync(personaHelper.Rut, usuarioLogin.Contrasena);
         }
     }
 }

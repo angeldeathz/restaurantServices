@@ -1,5 +1,9 @@
-﻿namespace RestaurantServices.Restaurant.Modelo.Dto
+﻿using FluentValidation.Attributes;
+using RestaurantServices.Restaurant.Modelo.Validaciones;
+
+namespace RestaurantServices.Restaurant.Modelo.Dto
 {
+    [Validator(typeof(UsuarioLoginValidator))]
     public class UsuarioLogin
     {
         public string Rut { get; set; }
