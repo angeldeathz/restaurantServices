@@ -45,6 +45,10 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\API\RestaurantServices.Restaurant.DAL\RestaurantServices.Restaurant.DAL.csproj">
+      <Project>{0009D986-F837-4244-9BB7-5EA5B90A2F38}</Project>
+      <Name>RestaurantServices.Restaurant.DAL</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\API\RestaurantServices.Restaurant.Shared\RestaurantServices.Restaurant.Shared.csproj">
       <Project>{BB132222-54B2-4A6A-80FD-D33FD0EC3EB6}</Project>
       <Name>RestaurantServices.Restaurant.Shared</Name>

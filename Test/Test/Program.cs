@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Data;
-using RestaurantServices.Restaurant.Shared.Repositorio;
+using RestaurantServices.Restaurant.DAL.Shared;
 
 namespace Test
 {

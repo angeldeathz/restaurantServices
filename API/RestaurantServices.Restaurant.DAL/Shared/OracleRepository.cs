@@ -5,9 +5,9 @@ using System.Threading.Tasks;
 using Dapper;
 using Oracle.ManagedDataAccess.Client;
 
-namespace RestaurantServices.Restaurant.Shared.Repositorio
+namespace RestaurantServices.Restaurant.DAL.Shared
 {
-    public class OracleRepository
+    public class OracleRepository : IRepository
     {
         private OracleConnection _connection;
 
@@ -27,7 +27,7 @@ namespace RestaurantServices.Restaurant.Shared.Repositorio
 
         #region Get
 
-        public async Task<IEnumerable<T>> GetListAsync<T>(string query) where T : class
+        public async Task<IEnumerable<T>> GetListAsync<T>(string query)
         {
             using (var db = GetConnection)
             {
@@ -46,7 +46,7 @@ namespace RestaurantServices.Restaurant.Shared.Repositorio
             }
         }
 
-        public async Task<T> GetAsync<T>(string query) where T : class
+        public async Task<T> GetAsync<T>(string query)
         {
             using (var db = GetConnection)
             {
@@ -55,7 +55,7 @@ namespace RestaurantServices.Restaurant.Shared.Repositorio
             }
         }
 
-        public async Task<T> GetAsync<T>(string query, Dictionary<string, object> parameters) where T : class
+        public async Task<T> GetAsync<T>(string query, Dictionary<string, object> parameters)
         {
             using (var db = GetConnection)
             {
