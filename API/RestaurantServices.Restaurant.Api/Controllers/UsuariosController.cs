@@ -1,4 +1,8 @@
-﻿using System.Web.Http;
+﻿using System.Net;
+using System.Net.Http;
+using System.Threading.Tasks;
+using System.Web.Http;
+using RestaurantServices.Restaurant.BLL.Negocio;
 using RestaurantServices.Restaurant.Modelo.Dto;
 
 namespace RestaurantServices.Restaurant.API.Controllers
@@ -6,17 +10,47 @@ namespace RestaurantServices.Restaurant.API.Controllers
     [RoutePrefix("api/usuarios")]
     public class UsuariosController : ApiController
     {
-        [HttpPost, Route("login")]
-        public IHttpActionResult ValidarSesion([FromBody] UsuarioLogin usuarioLogin)
+        private readonly UsuarioBl _usuarioBl;
+
+        public UsuariosController()
         {
-            if (usuarioLogin.Rut == "a" && usuarioLogin.Contrasena == "b")
-            {
-                return Ok("Ha iniciado sesion");
-            }
-            else
-            {
-                return BadRequest("Credenciales Incorrectas");
-            }
+            _usuarioBl = new UsuarioBl();
+        }
+
+        [HttpPost, Route("login")]
+        public async Task<IHttpActionResult> ValidarSesion([FromBody] UsuarioLogin usuarioLogin)
+        {
+            var usuario = await _usuarioBl.ValidaLoginAsync(usuarioLogin);
+
+            if (usuario == null) return ResponseMessage(new HttpResponseMessage(HttpStatusCode.NoContent));
+            return Ok(usuario);
+        }
+
+        [HttpGet, Route("")]
+        public async Task<IHttpActionResult> Get()
+        {
+            var usuarios = await _usuarioBl.ObtenerTodosAsync();
+
+            if (usuarios.Count == 0) return ResponseMessage(new HttpResponseMessage(HttpStatusCode.NoContent));
+            return Ok(usuarios);
+        }
+
+        [HttpGet, Route("{id}")]
+        public async Task<IHttpActionResult> Get(int id)
+        {
+            var usuario = await _usuarioBl.ObtenerPorIdAsync(id);
+
+            if (usuario == null) return ResponseMessage(new HttpResponseMessage(HttpStatusCode.NoContent));
+            return Ok(usuario);
+        }
+
+        [HttpGet, Route("")]
+        public async Task<IHttpActionResult> Get([FromUri] string rut)
+        {
+            var usuario = await _usuarioBl.ObtenerPorRutAsync(rut);
+
+            if (usuario == null) return ResponseMessage(new HttpResponseMessage(HttpStatusCode.NoContent));
+            return Ok(usuario);
         }
     }
 }

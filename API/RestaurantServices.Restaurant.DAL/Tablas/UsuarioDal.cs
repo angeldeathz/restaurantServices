@@ -40,5 +40,16 @@ namespace RestaurantServices.Restaurant.DAL.Tablas
                 {"@rut", rut}
             });
         }
+
+        public async Task<Usuario> ValidaLoginAsync(string rut, string contrasena)
+        {
+            const string query = "";
+
+            return await _repository.GetAsync<Usuario>(query, new Dictionary<string, object>
+            {
+                {"@rut", rut},
+                {"@contrasena", contrasena}
+            });
+        }
     }
 }

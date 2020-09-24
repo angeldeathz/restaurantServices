@@ -126,6 +126,10 @@
     </None>
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\RestaurantServices.Restaurant.BLL\RestaurantServices.Restaurant.BLL.csproj">
+      <Project>{3B77B3CB-EDA8-4B29-8FF2-3B3A6E815E9D}</Project>
+      <Name>RestaurantServices.Restaurant.BLL</Name>
+    </ProjectReference>
     <ProjectReference Include="..\RestaurantServices.Restaurant.Modelo\RestaurantServices.Restaurant.Modelo.csproj">
       <Project>{B8347E32-1A66-4C0F-B5BF-DF814F56A8A9}</Project>
       <Name>RestaurantServices.Restaurant.Modelo</Name>

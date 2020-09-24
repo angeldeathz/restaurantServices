@@ -17,8 +17,8 @@ namespace RestaurantServices.Restaurant.DAL.Shared
             {
                 if (_connection == null)
                 {
-                    var a = ConfigurationManager.AppSettings["OracleConnection"];
-                    _connection = new OracleConnection(a);
+                    var connectionString = ConfigurationManager.AppSettings["OracleConnection"];
+                    _connection = new OracleConnection(connectionString);
                 }
 
                 return _connection;
