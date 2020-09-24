@@ -34,7 +34,10 @@ namespace RestaurantServices.Autenticacion.Api.Config
         private async Task<bool> ValidarCredencialesUsuarioAsync(string rut, string contrasena)
         {
             var restClient = new RestClient();
-            var respuesta = await restClient.GetAsync($"http://localhost/restaurant/usuarios?rut={rut}&contrasena={contrasena}");
+            var respuesta = await restClient.PostAsync($"http://localhost/restaurant/api/usuarios/login", new
+            {
+                rut, contrasena
+            });
             return respuesta.StatusName == HttpStatusCode.OK;
         }
     }

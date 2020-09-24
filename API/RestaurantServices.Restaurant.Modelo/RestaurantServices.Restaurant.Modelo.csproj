@@ -69,6 +69,7 @@
     <Compile Include="Clases\TipoUsuario.cs" />
     <Compile Include="Clases\UnidadMedida.cs" />
     <Compile Include="Clases\Usuario.cs" />
+    <Compile Include="Dto\UsuarioLogin.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Validaciones\PersonaValidator.cs" />
   </ItemGroup>

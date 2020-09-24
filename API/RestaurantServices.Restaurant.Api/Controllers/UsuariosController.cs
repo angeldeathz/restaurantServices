@@ -1,14 +1,15 @@
 ﻿using System.Web.Http;
+using RestaurantServices.Restaurant.Modelo.Dto;
 
 namespace RestaurantServices.Restaurant.API.Controllers
 {
-    [Route("usuarios")]
+    [RoutePrefix("api/usuarios")]
     public class UsuariosController : ApiController
     {
-        [HttpGet]
-        public IHttpActionResult ValidarSesion([FromUri] string rut, [FromUri] string contrasena)
+        [HttpPost, Route("login")]
+        public IHttpActionResult ValidarSesion([FromBody] UsuarioLogin usuarioLogin)
         {
-            if (rut == "a" && contrasena == "b")
+            if (usuarioLogin.Rut == "a" && usuarioLogin.Contrasena == "b")
             {
                 return Ok("Ha iniciado sesion");
             }

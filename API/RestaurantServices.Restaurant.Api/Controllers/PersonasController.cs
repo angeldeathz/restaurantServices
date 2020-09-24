@@ -3,7 +3,7 @@ using RestaurantServices.Restaurant.Modelo.Clases;
 
 namespace RestaurantServices.Restaurant.API.Controllers
 {
-    [Authorize, Route("personas")]
+    [Authorize, RoutePrefix("api/personas")]
     public class PersonasController : ApiController
     {
         [HttpPost]
