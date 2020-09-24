@@ -17,6 +17,7 @@ namespace RestaurantServices.Restaurant.BLL.Negocio
 
         public async Task<List<Usuario>> ObtenerTodosAsync()
         {
+            var a = await _unitOfWork.UsuarioDal.GetAsync();
             return (List<Usuario>) await _unitOfWork.UsuarioDal.GetAsync();
         }
 

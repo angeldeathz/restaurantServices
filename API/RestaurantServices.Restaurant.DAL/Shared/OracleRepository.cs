@@ -10,6 +10,7 @@ namespace RestaurantServices.Restaurant.DAL.Shared
     public class OracleRepository : IRepository
     {
         private OracleConnection _connection;
+        private OracleTransaction _oracleTransaction;
 
         private OracleConnection GetConnection
         {
@@ -25,44 +26,63 @@ namespace RestaurantServices.Restaurant.DAL.Shared
             }
         }
 
+        #region Transaction
+
+        public void BeginTransaction()
+        {
+            _oracleTransaction = GetConnection.BeginTransaction(IsolationLevel.ReadCommitted);
+        }
+
+        public void Commit()
+        {
+            _oracleTransaction.Commit();
+            _oracleTransaction.Dispose();
+            _connection.Dispose();
+        }
+
+        public void RollBack()
+        {
+            _oracleTransaction.Rollback();
+            _oracleTransaction.Dispose();
+            _connection.Dispose();
+        }
+
+        #endregion
+
         #region Get
 
         public async Task<IEnumerable<T>> GetListAsync<T>(string query)
         {
-            using (var db = GetConnection)
-            {
-                db.Open();
-                return await db.QueryAsync<T>(query);
-            }
+            GetConnection.Open();
+            var result = await GetConnection.QueryAsync<T>(query);
+            GetConnection.Close();
+            return result;
         }
 
         public async Task<IEnumerable<T>> GetListAsync<T>(string query, Dictionary<string, object> parameters)
         {
-            using (var db = GetConnection)
-            {
-                db.Open();
-                var dynamicParameters = new DynamicParameters(parameters);
-                return await db.QueryAsync<T>(query, dynamicParameters);
-            }
+            GetConnection.Open();
+            var dynamicParameters = new DynamicParameters(parameters);
+            var result = await GetConnection.QueryAsync<T>(query, dynamicParameters);
+            GetConnection.Close();
+            return result;
         }
 
         public async Task<T> GetAsync<T>(string query)
         {
-            using (var db = GetConnection)
-            {
-                db.Open();
-                return await db.QueryFirstOrDefaultAsync<T>(query);
-            }
+            GetConnection.Open();
+            var result = await GetConnection.QueryFirstOrDefaultAsync<T>(query);
+            GetConnection.Close();
+            return result;
         }
 
         public async Task<T> GetAsync<T>(string query, Dictionary<string, object> parameters)
         {
-            using (var db = GetConnection)
-            {
-                db.Open();
-                var dynamicParameters = new DynamicParameters(parameters);
-                return await db.QueryFirstOrDefaultAsync<T>(query);
-            }
+            GetConnection.Open();
+            var dynamicParameters = new DynamicParameters(parameters);
+            var result = await GetConnection.QueryFirstOrDefaultAsync<T>(query, dynamicParameters);
+            GetConnection.Close();
+            return result;
         }
 
         #endregion
@@ -71,22 +91,20 @@ namespace RestaurantServices.Restaurant.DAL.Shared
 
         public async Task<T> InsertAsync<T>(string query, Dictionary<string, object> parameters)
         {
-            using (var db = GetConnection)
-            {
-                db.Open();
-                var dynamicParameters = new DynamicParameters(parameters);
-                return await db.ExecuteScalarAsync<T>(query, dynamicParameters);
-            }
+            GetConnection.Open();
+            var dynamicParameters = new DynamicParameters(parameters);
+            var result = await GetConnection.ExecuteScalarAsync<T>(query, dynamicParameters);
+            GetConnection.Close();
+            return result;
         }
 
         public async Task<T> InsertAsync<T>(string query, Dictionary<string, object> parameters, CommandType commandType)
         {
-            using (var db = GetConnection)
-            {
-                db.Open();
-                var dynamicParameters = new DynamicParameters(parameters);
-                return await db.ExecuteScalarAsync<T>(query, dynamicParameters, null, null, commandType);
-            }
+            GetConnection.Open();
+            var dynamicParameters = new DynamicParameters(parameters);
+            var result = await GetConnection.ExecuteScalarAsync<T>(query, dynamicParameters, null, null, commandType);
+            GetConnection.Close();
+            return result;
         }
 
         #endregion

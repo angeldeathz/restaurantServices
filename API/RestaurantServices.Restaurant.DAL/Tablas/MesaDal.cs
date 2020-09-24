@@ -18,7 +18,7 @@ namespace RestaurantServices.Restaurant.DAL.Tablas
         {
             const string query = "";
 
-            return await _repository.GetAsync<IEnumerable<Mesa>>(query);
+            return await _repository.GetListAsync<Mesa>(query);
         }
 
         public async Task<Mesa> GetAsync(int id)
