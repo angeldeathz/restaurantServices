@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using RestaurantServices.Restaurant.DAL.Shared;
 using RestaurantServices.Restaurant.Modelo.Clases;
@@ -23,13 +24,62 @@ namespace RestaurantServices.Restaurant.BLL.Negocio
 
         public async Task<Usuario> ObtenerPorIdAsync(int id)
         {
-            return await _unitOfWork.UsuarioDal.GetAsync(id);
+            var usuarioCompleto = await _unitOfWork.UsuarioDal.GetAsync(id);
+            return new Usuario
+            {
+                Id = usuarioCompleto.IdUsuario,
+                IdPersona = usuarioCompleto.IdPersona,
+                IdTipoUsuario = usuarioCompleto.IdTipoUsuario,
+                Persona = new Persona
+                {
+                    DigitoVerificador = usuarioCompleto.DigitoVerificador,
+                    Nombre = usuarioCompleto.Nombre,
+                    Apellido = usuarioCompleto.Apellido,
+                    Id = usuarioCompleto.IdPersona,
+                    Email = usuarioCompleto.Email,
+                    EsPersonaNatural = usuarioCompleto.EsPersonaNatural,
+                    Rut = usuarioCompleto.Rut,
+                    Telefono = usuarioCompleto.Telefono
+                },
+                TipoUsuario = new TipoUsuario
+                {
+                    Id = usuarioCompleto.IdTipoUsuario,
+                    Nombre = usuarioCompleto.NombreTipoUsuario
+                }
+            };
         }
 
         public async Task<Usuario> ObtenerPorRutAsync(string rut)
         {
-            var rutSinDv = 1;
-            return await _unitOfWork.UsuarioDal.GetByRutAsync(rutSinDv);
+            var personaHelper = new Persona();
+            if (!personaHelper.ValidaRut(rut))
+            {
+                throw new Exception("Rut es inválido");
+            }
+
+            var usuarioCompleto = await _unitOfWork.UsuarioDal.GetByRutAsync(personaHelper.Rut);
+            return new Usuario
+            {
+                Id = usuarioCompleto.IdUsuario,
+                IdPersona = usuarioCompleto.IdPersona,
+                IdTipoUsuario = usuarioCompleto.IdTipoUsuario,
+                Persona = new Persona
+                {
+                    DigitoVerificador = usuarioCompleto.DigitoVerificador,
+                    Nombre = usuarioCompleto.Nombre,
+                    Apellido = usuarioCompleto.Apellido,
+                    Id = usuarioCompleto.IdPersona,
+                    Email = usuarioCompleto.Email,
+                    EsPersonaNatural = usuarioCompleto.EsPersonaNatural,
+                    Rut = usuarioCompleto.Rut,
+                    Telefono = usuarioCompleto.Telefono
+                },
+                TipoUsuario = new TipoUsuario
+                {
+                    Id = usuarioCompleto.IdTipoUsuario,
+                    Nombre = usuarioCompleto.NombreTipoUsuario
+                }
+            };
         }
 
         public async Task<Usuario> ValidaLoginAsync(UsuarioLogin usuarioLogin)

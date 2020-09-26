@@ -1,6 +1,7 @@
 ﻿using System.Linq;
 using System.Net.Http.Formatting;
 using System.Web.Http;
+using System.Web.Http.ExceptionHandling;
 using FluentValidation.WebApi;
 using Microsoft.Owin;
 using Microsoft.Owin.Cors;
@@ -19,6 +20,8 @@ namespace RestaurantServices.Restaurant.API
         {
             var config = new HttpConfiguration();
             config.Filters.Add(new Interceptor());
+            config.Services.Replace(typeof(IExceptionHandler), new ErrorHandler());
+
             app.UseExternalSignInCookie();
             var oAuthServerOptions = new OAuthBearerAuthenticationOptions();
             app.UseOAuthBearerAuthentication(oAuthServerOptions);

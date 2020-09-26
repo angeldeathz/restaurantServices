@@ -15,7 +15,7 @@ namespace RestaurantServices.Restaurant.Modelo.Clases
         public string Apellido { get; set; }
         public string Email { get; set; }
         public string Telefono { get; set; }
-        public bool EsPersonaNatural { get; set; }
+        public char EsPersonaNatural { get; set; }
 
         public string ObtenerRutCompleto()
         {
