@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using RestaurantServices.Restaurant.DAL.Shared;
 using RestaurantServices.Restaurant.Modelo.Clases;
@@ -18,8 +19,29 @@ namespace RestaurantServices.Restaurant.BLL.Negocio
 
         public async Task<List<Usuario>> ObtenerTodosAsync()
         {
-            var a = await _unitOfWork.UsuarioDal.GetAsync();
-            return (List<Usuario>) await _unitOfWork.UsuarioDal.GetAsync();
+            var usuarioCompleto = await _unitOfWork.UsuarioDal.GetAsync();
+            return usuarioCompleto.Select(x => new Usuario
+            {
+                Id = x.IdUsuario,
+                IdPersona = x.IdPersona,
+                IdTipoUsuario = x.IdTipoUsuario,
+                Persona = new Persona
+                {
+                    DigitoVerificador = x.DigitoVerificador,
+                    Nombre = x.Nombre,
+                    Apellido = x.Apellido,
+                    Id = x.IdPersona,
+                    Email = x.Email,
+                    EsPersonaNatural = x.EsPersonaNatural,
+                    Rut = x.Rut,
+                    Telefono = x.Telefono
+                },
+                TipoUsuario = new TipoUsuario
+                {
+                    Id = x.IdTipoUsuario,
+                    Nombre = x.NombreTipoUsuario
+                }
+            }).ToList();
         }
 
         public async Task<Usuario> ObtenerPorIdAsync(int id)

@@ -15,11 +15,26 @@ namespace RestaurantServices.Restaurant.DAL.Tablas
             _repository = repository;
         }
 
-        public async Task<IEnumerable<Usuario>> GetAsync()
+        public async Task<IEnumerable<UsuarioCompleto>> GetAsync()
         {
-            const string query = "select * from usuario";
+            const string query =
+                @"SELECT
+                    u.id as idUsuario,
+                    u.tipo_usuario_id as idTipoUsuario,
+                    p.id as idPersona,
+                    p.rut,
+                    p.digito_verificador as digitoVerificador,
+                    p.nombre,
+                    p.apellido,
+                    p.email,
+                    p.telefono,
+                    p.persona_natural as EsPersonaNatural,
+                    t.nombre as nombreTipoUsuario
+                FROM USUARIO u
+                JOIN persona p on u.persona_id = p.id
+                JOIN tipo_usuario t on t.id = u.tipo_usuario_id";
 
-            return await _repository.GetListAsync<Usuario>(query);
+            return await _repository.GetListAsync<UsuarioCompleto>(query);
         }
 
         public async Task<UsuarioCompleto> GetAsync(int id)
@@ -56,12 +71,12 @@ namespace RestaurantServices.Restaurant.DAL.Tablas
                     u.tipo_usuario_id as idTipoUsuario,
                     p.id as idPersona,
                     p.rut,
-                    p.digito_verificador,
+                    p.digito_verificador as digitoVerificador,
                     p.nombre,
                     p.apellido,
                     p.email,
                     p.telefono,
-                    p.persona_natural,
+                    p.persona_natural as EsPersonaNatural,
                     t.nombre as nombreTipoUsuario
                 FROM USUARIO u
                 JOIN persona p on u.persona_id = p.id
@@ -78,7 +93,7 @@ namespace RestaurantServices.Restaurant.DAL.Tablas
         {
             const string query =
                 @"SELECT
-                *
+                u.id
                 FROM USUARIO u
                 JOIN persona p on u.persona_id = p.id
                 WHERE p.rut = :rut AND u.contrasena = :contrasena";
