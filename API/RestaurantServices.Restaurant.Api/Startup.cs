@@ -45,6 +45,9 @@ namespace RestaurantServices.Restaurant.API
             var jsonFormatter = config.Formatters.OfType<JsonMediaTypeFormatter>().First();
             jsonFormatter.SerializerSettings.ContractResolver = new CamelCasePropertyNamesContractResolver();
 
+            // elimina el formateo en XML de las respuestas 
+            config.Formatters.Remove(config.Formatters.XmlFormatter);
+
             // Configure FluentValidation
             FluentValidationModelValidatorProvider.Configure(config);
         }
