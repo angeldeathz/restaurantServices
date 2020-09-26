@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Data;
+using RestaurantServices.Restaurant.BLL.Negocio;
 using RestaurantServices.Restaurant.DAL.Shared;
 
 namespace Test
@@ -15,7 +16,9 @@ namespace Test
             //    {"@NOMBRE", "sdfsdfsdfs"}
             //};
             //var c = repo.ExecuteProcedureAsync<object>("INSERT_PRUEBA", param, CommandType.StoredProcedure).Result;
-            var a = repo.GetListAsync<List<object>>("select * from usuario").Result;
+            //var a = repo.GetListAsync<List<object>>("select * from usuario").Result;
+
+            var respuesta = new UsuarioBl().ObtenerTodosAsync().Result;
         }
     }
 }
