@@ -87,9 +87,9 @@ namespace RestaurantServices.Restaurant.DAL.Shared
 
         #endregion
 
-        #region Insert
+        #region Procedures
 
-        public async Task<T> InsertAsync<T>(string query, Dictionary<string, object> parameters)
+        public async Task<T> ExecuteProcedureAsync<T>(string query, Dictionary<string, object> parameters)
         {
             GetConnection.Open();
             var dynamicParameters = new DynamicParameters(parameters);
@@ -98,7 +98,7 @@ namespace RestaurantServices.Restaurant.DAL.Shared
             return result;
         }
 
-        public async Task<T> InsertAsync<T>(string query, Dictionary<string, object> parameters, CommandType commandType)
+        public async Task<T> ExecuteProcedureAsync<T>(string query, Dictionary<string, object> parameters, CommandType commandType)
         {
             GetConnection.Open();
             var dynamicParameters = new DynamicParameters(parameters);

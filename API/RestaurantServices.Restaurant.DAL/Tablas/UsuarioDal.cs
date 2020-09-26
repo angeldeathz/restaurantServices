@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Data;
 using System.Threading.Tasks;
 using RestaurantServices.Restaurant.DAL.Shared;
 using RestaurantServices.Restaurant.Modelo.Clases;
@@ -103,6 +104,31 @@ namespace RestaurantServices.Restaurant.DAL.Tablas
                 {"@rut", rut},
                 {"@contrasena", contrasena}
             });
+        }
+
+        public async Task<int> InsertAsync(Usuario usuario)
+        {
+            const string query = "PROCEDURE";
+
+            return await _repository.ExecuteProcedureAsync<int>(query, new Dictionary<string, object>
+            {
+                {"@contrasena", usuario.Contrasena},
+                {"@idTipoUsuario", usuario.IdTipoUsuario},
+                {"@personaId", usuario.IdPersona}
+            }, CommandType.StoredProcedure);
+        }
+
+        public async Task<bool> UpdateAsync(Usuario usuario)
+        {
+            const string query = "PROCEDURE";
+
+            return await _repository.ExecuteProcedureAsync<bool>(query, new Dictionary<string, object>
+            {
+                {"@id", usuario.Id},
+                {"@contrasena", usuario.Contrasena},
+                {"@idTipoUsuario", usuario.IdTipoUsuario},
+                {"@personaId", usuario.IdPersona}
+            }, CommandType.StoredProcedure);
         }
     }
 }

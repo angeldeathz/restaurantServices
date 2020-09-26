@@ -14,7 +14,7 @@ namespace Test
             //    {"@ID_PRUEBA", 6},
             //    {"@NOMBRE", "sdfsdfsdfs"}
             //};
-            //var c = repo.InsertAsync<object>("INSERT_PRUEBA", param, CommandType.StoredProcedure).Result;
+            //var c = repo.ExecuteProcedureAsync<object>("INSERT_PRUEBA", param, CommandType.StoredProcedure).Result;
             var a = repo.GetListAsync<List<object>>("select * from usuario").Result;
         }
     }

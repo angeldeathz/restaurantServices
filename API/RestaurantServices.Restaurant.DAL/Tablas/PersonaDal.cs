@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Data;
 using System.Threading.Tasks;
 using RestaurantServices.Restaurant.DAL.Shared;
 using RestaurantServices.Restaurant.Modelo.Clases;
@@ -39,6 +40,39 @@ namespace RestaurantServices.Restaurant.DAL.Tablas
             {
                 {"@rut", rut}
             });
+        }
+
+        public async Task<int> InsertAsync(Persona persona)
+        {
+            const string query = "PROCEDURE";
+
+            return await _repository.ExecuteProcedureAsync<int>(query, new Dictionary<string, object>
+            {
+                {"@rut", persona.Rut},
+                {"@digito_verificador", persona.DigitoVerificador},
+                {"@nombre", persona.Nombre},
+                {"@apellido", persona.Apellido},
+                {"@email", persona.Email},
+                {"@telefono", persona.Telefono},
+                {"@persona_natural", persona.EsPersonaNatural},
+            }, CommandType.StoredProcedure);
+        }
+
+        public async Task<int> UpdateAsync(Persona persona)
+        {
+            const string query = "PROCEDURE";
+
+            return await _repository.ExecuteProcedureAsync<int>(query, new Dictionary<string, object>
+            {
+                {"@id", persona.Id},
+                {"@rut", persona.Rut},
+                {"@digito_verificador", persona.DigitoVerificador},
+                {"@nombre", persona.Nombre},
+                {"@apellido", persona.Apellido},
+                {"@email", persona.Email},
+                {"@telefono", persona.Telefono},
+                {"@persona_natural", persona.EsPersonaNatural},
+            }, CommandType.StoredProcedure);
         }
     }
 }

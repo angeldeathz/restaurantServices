@@ -10,7 +10,7 @@ namespace RestaurantServices.Restaurant.DAL.Shared
         Task<IEnumerable<T>> GetListAsync<T>(string query, Dictionary<string, object> parameters);
         Task<T> GetAsync<T>(string query);
         Task<T> GetAsync<T>(string query, Dictionary<string, object> parameters);
-        Task<T> InsertAsync<T>(string query, Dictionary<string, object> parameters);
-        Task<T> InsertAsync<T>(string query, Dictionary<string, object> parameters, CommandType commandType);
+        Task<T> ExecuteProcedureAsync<T>(string query, Dictionary<string, object> parameters);
+        Task<T> ExecuteProcedureAsync<T>(string query, Dictionary<string, object> parameters, CommandType commandType);
     }
 }
