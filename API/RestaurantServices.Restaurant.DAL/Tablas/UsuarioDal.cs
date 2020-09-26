@@ -23,7 +23,8 @@ namespace RestaurantServices.Restaurant.DAL.Tablas
 
         public async Task<Usuario> GetAsync(int id)
         {
-            const string query = "";
+            const string query = 
+                @"SELECT Id, ";
 
             return await _repository.GetAsync<Usuario>(query, new Dictionary<string, object>
             {
@@ -43,9 +44,12 @@ namespace RestaurantServices.Restaurant.DAL.Tablas
 
         public async Task<Usuario> ValidaLoginAsync(int rut, string contrasena)
         {
-            const string query = 
-                @"select * from usuario 
-                where rut = :rut AND contrasena = :contrasena";
+            const string query =
+                @"SELECT
+                *
+                FROM USUARIO u
+                JOIN persona p on u.persona_id = p.id
+                WHERE p.rut = :rut AND u.contrasena = :contrasena";
 
             return await _repository.GetAsync<Usuario>(query, new Dictionary<string, object>
             {
