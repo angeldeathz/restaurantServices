@@ -68,9 +68,11 @@
     <Compile Include="Clases\TipoUsuario.cs" />
     <Compile Include="Clases\UnidadMedida.cs" />
     <Compile Include="Clases\Usuario.cs" />
-    <Compile Include="Dto\UsuarioCompleto.cs" />
+    <Compile Include="TableJoin\UsuarioCompleto.cs" />
     <Compile Include="Dto\UsuarioLogin.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="TableJoin\InsumoJoin.cs" />
+    <Compile Include="TableJoin\ProveedorJoin.cs" />
     <Compile Include="Validaciones\PersonaValidator.cs" />
     <Compile Include="Validaciones\UsuarioLoginValidator.cs" />
   </ItemGroup>

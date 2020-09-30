@@ -47,8 +47,12 @@
     <Compile Include="Shared\IRepository.cs" />
     <Compile Include="Shared\OracleRepository.cs" />
     <Compile Include="Shared\UnitOfWork.cs" />
+    <Compile Include="Tablas\ArticuloDal.cs" />
+    <Compile Include="Tablas\InsumoDal.cs" />
     <Compile Include="Tablas\MesaDal.cs" />
     <Compile Include="Tablas\PersonaDal.cs" />
+    <Compile Include="Tablas\ProveedorDal.cs" />
+    <Compile Include="Tablas\UnidadMedidaDal.cs" />
     <Compile Include="Tablas\UsuarioDal.cs" />
   </ItemGroup>
   <ItemGroup>

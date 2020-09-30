@@ -1,4 +1,4 @@
-﻿namespace RestaurantServices.Restaurant.Modelo.Dto
+﻿namespace RestaurantServices.Restaurant.Modelo.TableJoin
 { 
     public class UsuarioCompleto
     {

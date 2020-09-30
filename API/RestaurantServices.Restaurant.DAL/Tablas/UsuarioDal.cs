@@ -4,6 +4,7 @@ using System.Threading.Tasks;
 using RestaurantServices.Restaurant.DAL.Shared;
 using RestaurantServices.Restaurant.Modelo.Clases;
 using RestaurantServices.Restaurant.Modelo.Dto;
+using RestaurantServices.Restaurant.Modelo.TableJoin;
 
 namespace RestaurantServices.Restaurant.DAL.Tablas
 {

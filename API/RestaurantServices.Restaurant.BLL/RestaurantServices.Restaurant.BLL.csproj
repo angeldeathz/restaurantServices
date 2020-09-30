@@ -35,7 +35,11 @@
     <Reference Include="System.Core" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Negocio\ArticuloBl.cs" />
+    <Compile Include="Negocio\InsumoBl.cs" />
     <Compile Include="Negocio\PersonaBl.cs" />
+    <Compile Include="Negocio\ProveedorBl.cs" />
+    <Compile Include="Negocio\UnidadMedidaBl.cs" />
     <Compile Include="Negocio\UsuarioBl.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
