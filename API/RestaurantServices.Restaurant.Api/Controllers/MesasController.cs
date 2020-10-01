@@ -3,6 +3,7 @@ using System.Net.Http;
 using System.Threading.Tasks;
 using System.Web.Http;
 using RestaurantServices.Restaurant.BLL.Negocio;
+using RestaurantServices.Restaurant.Modelo.Clases;
 
 namespace RestaurantServices.Restaurant.API.Controllers
 {
@@ -34,22 +35,22 @@ namespace RestaurantServices.Restaurant.API.Controllers
             return Ok(mesa);
         }
 
-        //[HttpPost, Route("")]
-        //public async Task<IHttpActionResult> Post([FromBody] Articulo articulo)
-        //{
-        //    var idArticulo = await _mesaBl.GuardarAsync(articulo);
+        [HttpPost, Route("")]
+        public async Task<IHttpActionResult> Post([FromBody] Mesa mesa)
+        {
+            var idMesa = await _mesaBl.GuardarAsync(mesa);
 
-        //    if (idArticulo == 0) return ResponseMessage(new HttpResponseMessage(HttpStatusCode.NoContent));
-        //    return Ok(idArticulo);
-        //}
+            if (idMesa == 0) return ResponseMessage(new HttpResponseMessage(HttpStatusCode.NoContent));
+            return Ok(idMesa);
+        }
 
-        //[HttpPut, Route("")]
-        //public async Task<IHttpActionResult> Put([FromBody] Articulo articulo)
-        //{
-        //    var esActualizado = await _mesaBl.ModificarAsync(articulo);
+        [HttpPut, Route("")]
+        public async Task<IHttpActionResult> Put([FromBody] Mesa mesa)
+        {
+            var esActualizado = await _mesaBl.ModificarAsync(mesa);
 
-        //    if (!esActualizado) return ResponseMessage(new HttpResponseMessage(HttpStatusCode.NoContent));
-        //    return Ok(esActualizado);
-        //}
+            if (!esActualizado) return ResponseMessage(new HttpResponseMessage(HttpStatusCode.NoContent));
+            return Ok(esActualizado);
+        }
     }
 }
