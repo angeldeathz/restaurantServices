@@ -7,7 +7,7 @@ using RestaurantServices.Restaurant.Modelo.Clases;
 
 namespace RestaurantServices.Restaurant.API.Controllers
 {
-    [RoutePrefix("api/Insumos")]
+    [Authorize, RoutePrefix("api/Insumos")]
     public class InsumosController : ApiController
     {
         private readonly InsumoBl _insumoBl;

@@ -27,7 +27,7 @@ namespace RestaurantServices.Restaurant.API.Controllers
             return Ok(usuario);
         }
 
-        [HttpGet, Route("")]
+        [Authorize, HttpGet, Route("")]
         public async Task<IHttpActionResult> Get()
         {
             var usuarios = await _usuarioBl.ObtenerTodosAsync();
@@ -36,7 +36,7 @@ namespace RestaurantServices.Restaurant.API.Controllers
             return Ok(usuarios);
         }
 
-        [HttpGet, Route("{id}")]
+        [Authorize, HttpGet, Route("{id}")]
         public async Task<IHttpActionResult> Get(int id)
         {
             var usuario = await _usuarioBl.ObtenerPorIdAsync(id);
@@ -45,7 +45,7 @@ namespace RestaurantServices.Restaurant.API.Controllers
             return Ok(usuario);
         }
 
-        [HttpGet, Route("")]
+        [Authorize, HttpGet, Route("")]
         public async Task<IHttpActionResult> Get([FromUri] string rut)
         {
             var usuario = await _usuarioBl.ObtenerPorRutAsync(rut);
@@ -54,7 +54,7 @@ namespace RestaurantServices.Restaurant.API.Controllers
             return Ok(usuario);
         }
 
-        [HttpPost, Route("")]
+        [Authorize, HttpPost, Route("")]
         public async Task<IHttpActionResult> Post([FromBody] Usuario usuario)
         {
             var idUsuario = await _usuarioBl.InsertarAsync(usuario);
@@ -63,7 +63,7 @@ namespace RestaurantServices.Restaurant.API.Controllers
             return Ok(idUsuario);
         }
 
-        [HttpPut, Route("")]
+        [Authorize, HttpPut, Route("")]
         public async Task<IHttpActionResult> Put([FromBody] Usuario usuario)
         {
             var esActualizado = await _usuarioBl.ActualizarAsync(usuario);

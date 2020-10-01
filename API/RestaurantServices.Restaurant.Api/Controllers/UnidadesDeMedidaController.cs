@@ -6,7 +6,7 @@ using RestaurantServices.Restaurant.BLL.Negocio;
 
 namespace RestaurantServices.Restaurant.API.Controllers
 {
-    [RoutePrefix("api/UnidadesDeMedida")]
+    [Authorize, RoutePrefix("api/UnidadesDeMedida")]
     public class UnidadesDeMedidaController : ApiController
     {
         private readonly UnidadMedidaBl _unidadMedidaBl;
