@@ -47,6 +47,7 @@ namespace RestaurantServices.Restaurant.BLL.Negocio
         public async Task<Usuario> ObtenerPorIdAsync(int id)
         {
             var usuarioCompleto = await _unitOfWork.UsuarioDal.GetAsync(id);
+            if (usuarioCompleto == null) return null;
             return new Usuario
             {
                 Id = usuarioCompleto.IdUsuario,
@@ -80,6 +81,8 @@ namespace RestaurantServices.Restaurant.BLL.Negocio
             }
 
             var usuarioCompleto = await _unitOfWork.UsuarioDal.GetByRutAsync(personaHelper.Rut);
+            if (usuarioCompleto == null) return null;
+
             return new Usuario
             {
                 Id = usuarioCompleto.IdUsuario,

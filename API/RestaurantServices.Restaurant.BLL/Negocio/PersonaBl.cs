@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using RestaurantServices.Restaurant.DAL.Shared;
 using RestaurantServices.Restaurant.Modelo.Clases;
@@ -26,8 +27,9 @@ namespace RestaurantServices.Restaurant.BLL.Negocio
 
         public async Task<Persona> ObtenerPorRutAsync(string rut)
         {
-            var rutSinDv = 1;
-            return await _unitOfWork.PersonaDal.GetByRutAsync(rutSinDv);
+            var personaTemp = new Persona();
+            if (!personaTemp.ValidaRut(rut)) throw new Exception("Rut es inválido");
+            return await _unitOfWork.PersonaDal.GetByRutAsync(personaTemp.Rut);
         }
     }
 }

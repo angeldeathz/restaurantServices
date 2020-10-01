@@ -17,14 +17,33 @@ namespace RestaurantServices.Restaurant.DAL.Tablas
 
         public async Task<IEnumerable<Persona>> GetAsync()
         {
-            const string query = "";
+            const string query = @"SELECT
+                    id,
+                    rut,
+                    digito_verificador as digitoVerificador,
+                    nombre,
+                    apellido,
+                    email,
+                    telefono,
+                    persona_natural as esPersonaNatural
+                from persona";
 
             return await _repository.GetListAsync<Persona>(query);
         }
 
         public async Task<Persona> GetAsync(int id)
         {
-            const string query = "";
+            const string query = @"SELECT
+                    id,
+                    rut,
+                    digito_verificador as digitoVerificador,
+                    nombre,
+                    apellido,
+                    email,
+                    telefono,
+                    persona_natural as esPersonaNatural
+                from persona
+                where id = :id";
 
             return await _repository.GetAsync<Persona>(query, new Dictionary<string, object>
             {
@@ -34,7 +53,17 @@ namespace RestaurantServices.Restaurant.DAL.Tablas
 
         public async Task<Persona> GetByRutAsync(int rut)
         {
-            const string query = "";
+            const string query = @"SELECT
+                    id,
+                    rut,
+                    digito_verificador as digitoVerificador,
+                    nombre,
+                    apellido,
+                    email,
+                    telefono,
+                    persona_natural as esPersonaNatural
+                from persona
+                where rut = :rut";
 
             return await _repository.GetAsync<Persona>(query, new Dictionary<string, object>
             {

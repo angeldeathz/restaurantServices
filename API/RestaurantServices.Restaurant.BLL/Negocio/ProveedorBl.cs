@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using RestaurantServices.Restaurant.DAL.Shared;
@@ -59,6 +60,20 @@ namespace RestaurantServices.Restaurant.BLL.Negocio
                     Id = proveedorJoin.IdPersona
                 }
             };
+        }
+
+        public async Task<int> GuardarAsync(Proveedor proveedor)
+        {
+            var idPersona = await _unitOfWork.PersonaDal.InsertAsync(proveedor.Persona);
+            if (idPersona == 0) throw new Exception("No se pudo ingresar los datos del proveedor");
+            proveedor.IdPersona = idPersona;
+            return await _unitOfWork.ProveedorDal.InsertAsync(proveedor);
+        }
+
+        public async Task<bool> ModificarAsync(Proveedor proveedor)
+        {
+            var esActualizado = await _unitOfWork.PersonaDal.UpdateAsync(proveedor.Persona);
+            return await _unitOfWork.ProveedorDal.UpdateAsync(proveedor);
         }
     }
 }

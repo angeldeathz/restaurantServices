@@ -6,7 +6,7 @@ using RestaurantServices.Restaurant.BLL.Negocio;
 
 namespace RestaurantServices.Restaurant.API.Controllers
 {
-    [Authorize, RoutePrefix("api/personas")]
+    [RoutePrefix("api/personas")]
     public class PersonasController : ApiController
     {
         private readonly PersonaBl _personaBl;

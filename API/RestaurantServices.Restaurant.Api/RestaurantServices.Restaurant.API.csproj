@@ -111,10 +111,15 @@
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Controllers\TipoPreparacionesController.cs" />
+    <Compile Include="Controllers\TipoConsumosController.cs" />
+    <Compile Include="Controllers\MesasController.cs" />
     <Compile Include="Controllers\InsumosController.cs" />
     <Compile Include="Controllers\ArticuloController.cs" />
     <Compile Include="Controllers\PersonasController.cs" />
     <Compile Include="Controllers\ProveedoresController.cs" />
+    <Compile Include="Controllers\EstadoArticulosController.cs" />
+    <Compile Include="Controllers\TipoUsuariosController.cs" />
     <Compile Include="Controllers\UnidadesDeMedidaController.cs" />
     <Compile Include="Controllers\UsuariosController.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
