@@ -3,6 +3,7 @@ using System.Net.Http;
 using System.Threading.Tasks;
 using System.Web.Http;
 using RestaurantServices.Restaurant.BLL.Negocio;
+using RestaurantServices.Restaurant.Modelo.Clases;
 
 namespace RestaurantServices.Restaurant.API.Controllers
 {
@@ -32,6 +33,24 @@ namespace RestaurantServices.Restaurant.API.Controllers
 
             if (proveedor == null) return ResponseMessage(new HttpResponseMessage(HttpStatusCode.NoContent));
             return Ok(proveedor);
+        }
+
+        [Authorize, HttpPost, Route("")]
+        public async Task<IHttpActionResult> Post([FromBody] Proveedor proveedor)
+        {
+            var idProveedor = await _proveedorBl.GuardarAsync(proveedor);
+
+            if (idProveedor == 0) return ResponseMessage(new HttpResponseMessage(HttpStatusCode.NoContent));
+            return Ok(idProveedor);
+        }
+
+        [Authorize, HttpPut, Route("")]
+        public async Task<IHttpActionResult> Put([FromBody] Proveedor proveedor)
+        {
+            var esActualizado = await _proveedorBl.ModificarAsync(proveedor);
+
+            if (esActualizado == 0) return ResponseMessage(new HttpResponseMessage(HttpStatusCode.NoContent));
+            return Ok(esActualizado);
         }
     }
 }
