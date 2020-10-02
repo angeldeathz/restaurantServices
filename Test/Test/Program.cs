@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Data;
-using RestaurantServices.Restaurant.BLL.Negocio;
+using Dapper;
 using RestaurantServices.Restaurant.DAL.Shared;
 
 namespace Test
@@ -10,15 +10,18 @@ namespace Test
         static void Main(string[] args)
         {
             var repo = new OracleRepository();
-            //var param = new Dictionary<string, object>
-            //{
-            //    {"@ID_PRUEBA", 6},
-            //    {"@NOMBRE", "sdfsdfsdfs"}
-            //};
-            //var c = repo.ExecuteProcedureAsync<object>("INSERT_PRUEBA", param, CommandType.StoredProcedure).Result;
-            //var a = repo.GetListAsync<List<object>>("select * from usuario").Result;
+            var param = new Dictionary<string, object>
+            {
+                {"p_nombre", "John"},
+                {"p_stockActual", 1},
+                {"p_stockCritico", 1},
+                {"p_stockOptimo", 1},
+                {"p_proveedorId", 1},
+                {"p_unidadMedidaId", 1},
+                {"p_return", 0}
+            };
 
-            var respuesta = new UsuarioBl().ObtenerTodosAsync().Result;
+            var c = repo.ExecuteProcedureAsync<int>(@"sp_insertInsumo", param, CommandType.StoredProcedure).Result;
         }
     }
 }
