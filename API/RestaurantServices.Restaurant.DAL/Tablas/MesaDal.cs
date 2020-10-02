@@ -50,26 +50,28 @@ namespace RestaurantServices.Restaurant.DAL.Tablas
 
         public Task<int> InsertAsync(Mesa mesa)
         {
-            const string query = "PROCEDURE";
+            const string spName = "PROCEDURE";
 
-            return _repository.ExecuteProcedureAsync<int>(query, new Dictionary<string, object>
+            return _repository.ExecuteProcedureAsync<int>(spName, new Dictionary<string, object>
             {
                 {"@NOMBRE", mesa.Nombre},
                 {"@CANTIDAD_COMENSALES", mesa.CantidadComensales},
-                {"@ESTADO_MESA_ID", mesa.IdEstadoMesa}
+                {"@ESTADO_MESA_ID", mesa.IdEstadoMesa},
+                {"p_return", 0}
             }, CommandType.StoredProcedure);
         }
 
         public Task<bool> UpdateAsync(Mesa mesa)
         {
-            const string query = "PROCEDURE";
+            const string spName = "PROCEDURE";
 
-            return _repository.ExecuteProcedureAsync<bool>(query, new Dictionary<string, object>
+            return _repository.ExecuteProcedureAsync<bool>(spName, new Dictionary<string, object>
             {
                 {"@id", mesa.Id},
                 {"@NOMBRE", mesa.Nombre},
                 {"@CANTIDAD_COMENSALES", mesa.CantidadComensales},
-                {"@ESTADO_MESA_ID", mesa.IdEstadoMesa}
+                {"@ESTADO_MESA_ID", mesa.IdEstadoMesa},
+                {"p_return", 0}
             }, CommandType.StoredProcedure);
         }
     }

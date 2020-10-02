@@ -73,9 +73,9 @@ namespace RestaurantServices.Restaurant.DAL.Tablas
 
         public async Task<int> InsertAsync(Persona persona)
         {
-            const string query = "PROCEDURE";
+            const string spName = "PROCEDURE";
 
-            return await _repository.ExecuteProcedureAsync<int>(query, new Dictionary<string, object>
+            return await _repository.ExecuteProcedureAsync<int>(spName, new Dictionary<string, object>
             {
                 {"@rut", persona.Rut},
                 {"@digito_verificador", persona.DigitoVerificador},
@@ -84,14 +84,15 @@ namespace RestaurantServices.Restaurant.DAL.Tablas
                 {"@email", persona.Email},
                 {"@telefono", persona.Telefono},
                 {"@persona_natural", persona.EsPersonaNatural},
+                {"p_return", 0}
             }, CommandType.StoredProcedure);
         }
 
         public async Task<int> UpdateAsync(Persona persona)
         {
-            const string query = "PROCEDURE";
+            const string spName = "PROCEDURE";
 
-            return await _repository.ExecuteProcedureAsync<int>(query, new Dictionary<string, object>
+            return await _repository.ExecuteProcedureAsync<int>(spName, new Dictionary<string, object>
             {
                 {"@id", persona.Id},
                 {"@rut", persona.Rut},
@@ -101,6 +102,7 @@ namespace RestaurantServices.Restaurant.DAL.Tablas
                 {"@email", persona.Email},
                 {"@telefono", persona.Telefono},
                 {"@persona_natural", persona.EsPersonaNatural},
+                {"p_return", 0}
             }, CommandType.StoredProcedure);
         }
     }

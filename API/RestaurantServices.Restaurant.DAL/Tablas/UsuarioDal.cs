@@ -3,7 +3,6 @@ using System.Data;
 using System.Threading.Tasks;
 using RestaurantServices.Restaurant.DAL.Shared;
 using RestaurantServices.Restaurant.Modelo.Clases;
-using RestaurantServices.Restaurant.Modelo.Dto;
 using RestaurantServices.Restaurant.Modelo.TableJoin;
 
 namespace RestaurantServices.Restaurant.DAL.Tablas
@@ -109,26 +108,28 @@ namespace RestaurantServices.Restaurant.DAL.Tablas
 
         public async Task<int> InsertAsync(Usuario usuario)
         {
-            const string query = "PROCEDURE";
+            const string spName = "PROCEDURE";
 
-            return await _repository.ExecuteProcedureAsync<int>(query, new Dictionary<string, object>
+            return await _repository.ExecuteProcedureAsync<int>(spName, new Dictionary<string, object>
             {
                 {"@contrasena", usuario.Contrasena},
                 {"@idTipoUsuario", usuario.IdTipoUsuario},
-                {"@personaId", usuario.IdPersona}
+                {"@personaId", usuario.IdPersona},
+                {"p_return", 0}
             }, CommandType.StoredProcedure);
         }
 
         public async Task<bool> UpdateAsync(Usuario usuario)
         {
-            const string query = "PROCEDURE";
+            const string spName = "PROCEDURE";
 
-            return await _repository.ExecuteProcedureAsync<bool>(query, new Dictionary<string, object>
+            return await _repository.ExecuteProcedureAsync<bool>(spName, new Dictionary<string, object>
             {
                 {"@id", usuario.Id},
                 {"@contrasena", usuario.Contrasena},
                 {"@idTipoUsuario", usuario.IdTipoUsuario},
-                {"@personaId", usuario.IdPersona}
+                {"@personaId", usuario.IdPersona},
+                {"p_return", 0}
             }, CommandType.StoredProcedure);
         }
     }

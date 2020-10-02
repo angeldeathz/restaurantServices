@@ -89,11 +89,11 @@ namespace RestaurantServices.Restaurant.DAL.Shared
 
         #region Procedures
 
-        public async Task<T> ExecuteProcedureAsync<T>(string query, Dictionary<string, object> parameters, CommandType commandType)
+        public async Task<T> ExecuteProcedureAsync<T>(string spName, Dictionary<string, object> parameters, CommandType commandType)
         {
             GetConnection.Open();
             var param = new DynamicParameters(parameters);
-            await GetConnection.ExecuteScalarAsync<T>(query, param, null, null, commandType);
+            await GetConnection.ExecuteScalarAsync<T>(spName, param, null, null, commandType);
             GetConnection.Close();
             return param.Get<T>("p_return");
         }

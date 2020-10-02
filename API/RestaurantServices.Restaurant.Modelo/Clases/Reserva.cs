@@ -1,7 +1,10 @@
 ﻿using System;
+using FluentValidation.Attributes;
+using RestaurantServices.Restaurant.Modelo.Validaciones;
 
 namespace RestaurantServices.Restaurant.Modelo.Clases
 {
+    [Validator(typeof(ReservaValidator))]
     public class Reserva
     {
         public int Id { get; set; }

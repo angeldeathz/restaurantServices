@@ -49,30 +49,32 @@ namespace RestaurantServices.Restaurant.DAL.Tablas
 
         public async Task<int> InsertAsync(Articulo articulo)
         {
-            const string query = "PROCEDURE";
+            const string spName = "PROCEDURE";
 
-            return await _repository.ExecuteProcedureAsync<int>(query, new Dictionary<string, object>
+            return await _repository.ExecuteProcedureAsync<int>(spName, new Dictionary<string, object>
             {
                 {"@NOMBRE", articulo.Nombre},
                 {"@DESCRIPCION", articulo.Descripcion},
                 {"@PRECIO", articulo.Precio},
                 {"@ESTADO_ARTICULO_ID", articulo.IdEstadoArticulo},
-                {"@TIPO_CONSUMO_ID", articulo.IdTipoConsumo}
+                {"@TIPO_CONSUMO_ID", articulo.IdTipoConsumo},
+                {"p_return", 0}
             }, CommandType.StoredProcedure);
         }
 
         public async Task<bool> UpdateAsync(Articulo articulo)
         {
-            const string query = "PROCEDURE";
+            const string spName = "PROCEDURE";
 
-            return await _repository.ExecuteProcedureAsync<bool>(query, new Dictionary<string, object>
+            return await _repository.ExecuteProcedureAsync<bool>(spName, new Dictionary<string, object>
             {
                 {"@id", articulo.Id},
                 {"@NOMBRE", articulo.Nombre},
                 {"@DESCRIPCION", articulo.Descripcion},
                 {"@PRECIO", articulo.Precio},
                 {"@ESTADO_ARTICULO_ID", articulo.IdEstadoArticulo},
-                {"@TIPO_CONSUMO_ID", articulo.IdTipoConsumo}
+                {"@TIPO_CONSUMO_ID", articulo.IdTipoConsumo},
+                {"p_return", 0}
             }, CommandType.StoredProcedure);
         }
     }

@@ -3,6 +3,7 @@ using System.Net;
 using System.Net.Http;
 using System.Web.Http.Controllers;
 using System.Web.Http.Filters;
+using Newtonsoft.Json;
 
 namespace RestaurantServices.Restaurant.Shared.WebApiConfig
 {
@@ -22,8 +23,15 @@ namespace RestaurantServices.Restaurant.Shared.WebApiConfig
 
             if (!actionContext.ModelState.IsValid)
             {
-                actionContext.Response = actionContext.Request
-                    .CreateErrorResponse(HttpStatusCode.BadRequest, actionContext.ModelState);
+                var error = new
+                {
+                    message = "Error de campos",
+                    code = 500,
+                    error = actionContext.ModelState.Values.SelectMany(e => e.Errors.Select(er => er.ErrorMessage))
+                };
+
+                
+                actionContext.Response = actionContext.Request.CreateResponse(HttpStatusCode.BadRequest, error);
             }
             else
             {

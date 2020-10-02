@@ -51,31 +51,33 @@ namespace RestaurantServices.Restaurant.DAL.Tablas
 
         public async Task<int> InsertAsync(Insumo articulo)
         {
-            const string query = "PROCEDURE";
+            const string spName = "PROCEDURE";
 
-            return await _repository.ExecuteProcedureAsync<int>(query, new Dictionary<string, object>
+            return await _repository.ExecuteProcedureAsync<int>(spName, new Dictionary<string, object>
             {
                 {"@NOMBRE", articulo.Nombre},
                 {"@STOCK_ACTUAL", articulo.StockActual},
                 {"@STOCK_CRITICO", articulo.StockCritico},
                 {"@STOCK_OPTIMO", articulo.StockOptimo},
                 {"@PROVEEDOR_ID", articulo.IdProveedor},
-                {"@UNIDAD_MEDIDA_ID", articulo.IdUnidadDeMedida}
+                {"@UNIDAD_MEDIDA_ID", articulo.IdUnidadDeMedida},
+                {"p_return", 0}
             }, CommandType.StoredProcedure);
         }
 
         public async Task<bool> UpdateAsync(Insumo articulo)
         {
-            const string query = "PROCEDURE";
+            const string spName = "PROCEDURE";
 
-            return await _repository.ExecuteProcedureAsync<bool>(query, new Dictionary<string, object>
+            return await _repository.ExecuteProcedureAsync<bool>(spName, new Dictionary<string, object>
             {
                 {"@id", articulo.Id},
                 {"@STOCK_ACTUAL", articulo.StockActual},
                 {"@STOCK_CRITICO", articulo.StockCritico},
                 {"@STOCK_OPTIMO", articulo.StockOptimo},
                 {"@PROVEEDOR_ID", articulo.IdProveedor},
-                {"@UNIDAD_MEDIDA_ID", articulo.IdUnidadDeMedida}
+                {"@UNIDAD_MEDIDA_ID", articulo.IdUnidadDeMedida},
+                {"p_return", 0}
             }, CommandType.StoredProcedure);
         }
     }

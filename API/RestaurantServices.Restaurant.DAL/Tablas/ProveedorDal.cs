@@ -60,24 +60,26 @@ namespace RestaurantServices.Restaurant.DAL.Tablas
 
         public async Task<int> InsertAsync(Proveedor proveedor)
         {
-            const string query = "PROCEDURE";
+            const string spName = "PROCEDURE";
 
-            return await _repository.ExecuteProcedureAsync<int>(query, new Dictionary<string, object>
+            return await _repository.ExecuteProcedureAsync<int>(spName, new Dictionary<string, object>
             {
                 {"@DIRECCION", proveedor.Direccion},
-                {"@PERSONA_ID", proveedor.IdPersona}
+                {"@PERSONA_ID", proveedor.IdPersona},
+                {"p_return", 0}
             }, CommandType.StoredProcedure);
         }
 
         public async Task<int> UpdateAsync(Proveedor proveedor)
         {
-            const string query = "PROCEDURE";
+            const string spName = "PROCEDURE";
 
-            return await _repository.ExecuteProcedureAsync<int>(query, new Dictionary<string, object>
+            return await _repository.ExecuteProcedureAsync<int>(spName, new Dictionary<string, object>
             {
                 {"@id", proveedor.Id},
                 {"@DIRECCION", proveedor.Direccion},
-                {"@PERSONA_ID", proveedor.IdPersona}
+                {"@PERSONA_ID", proveedor.IdPersona},
+                {"p_return", 0}
             }, CommandType.StoredProcedure);
         }
     }
