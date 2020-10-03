@@ -15,7 +15,7 @@ namespace RestaurantServices.Restaurant.DAL.Tablas
             _repository = repository;
         }
 
-        public async Task<IEnumerable<Articulo>> GetAsync()
+        public Task<IEnumerable<Articulo>> GetAsync()
         {
             const string query = @"SELECT
                     id,
@@ -26,10 +26,10 @@ namespace RestaurantServices.Restaurant.DAL.Tablas
                     tipo_consumo_id as IdtipoConsumo
                 from articulo";
 
-            return await _repository.GetListAsync<Articulo>(query);
+            return _repository.GetListAsync<Articulo>(query);
         }
 
-        public async Task<Articulo> GetAsync(int id)
+        public Task<Articulo> GetAsync(int id)
         {
             const string query = @"SELECT
                     id,
@@ -41,17 +41,17 @@ namespace RestaurantServices.Restaurant.DAL.Tablas
                 from articulo
                 where id = :id";
 
-            return await _repository.GetAsync<Articulo>(query, new Dictionary<string, object>
+            return _repository.GetAsync<Articulo>(query, new Dictionary<string, object>
             {
                 {"@id", id}
             });
         }
 
-        public async Task<int> InsertAsync(Articulo articulo)
+        public Task<int> InsertAsync(Articulo articulo)
         {
             const string spName = "PROCEDURE";
 
-            return await _repository.ExecuteProcedureAsync<int>(spName, new Dictionary<string, object>
+            return _repository.ExecuteProcedureAsync<int>(spName, new Dictionary<string, object>
             {
                 {"@NOMBRE", articulo.Nombre},
                 {"@DESCRIPCION", articulo.Descripcion},
@@ -62,11 +62,11 @@ namespace RestaurantServices.Restaurant.DAL.Tablas
             }, CommandType.StoredProcedure);
         }
 
-        public async Task<bool> UpdateAsync(Articulo articulo)
+        public Task<bool> UpdateAsync(Articulo articulo)
         {
             const string spName = "PROCEDURE";
 
-            return await _repository.ExecuteProcedureAsync<bool>(spName, new Dictionary<string, object>
+            return _repository.ExecuteProcedureAsync<bool>(spName, new Dictionary<string, object>
             {
                 {"@id", articulo.Id},
                 {"@NOMBRE", articulo.Nombre},

@@ -1,0 +1,2 @@
+﻿Http error code 400 -> error de validacion de campos, modelstate
+Http error code 500 -> error de servidor

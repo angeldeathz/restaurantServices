@@ -50,7 +50,7 @@ namespace RestaurantServices.Restaurant.API.Controllers
             var esActualizado = await _articuloBl.ModificarAsync(articulo);
 
             if (!esActualizado) return ResponseMessage(new HttpResponseMessage(HttpStatusCode.NoContent));
-            return Ok(esActualizado);
+            return Ok(true);
         }
     }
 }

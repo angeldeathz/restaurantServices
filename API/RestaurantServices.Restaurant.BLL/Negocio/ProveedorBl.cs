@@ -70,10 +70,10 @@ namespace RestaurantServices.Restaurant.BLL.Negocio
             return await _unitOfWork.ProveedorDal.InsertAsync(proveedor);
         }
 
-        public async Task<int> ModificarAsync(Proveedor proveedor)
+        public async Task<bool> ModificarAsync(Proveedor proveedor)
         {
             var esActualizado = await _unitOfWork.PersonaDal.UpdateAsync(proveedor.Persona);
-            if (esActualizado == 0) throw new Exception("No se pudo modificar los datos del proveedor");
+            if (!esActualizado) throw new Exception("No se pudo modificar los datos del proveedor");
             return await _unitOfWork.ProveedorDal.UpdateAsync(proveedor);
         }
     }

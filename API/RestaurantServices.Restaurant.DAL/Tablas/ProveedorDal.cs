@@ -16,7 +16,7 @@ namespace RestaurantServices.Restaurant.DAL.Tablas
             _repository = repository;
         }
 
-        public async Task<IEnumerable<ProveedorJoin>> GetAsync()
+        public Task<IEnumerable<ProveedorJoin>> GetAsync()
         {
             const string query = @"select
                     p.id as idproveedor,
@@ -32,10 +32,10 @@ namespace RestaurantServices.Restaurant.DAL.Tablas
                 from proveedor p
                 join persona pe on p.persona_id = pe.id";
 
-            return await _repository.GetListAsync<ProveedorJoin>(query);
+            return _repository.GetListAsync<ProveedorJoin>(query);
         }
 
-        public async Task<ProveedorJoin> GetAsync(int id)
+        public Task<ProveedorJoin> GetAsync(int id)
         {
             const string query = @"select
                     p.id as idproveedor,
@@ -52,17 +52,17 @@ namespace RestaurantServices.Restaurant.DAL.Tablas
                 join persona pe on p.persona_id = pe.id
                 where p.id = :id";
 
-            return await _repository.GetAsync<ProveedorJoin>(query, new Dictionary<string, object>
+            return _repository.GetAsync<ProveedorJoin>(query, new Dictionary<string, object>
             {
                 {"@id", id}
             });
         }
 
-        public async Task<int> InsertAsync(Proveedor proveedor)
+        public Task<int> InsertAsync(Proveedor proveedor)
         {
             const string spName = "PROCEDURE";
 
-            return await _repository.ExecuteProcedureAsync<int>(spName, new Dictionary<string, object>
+            return _repository.ExecuteProcedureAsync<int>(spName, new Dictionary<string, object>
             {
                 {"@DIRECCION", proveedor.Direccion},
                 {"@PERSONA_ID", proveedor.IdPersona},
@@ -70,11 +70,11 @@ namespace RestaurantServices.Restaurant.DAL.Tablas
             }, CommandType.StoredProcedure);
         }
 
-        public async Task<int> UpdateAsync(Proveedor proveedor)
+        public Task<bool> UpdateAsync(Proveedor proveedor)
         {
             const string spName = "PROCEDURE";
 
-            return await _repository.ExecuteProcedureAsync<int>(spName, new Dictionary<string, object>
+            return _repository.ExecuteProcedureAsync<bool>(spName, new Dictionary<string, object>
             {
                 {"@id", proveedor.Id},
                 {"@DIRECCION", proveedor.Direccion},

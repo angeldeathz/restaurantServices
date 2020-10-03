@@ -15,7 +15,7 @@ namespace RestaurantServices.Restaurant.DAL.Tablas
             _repository = repository;
         }
 
-        public async Task<IEnumerable<Persona>> GetAsync()
+        public Task<IEnumerable<Persona>> GetAsync()
         {
             const string query = @"SELECT
                     id,
@@ -28,10 +28,10 @@ namespace RestaurantServices.Restaurant.DAL.Tablas
                     persona_natural as esPersonaNatural
                 from persona";
 
-            return await _repository.GetListAsync<Persona>(query);
+            return _repository.GetListAsync<Persona>(query);
         }
 
-        public async Task<Persona> GetAsync(int id)
+        public Task<Persona> GetAsync(int id)
         {
             const string query = @"SELECT
                     id,
@@ -45,13 +45,13 @@ namespace RestaurantServices.Restaurant.DAL.Tablas
                 from persona
                 where id = :id";
 
-            return await _repository.GetAsync<Persona>(query, new Dictionary<string, object>
+            return _repository.GetAsync<Persona>(query, new Dictionary<string, object>
             {
                 {"@id", id}
             });
         }
 
-        public async Task<Persona> GetByRutAsync(int rut)
+        public Task<Persona> GetByRutAsync(int rut)
         {
             const string query = @"SELECT
                     id,
@@ -65,17 +65,17 @@ namespace RestaurantServices.Restaurant.DAL.Tablas
                 from persona
                 where rut = :rut";
 
-            return await _repository.GetAsync<Persona>(query, new Dictionary<string, object>
+            return _repository.GetAsync<Persona>(query, new Dictionary<string, object>
             {
                 {"@rut", rut}
             });
         }
 
-        public async Task<int> InsertAsync(Persona persona)
+        public Task<int> InsertAsync(Persona persona)
         {
             const string spName = "PROCEDURE";
 
-            return await _repository.ExecuteProcedureAsync<int>(spName, new Dictionary<string, object>
+            return _repository.ExecuteProcedureAsync<int>(spName, new Dictionary<string, object>
             {
                 {"@rut", persona.Rut},
                 {"@digito_verificador", persona.DigitoVerificador},
@@ -88,11 +88,11 @@ namespace RestaurantServices.Restaurant.DAL.Tablas
             }, CommandType.StoredProcedure);
         }
 
-        public async Task<int> UpdateAsync(Persona persona)
+        public Task<bool> UpdateAsync(Persona persona)
         {
             const string spName = "PROCEDURE";
 
-            return await _repository.ExecuteProcedureAsync<int>(spName, new Dictionary<string, object>
+            return _repository.ExecuteProcedureAsync<bool>(spName, new Dictionary<string, object>
             {
                 {"@id", persona.Id},
                 {"@rut", persona.Rut},

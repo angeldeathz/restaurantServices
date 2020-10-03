@@ -48,6 +48,8 @@
     <Compile Include="Shared\OracleRepository.cs" />
     <Compile Include="Shared\UnitOfWork.cs" />
     <Compile Include="Tablas\ArticuloDal.cs" />
+    <Compile Include="Tablas\ClienteDal.cs" />
+    <Compile Include="Tablas\ReservaDal.cs" />
     <Compile Include="Tablas\TipoPreparacionDal.cs" />
     <Compile Include="Tablas\InsumoDal.cs" />
     <Compile Include="Tablas\MesaDal.cs" />
