@@ -15,7 +15,7 @@ namespace RestaurantServices.Restaurant.DAL.Tablas
             _repository = repository;
         }
 
-        public async Task<IEnumerable<Insumo>> GetAsync()
+        public Task<IEnumerable<Insumo>> GetAsync()
         {
             const string query = @"SELECT
                     id,
@@ -27,10 +27,10 @@ namespace RestaurantServices.Restaurant.DAL.Tablas
                     UNIDAD_MEDIDA_ID as IdUnidadDeMedida
                 from insumo";
 
-            return await _repository.GetListAsync<Insumo>(query);
+            return _repository.GetListAsync<Insumo>(query);
         }
 
-        public async Task<Insumo> GetAsync(int id)
+        public Task<Insumo> GetAsync(int id)
         {
             const string query = @"SELECT
                     id,
@@ -43,33 +43,33 @@ namespace RestaurantServices.Restaurant.DAL.Tablas
                 from insumo
                 where id = :id";
 
-            return await _repository.GetAsync<Insumo>(query, new Dictionary<string, object>
+            return _repository.GetAsync<Insumo>(query, new Dictionary<string, object>
             {
                 {"@id", id}
             });
         }
 
-        public async Task<int> InsertAsync(Insumo articulo)
+        public Task<int> InsertAsync(Insumo articulo)
         {
-            const string spName = "PROCEDURE";
+            const string spName = "sp_insertInsumo";
 
-            return await _repository.ExecuteProcedureAsync<int>(spName, new Dictionary<string, object>
+            return _repository.ExecuteProcedureAsync<int>(spName, new Dictionary<string, object>
             {
-                {"@NOMBRE", articulo.Nombre},
-                {"@STOCK_ACTUAL", articulo.StockActual},
-                {"@STOCK_CRITICO", articulo.StockCritico},
-                {"@STOCK_OPTIMO", articulo.StockOptimo},
-                {"@PROVEEDOR_ID", articulo.IdProveedor},
-                {"@UNIDAD_MEDIDA_ID", articulo.IdUnidadDeMedida},
+                {"@p_nombre", articulo.Nombre},
+                {"@p_stockActual", articulo.StockActual},
+                {"@p_stockCritico", articulo.StockCritico},
+                {"@p_stockOptimo", articulo.StockOptimo},
+                {"@p_proveedorId", articulo.IdProveedor},
+                {"@p_unidadMedidaId", articulo.IdUnidadDeMedida},
                 {"p_return", 0}
             }, CommandType.StoredProcedure);
         }
 
-        public async Task<bool> UpdateAsync(Insumo articulo)
+        public Task<bool> UpdateAsync(Insumo articulo)
         {
             const string spName = "PROCEDURE";
 
-            return await _repository.ExecuteProcedureAsync<bool>(spName, new Dictionary<string, object>
+            return _repository.ExecuteProcedureAsync<bool>(spName, new Dictionary<string, object>
             {
                 {"@id", articulo.Id},
                 {"@STOCK_ACTUAL", articulo.StockActual},

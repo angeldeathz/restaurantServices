@@ -13,6 +13,8 @@ namespace RestaurantServices.Restaurant.Modelo.Validaciones
             RuleFor(x => x.StockActual).GreaterThan(0);
             RuleFor(x => x.StockOptimo).GreaterThan(0);
             RuleFor(x => x.StockCritico).GreaterThan(0);
+            RuleFor(x => x.Proveedor).Null();
+            RuleFor(x => x.UnidadMedida).Null();
         }
     }
 }
