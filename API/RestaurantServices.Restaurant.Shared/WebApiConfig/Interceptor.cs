@@ -24,7 +24,7 @@ namespace RestaurantServices.Restaurant.Shared.WebApiConfig
             {
                 var error = new
                 {
-                    error = actionContext.ModelState.Values.SelectMany(e => e.Errors.Select(er => er.ErrorMessage)),
+                    error = actionContext.ModelState.Values.SelectMany(e => e.Errors.Select(er => er.ErrorMessage)).ToList(),
                     codigoError = (int)HttpStatusCode.BadRequest
                 };
 
