@@ -1,4 +1,5 @@
-﻿using System.Net;
+﻿using System;
+using System.Net;
 using System.Net.Http;
 using System.Threading.Tasks;
 using System.Web.Http;
@@ -40,16 +41,18 @@ namespace RestaurantServices.Restaurant.API.Controllers
         {
             var idReserva = await _reservaBl.GuardarAsync(reserva);
 
-            if (idReserva == 0) return ResponseMessage(new HttpResponseMessage(HttpStatusCode.NoContent));
+            if (idReserva == 0) throw new Exception("No se pudo crear la reserva");
             return Ok(idReserva);
         }
 
-        [HttpPut, Route("")]
-        public async Task<IHttpActionResult> Put([FromBody] Reserva reserva)
+        [HttpPut, Route("{id}")]
+        public async Task<IHttpActionResult> Put([FromBody] Reserva reserva, int id)
         {
+            if (id == 0) throw new Exception("El id de la reserva debe ser mayor a cero");
+            reserva.Id = id;
             var esActualizado = await _reservaBl.ModificarAsync(reserva);
 
-            if (!esActualizado) return ResponseMessage(new HttpResponseMessage(HttpStatusCode.NoContent));
+            if (esActualizado == 0) throw new Exception("No se pudo actualizar la reserva");
             return Ok(true);
         }
     }

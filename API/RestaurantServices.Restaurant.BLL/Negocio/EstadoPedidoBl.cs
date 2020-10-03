@@ -29,7 +29,7 @@ namespace RestaurantServices.Restaurant.BLL.Negocio
             return _unitOfWork.EstadoPedidoDal.InsertAsync(estadoPedido);
         }
 
-        public Task<bool> ModificarAsync(EstadoPedido estadoPedido)
+        public Task<int> ModificarAsync(EstadoPedido estadoPedido)
         {
             return _unitOfWork.EstadoPedidoDal.UpdateAsync(estadoPedido);
         }

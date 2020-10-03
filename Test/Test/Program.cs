@@ -1,6 +1,5 @@
 ﻿using System.Collections.Generic;
 using System.Data;
-using Dapper;
 using RestaurantServices.Restaurant.DAL.Shared;
 
 namespace Test

@@ -58,12 +58,36 @@ namespace RestaurantServices.Restaurant.DAL.Tablas
 
         public Task<int> InsertAsync(Cliente cliente)
         {
-            const string spName = "PROCEDURE";
+            const string spName = "sp_insertCliente";
 
             return _repository.ExecuteProcedureAsync<int>(spName, new Dictionary<string, object>
             {
-                {"@PERSONA_ID", cliente.IdPersona},
-                {"p_return", 0}
+                {"@p_rut", cliente.Persona.Rut},
+                {"@p_digito_verificador", cliente.Persona.DigitoVerificador},
+                {"@p_nombre", cliente.Persona.Nombre},
+                {"@p_apellido", cliente.Persona.Apellido},
+                {"@p_email", cliente.Persona.Email},
+                {"@p_telefono", cliente.Persona.Telefono},
+                {"@p_persona_natural", cliente.Persona.EsPersonaNatural},
+                {"@p_return", 0}
+            }, CommandType.StoredProcedure);
+        }
+
+        public Task<int> UpdateAsync(Cliente cliente)
+        {
+            const string spName = "sp_updateCliente";
+
+            return _repository.ExecuteProcedureAsync<int>(spName, new Dictionary<string, object>
+            {
+                {"@p_id", cliente.Id},
+                {"@p_rut", cliente.Persona.Rut},
+                {"@p_digito_verificador", cliente.Persona.DigitoVerificador},
+                {"@p_nombre", cliente.Persona.Nombre},
+                {"@p_apellido", cliente.Persona.Apellido},
+                {"@p_email", cliente.Persona.Email},
+                {"@p_telefono", cliente.Persona.Telefono},
+                {"@p_persona_natural", cliente.Persona.EsPersonaNatural},
+                {"@p_return", 0}
             }, CommandType.StoredProcedure);
         }
     }

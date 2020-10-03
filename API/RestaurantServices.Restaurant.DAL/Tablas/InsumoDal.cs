@@ -65,18 +65,19 @@ namespace RestaurantServices.Restaurant.DAL.Tablas
             }, CommandType.StoredProcedure);
         }
 
-        public Task<bool> UpdateAsync(Insumo articulo)
+        public Task<int> UpdateAsync(Insumo articulo)
         {
-            const string spName = "PROCEDURE";
+            const string spName = "sp_updateInsumo";
 
-            return _repository.ExecuteProcedureAsync<bool>(spName, new Dictionary<string, object>
+            return _repository.ExecuteProcedureAsync<int>(spName, new Dictionary<string, object>
             {
                 {"@id", articulo.Id},
-                {"@STOCK_ACTUAL", articulo.StockActual},
-                {"@STOCK_CRITICO", articulo.StockCritico},
-                {"@STOCK_OPTIMO", articulo.StockOptimo},
-                {"@PROVEEDOR_ID", articulo.IdProveedor},
-                {"@UNIDAD_MEDIDA_ID", articulo.IdUnidadDeMedida},
+                {"@p_nombre", articulo.Nombre},
+                {"@p_stock_actual", articulo.StockActual},
+                {"@p_stock_critico", articulo.StockCritico},
+                {"@p_stock_optimo", articulo.StockOptimo},
+                {"@p_proveedor_id", articulo.IdProveedor},
+                {"@p_unidad_medida_id", articulo.IdUnidadDeMedida},
                 {"p_return", 0}
             }, CommandType.StoredProcedure);
         }

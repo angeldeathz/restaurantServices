@@ -24,14 +24,14 @@ namespace RestaurantServices.Restaurant.BLL.Negocio
             return await _unitOfWork.InsumoDal.GetAsync(id);
         }
 
-        public async Task<int> GuardarAsync(Insumo insumo)
+        public Task<int> GuardarAsync(Insumo insumo)
         {
-            return await _unitOfWork.InsumoDal.InsertAsync(insumo);
+            return _unitOfWork.InsumoDal.InsertAsync(insumo);
         }
 
-        public async Task<bool> ModificarAsync(Insumo insumo)
+        public Task<int> ModificarAsync(Insumo insumo)
         {
-            return await _unitOfWork.InsumoDal.UpdateAsync(insumo);
+            return _unitOfWork.InsumoDal.UpdateAsync(insumo);
         }
     }
 }

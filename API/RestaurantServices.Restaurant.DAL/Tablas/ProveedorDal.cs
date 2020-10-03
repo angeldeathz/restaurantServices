@@ -60,26 +60,38 @@ namespace RestaurantServices.Restaurant.DAL.Tablas
 
         public Task<int> InsertAsync(Proveedor proveedor)
         {
-            const string spName = "PROCEDURE";
+            const string spName = "sp_insertProveedor";
 
             return _repository.ExecuteProcedureAsync<int>(spName, new Dictionary<string, object>
             {
-                {"@DIRECCION", proveedor.Direccion},
-                {"@PERSONA_ID", proveedor.IdPersona},
-                {"p_return", 0}
+                {"@p_rut", proveedor.Persona.Rut},
+                {"@p_digito_verificador", proveedor.Persona.DigitoVerificador},
+                {"@p_nombre", proveedor.Persona.Nombre},
+                {"@p_apellido", proveedor.Persona.Apellido},
+                {"@p_email", proveedor.Persona.Email},
+                {"@p_telefono", proveedor.Persona.Telefono},
+                {"@p_persona_natural", proveedor.Persona.EsPersonaNatural},
+                {"@P_direccion", proveedor.Direccion},
+                {"@p_return", 0}
             }, CommandType.StoredProcedure);
         }
 
-        public Task<bool> UpdateAsync(Proveedor proveedor)
+        public Task<int> UpdateAsync(Proveedor proveedor)
         {
-            const string spName = "PROCEDURE";
+            const string spName = "sp_updateProveedor";
 
-            return _repository.ExecuteProcedureAsync<bool>(spName, new Dictionary<string, object>
+            return _repository.ExecuteProcedureAsync<int>(spName, new Dictionary<string, object>
             {
-                {"@id", proveedor.Id},
-                {"@DIRECCION", proveedor.Direccion},
-                {"@PERSONA_ID", proveedor.IdPersona},
-                {"p_return", 0}
+                {"@p_id", proveedor.Id},
+                {"@p_rut", proveedor.Persona.Rut},
+                {"@p_digito_verificador", proveedor.Persona.DigitoVerificador},
+                {"@p_nombre", proveedor.Persona.Nombre},
+                {"@p_apellido", proveedor.Persona.Apellido},
+                {"@p_email", proveedor.Persona.Email},
+                {"@p_telefono", proveedor.Persona.Telefono},
+                {"@p_persona_natural", proveedor.Persona.EsPersonaNatural},
+                {"@P_direccion", proveedor.Direccion},
+                {"@p_return", 0}
             }, CommandType.StoredProcedure);
         }
     }

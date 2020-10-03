@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using RestaurantServices.Restaurant.DAL.Shared;
@@ -59,19 +58,14 @@ namespace RestaurantServices.Restaurant.BLL.Negocio
             };
         }
 
-        public async Task<int> GuardarAsync(Cliente cliente)
+        public Task<int> GuardarAsync(Cliente cliente)
         {
-            var idPersona = await _unitOfWork.PersonaDal.InsertAsync(cliente.Persona);
-            if (idPersona == 0) throw new Exception("Cliente no pudo ser creado (persona = 0)");
-            cliente.IdPersona = idPersona;
-            return await _unitOfWork.ClienteDal.InsertAsync(cliente);
+            return _unitOfWork.ClienteDal.InsertAsync(cliente);
         }
 
-        public async Task<bool> ModificarAsync(Cliente cliente)
+        public Task<int> ModificarAsync(Cliente cliente)
         {
-            var esActualizado = await _unitOfWork.PersonaDal.UpdateAsync(cliente.Persona);
-            if (!esActualizado) throw new Exception("Cliente no pudo ser actualizado");
-            return true;
+            return _unitOfWork.ClienteDal.UpdateAsync(cliente);
         }
     }
 }

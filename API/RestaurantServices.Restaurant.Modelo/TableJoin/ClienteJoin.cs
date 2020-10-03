@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace RestaurantServices.Restaurant.Modelo.TableJoin
+﻿namespace RestaurantServices.Restaurant.Modelo.TableJoin
 {
     public class ClienteJoin
     {

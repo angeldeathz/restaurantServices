@@ -49,32 +49,32 @@ namespace RestaurantServices.Restaurant.DAL.Tablas
 
         public Task<int> InsertAsync(Articulo articulo)
         {
-            const string spName = "PROCEDURE";
+            const string spName = "sp_insertArticulo";
 
             return _repository.ExecuteProcedureAsync<int>(spName, new Dictionary<string, object>
             {
-                {"@NOMBRE", articulo.Nombre},
-                {"@DESCRIPCION", articulo.Descripcion},
-                {"@PRECIO", articulo.Precio},
-                {"@ESTADO_ARTICULO_ID", articulo.IdEstadoArticulo},
-                {"@TIPO_CONSUMO_ID", articulo.IdTipoConsumo},
-                {"p_return", 0}
+                {"@p_nombre", articulo.Nombre},
+                {"@p_descripcion", articulo.Descripcion},
+                {"@p_precio", articulo.Precio},
+                {"@p_estado_articulo_id", articulo.IdEstadoArticulo},
+                {"@p_tipo_consumo_id", articulo.IdTipoConsumo},
+                {"@p_return", 0}
             }, CommandType.StoredProcedure);
         }
 
-        public Task<bool> UpdateAsync(Articulo articulo)
+        public Task<int> UpdateAsync(Articulo articulo)
         {
-            const string spName = "PROCEDURE";
+            const string spName = "sp_updateArticulo";
 
-            return _repository.ExecuteProcedureAsync<bool>(spName, new Dictionary<string, object>
+            return _repository.ExecuteProcedureAsync<int>(spName, new Dictionary<string, object>
             {
-                {"@id", articulo.Id},
-                {"@NOMBRE", articulo.Nombre},
-                {"@DESCRIPCION", articulo.Descripcion},
-                {"@PRECIO", articulo.Precio},
-                {"@ESTADO_ARTICULO_ID", articulo.IdEstadoArticulo},
-                {"@TIPO_CONSUMO_ID", articulo.IdTipoConsumo},
-                {"p_return", 0}
+                {"@p_id", articulo.Id},
+                {"@p_nombre", articulo.Nombre},
+                {"@p_descripcion", articulo.Descripcion},
+                {"@p_precio", articulo.Precio},
+                {"@p_estado_articulo_id", articulo.IdEstadoArticulo},
+                {"@p_tipo_consumo_id", articulo.IdTipoConsumo},
+                {"@p_return", 0}
             }, CommandType.StoredProcedure);
         }
     }

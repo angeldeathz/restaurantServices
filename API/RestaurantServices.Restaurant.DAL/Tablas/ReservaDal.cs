@@ -88,11 +88,11 @@ namespace RestaurantServices.Restaurant.DAL.Tablas
             }, CommandType.StoredProcedure);
         }
 
-        public Task<bool> UpdateAsync(Reserva reserva)
+        public Task<int> UpdateAsync(Reserva reserva)
         {
             const string spName = "PROCEDURE";
 
-            return _repository.ExecuteProcedureAsync<bool>(spName, new Dictionary<string, object>
+            return _repository.ExecuteProcedureAsync<int>(spName, new Dictionary<string, object>
             {
                 {"@id", reserva.Id},
                 {"@FECHA_HORA", reserva.FechaReserva},

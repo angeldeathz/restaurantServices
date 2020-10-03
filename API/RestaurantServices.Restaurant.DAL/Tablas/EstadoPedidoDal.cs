@@ -46,19 +46,19 @@ namespace RestaurantServices.Restaurant.DAL.Tablas
             return _repository.ExecuteProcedureAsync<int>(spName, new Dictionary<string, object>
             {
                 {"@NOMBRE", estadoPedido.Nombre},
-                {"p_return", 0}
+                {"@p_return", 0}
             }, CommandType.StoredProcedure);
         }
 
-        public Task<bool> UpdateAsync(EstadoPedido estadoPedido)
+        public Task<int> UpdateAsync(EstadoPedido estadoPedido)
         {
             const string spName = "PROCEDURE";
 
-            return _repository.ExecuteProcedureAsync<bool>(spName, new Dictionary<string, object>
+            return _repository.ExecuteProcedureAsync<int>(spName, new Dictionary<string, object>
             {
                 {"@id", estadoPedido.Id},
                 {"@NOMBRE", estadoPedido.Nombre},
-                {"p_return", 0}
+                {"@p_return", 0}
             }, CommandType.StoredProcedure);
         }
     }
