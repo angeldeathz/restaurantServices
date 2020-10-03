@@ -51,7 +51,7 @@ namespace RestaurantServices.Restaurant.API.Controllers
             insumo.Id = id;
             var esActualizado = await _insumoBl.ModificarAsync(insumo);
 
-            if (esActualizado == 1) throw new Exception("No se pudo actualizar el insumo");
+            if (esActualizado == 0) throw new Exception("No se pudo actualizar el insumo");
             return Ok(true);
         }
     }

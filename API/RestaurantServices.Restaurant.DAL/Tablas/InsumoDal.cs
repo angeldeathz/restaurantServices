@@ -71,7 +71,7 @@ namespace RestaurantServices.Restaurant.DAL.Tablas
 
             return _repository.ExecuteProcedureAsync<int>(spName, new Dictionary<string, object>
             {
-                {"@id", articulo.Id},
+                {"@p_id", articulo.Id},
                 {"@p_nombre", articulo.Nombre},
                 {"@p_stock_actual", articulo.StockActual},
                 {"@p_stock_critico", articulo.StockCritico},
