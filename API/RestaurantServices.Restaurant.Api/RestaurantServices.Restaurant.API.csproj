@@ -113,6 +113,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Controllers\ClientesController.cs" />
+    <Compile Include="Controllers\EstadoReservasController.cs" />
+    <Compile Include="Controllers\EstadoPedidosController.cs" />
     <Compile Include="Controllers\ReservasController.cs" />
     <Compile Include="Controllers\TipoPreparacionesController.cs" />
     <Compile Include="Controllers\TipoConsumosController.cs" />

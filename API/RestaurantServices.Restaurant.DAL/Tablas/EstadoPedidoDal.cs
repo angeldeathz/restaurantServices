@@ -6,58 +6,58 @@ using RestaurantServices.Restaurant.Modelo.Clases;
 
 namespace RestaurantServices.Restaurant.DAL.Tablas
 {
-    public class EstadoArticuloDal
+    public class EstadoPedidoDal
     {
         private readonly IRepository _repository;
 
-        public EstadoArticuloDal(IRepository repository)
+        public EstadoPedidoDal(IRepository repository)
         {
             _repository = repository;
         }
 
-        public Task<IEnumerable<EstadoArticulo>> GetAsync()
+        public Task<IEnumerable<EstadoPedido>> GetAsync()
         {
             const string query = @"SELECT
                     id,
                     NOMBRE
-                from estado_articulo";
+                from estado_pedido";
 
-            return _repository.GetListAsync<EstadoArticulo>(query);
+            return _repository.GetListAsync<EstadoPedido>(query);
         }
 
-        public Task<EstadoArticulo> GetAsync(int id)
+        public Task<EstadoPedido> GetAsync(int id)
         {
             const string query = @"SELECT
                     id,
                     NOMBRE
-                from estado_articulo
+                from estado_pedido
                 where id = :id";
 
-            return _repository.GetAsync<EstadoArticulo>(query, new Dictionary<string, object>
+            return _repository.GetAsync<EstadoPedido>(query, new Dictionary<string, object>
             {
                 {"@id", id}
             });
         }
 
-        public Task<int> InsertAsync(EstadoArticulo estadoArticulo)
+        public Task<int> InsertAsync(EstadoPedido estadoPedido)
         {
             const string spName = "PROCEDURE";
 
             return _repository.ExecuteProcedureAsync<int>(spName, new Dictionary<string, object>
             {
-                {"@NOMBRE", estadoArticulo.Nombre},
+                {"@NOMBRE", estadoPedido.Nombre},
                 {"p_return", 0}
             }, CommandType.StoredProcedure);
         }
 
-        public Task<bool> UpdateAsync(EstadoArticulo estadoArticulo)
+        public Task<bool> UpdateAsync(EstadoPedido estadoPedido)
         {
             const string spName = "PROCEDURE";
 
             return _repository.ExecuteProcedureAsync<bool>(spName, new Dictionary<string, object>
             {
-                {"@id", estadoArticulo.Id},
-                {"@NOMBRE", estadoArticulo.Nombre},
+                {"@id", estadoPedido.Id},
+                {"@NOMBRE", estadoPedido.Nombre},
                 {"p_return", 0}
             }, CommandType.StoredProcedure);
         }

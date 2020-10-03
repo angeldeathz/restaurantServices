@@ -7,20 +7,20 @@ using RestaurantServices.Restaurant.Modelo.Clases;
 
 namespace RestaurantServices.Restaurant.API.Controllers
 {
-    [Authorize, RoutePrefix("api/estadoArticulos")]
-    public class EstadoArticulosController : ApiController
+    [Authorize, RoutePrefix("api/estadoPedidos")]
+    public class EstadoPedidosController : ApiController
     {
-        private readonly EstadoArticuloBl _estadoArticuloBl;
+        private readonly EstadoPedidoBl _estadoPedidoBl;
 
-        public EstadoArticulosController()
+        public EstadoPedidosController()
         {
-            _estadoArticuloBl = new EstadoArticuloBl();
+            _estadoPedidoBl = new EstadoPedidoBl();
         }
 
         [HttpGet, Route("")]
         public async Task<IHttpActionResult> Get()
         {
-            var estadoArticulos = await _estadoArticuloBl.ObtenerTodosAsync();
+            var estadoArticulos = await _estadoPedidoBl.ObtenerTodosAsync();
 
             if (estadoArticulos.Count == 0) return ResponseMessage(new HttpResponseMessage(HttpStatusCode.NoContent));
             return Ok(estadoArticulos);
@@ -29,25 +29,25 @@ namespace RestaurantServices.Restaurant.API.Controllers
         [HttpGet, Route("{id}")]
         public async Task<IHttpActionResult> Get(int id)
         {
-            var estadoArticulo = await _estadoArticuloBl.ObtenerPorIdAsync(id);
+            var estadoArticulo = await _estadoPedidoBl.ObtenerPorIdAsync(id);
 
             if (estadoArticulo == null) return ResponseMessage(new HttpResponseMessage(HttpStatusCode.NoContent));
             return Ok(estadoArticulo);
         }
 
         [HttpPost, Route("")]
-        public async Task<IHttpActionResult> Post([FromBody] EstadoArticulo estadoArticulo)
+        public async Task<IHttpActionResult> Post([FromBody] EstadoPedido estadoPedido)
         {
-            var idEstadoArticulo = await _estadoArticuloBl.GuardarAsync(estadoArticulo);
+            var idEstadoPedido = await _estadoPedidoBl.GuardarAsync(estadoPedido);
 
-            if (idEstadoArticulo == 0) return ResponseMessage(new HttpResponseMessage(HttpStatusCode.NoContent));
-            return Ok(idEstadoArticulo);
+            if (idEstadoPedido == 0) return ResponseMessage(new HttpResponseMessage(HttpStatusCode.NoContent));
+            return Ok(idEstadoPedido);
         }
 
         [HttpPut, Route("")]
-        public async Task<IHttpActionResult> Put([FromBody] EstadoArticulo estadoArticulo)
+        public async Task<IHttpActionResult> Put([FromBody] EstadoPedido estadoPedido)
         {
-            var esActualizado = await _estadoArticuloBl.ModificarAsync(estadoArticulo);
+            var esActualizado = await _estadoPedidoBl.ModificarAsync(estadoPedido);
 
             if (!esActualizado) return ResponseMessage(new HttpResponseMessage(HttpStatusCode.NoContent));
             return Ok(true);
