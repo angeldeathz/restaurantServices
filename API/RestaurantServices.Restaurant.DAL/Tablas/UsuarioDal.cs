@@ -43,6 +43,7 @@ namespace RestaurantServices.Restaurant.DAL.Tablas
             const string query =
                 @"SELECT
                     u.id as idUsuario,
+                    u.contrasena,
                     u.tipo_usuario_id as idTipoUsuario,
                     p.id as idPersona,
                     p.rut,
@@ -69,6 +70,7 @@ namespace RestaurantServices.Restaurant.DAL.Tablas
             const string query =
                 @"SELECT
                     u.id as idUsuario,
+                    u.contrasena,
                     u.tipo_usuario_id as idTipoUsuario,
                     p.id as idPersona,
                     p.rut,

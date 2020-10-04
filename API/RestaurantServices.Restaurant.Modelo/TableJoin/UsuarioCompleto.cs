@@ -4,6 +4,7 @@
     {
         // usuario
         public int IdUsuario { get; set; }
+        public string Contrasena { get; set; }
 
         // persona
         public int IdPersona { get; set; }
