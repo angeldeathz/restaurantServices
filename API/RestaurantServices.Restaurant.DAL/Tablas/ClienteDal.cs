@@ -86,7 +86,6 @@ namespace RestaurantServices.Restaurant.DAL.Tablas
                 {"@p_apellido", cliente.Persona.Apellido},
                 {"@p_email", cliente.Persona.Email},
                 {"@p_telefono", cliente.Persona.Telefono},
-                {"@p_persona_natural", cliente.Persona.EsPersonaNatural},
                 {"@p_return", 0}
             }, CommandType.StoredProcedure);
         }

@@ -19,7 +19,7 @@ namespace RestaurantServices.Restaurant.Shared.WebApiConfig
                 Request = context.ExceptionContext.Request,
                 Content = JsonConvert.SerializeObject(new
                 {
-                    error = new List<string>
+                    errores = new List<string>
                     {
                         context.Exception.Message
                     },
