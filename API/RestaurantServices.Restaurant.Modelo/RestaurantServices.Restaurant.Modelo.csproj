@@ -68,6 +68,7 @@
     <Compile Include="Clases\TipoUsuario.cs" />
     <Compile Include="Clases\UnidadMedida.cs" />
     <Compile Include="Clases\Usuario.cs" />
+    <Compile Include="TableJoin\ArticuloJoin.cs" />
     <Compile Include="TableJoin\ClienteJoin.cs" />
     <Compile Include="TableJoin\MesaJoin.cs" />
     <Compile Include="TableJoin\ReservaJoin.cs" />
