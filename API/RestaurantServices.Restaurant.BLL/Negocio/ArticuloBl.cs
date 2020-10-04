@@ -19,19 +19,19 @@ namespace RestaurantServices.Restaurant.BLL.Negocio
             return (List<Articulo>)await _unitOfWork.ArticuloDal.GetAsync();
         }
 
-        public async Task<Articulo> ObtenerPorIdAsync(int id)
+        public Task<Articulo> ObtenerPorIdAsync(int id)
         {
-            return await _unitOfWork.ArticuloDal.GetAsync(id);
+            return _unitOfWork.ArticuloDal.GetAsync(id);
         }
 
-        public async Task<int> GuardarAsync(Articulo articulo)
+        public Task<int> GuardarAsync(Articulo articulo)
         {
-            return await _unitOfWork.ArticuloDal.InsertAsync(articulo);
+            return _unitOfWork.ArticuloDal.InsertAsync(articulo);
         }
 
-        public async Task<bool> ModificarAsync(Articulo articulo)
+        public Task<int> ModificarAsync(Articulo articulo)
         {
-            return await _unitOfWork.ArticuloDal.UpdateAsync(articulo);
+            return _unitOfWork.ArticuloDal.UpdateAsync(articulo);
         }
     }
 }

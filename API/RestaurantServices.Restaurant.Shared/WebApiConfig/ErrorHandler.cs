@@ -1,4 +1,5 @@
-﻿using System.Net;
+﻿using System.Collections.Generic;
+using System.Net;
 using System.Net.Http;
 using System.Text;
 using System.Threading;
@@ -18,7 +19,10 @@ namespace RestaurantServices.Restaurant.Shared.WebApiConfig
                 Request = context.ExceptionContext.Request,
                 Content = JsonConvert.SerializeObject(new
                 {
-                    error = context.Exception.Message,
+                    error = new List<string>
+                    {
+                        context.Exception.Message
+                    },
                     codigoError = HttpStatusCode.InternalServerError
                 })
             };

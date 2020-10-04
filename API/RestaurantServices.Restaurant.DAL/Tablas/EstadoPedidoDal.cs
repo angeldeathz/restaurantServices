@@ -1,7 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+﻿using System.Collections.Generic;
+using System.Data;
 using System.Threading.Tasks;
 using RestaurantServices.Restaurant.DAL.Shared;
 using RestaurantServices.Restaurant.Modelo.Clases;
@@ -39,6 +37,29 @@ namespace RestaurantServices.Restaurant.DAL.Tablas
             {
                 {"@id", id}
             });
+        }
+
+        public Task<int> InsertAsync(EstadoPedido estadoPedido)
+        {
+            const string spName = "PROCEDURE";
+
+            return _repository.ExecuteProcedureAsync<int>(spName, new Dictionary<string, object>
+            {
+                {"@NOMBRE", estadoPedido.Nombre},
+                {"@p_return", 0}
+            }, CommandType.StoredProcedure);
+        }
+
+        public Task<int> UpdateAsync(EstadoPedido estadoPedido)
+        {
+            const string spName = "PROCEDURE";
+
+            return _repository.ExecuteProcedureAsync<int>(spName, new Dictionary<string, object>
+            {
+                {"@id", estadoPedido.Id},
+                {"@NOMBRE", estadoPedido.Nombre},
+                {"@p_return", 0}
+            }, CommandType.StoredProcedure);
         }
     }
 }

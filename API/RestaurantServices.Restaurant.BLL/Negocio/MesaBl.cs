@@ -51,14 +51,14 @@ namespace RestaurantServices.Restaurant.BLL.Negocio
             };
         }
 
-        public async Task<int> GuardarAsync(Mesa mesa)
+        public Task<int> GuardarAsync(Mesa mesa)
         {
-            return await _unitOfWork.MesaDal.InsertAsync(mesa);
+            return _unitOfWork.MesaDal.InsertAsync(mesa);
         }
 
-        public async Task<bool> ModificarAsync(Mesa mesa)
+        public Task<int> ModificarAsync(Mesa mesa)
         {
-            return await _unitOfWork.MesaDal.UpdateAsync(mesa);
+            return _unitOfWork.MesaDal.UpdateAsync(mesa);
         }
     }
 }

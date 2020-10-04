@@ -16,6 +16,10 @@ namespace RestaurantServices.Restaurant.DAL.Shared
         private TipoConsumoDal _tipoConsumoDal;
         private EstadoArticuloDal _estadoArticuloDal;
         private TipoPreparacionDal _tipoPreparacionDal;
+        private ClienteDal _clienteDal;
+        private ReservaDal _reservaDal;
+        private EstadoPedidoDal _estadoPedidoDal;
+        private EstadoReservaDal _estadoReservaDal;
 
         public UnitOfWork(IRepository repository)
         {
@@ -33,5 +37,9 @@ namespace RestaurantServices.Restaurant.DAL.Shared
         public TipoConsumoDal TipoConsumoDal => _tipoConsumoDal ?? (_tipoConsumoDal = new TipoConsumoDal(_repository));
         public EstadoArticuloDal EstadoArticuloDal => _estadoArticuloDal ?? (_estadoArticuloDal = new EstadoArticuloDal(_repository));
         public TipoPreparacionDal TipoPreparacionDal => _tipoPreparacionDal ?? (_tipoPreparacionDal = new TipoPreparacionDal(_repository));
+        public ClienteDal ClienteDal => _clienteDal ?? (_clienteDal = new ClienteDal(_repository));
+        public ReservaDal ReservaDal => _reservaDal ?? (_reservaDal = new ReservaDal(_repository));
+        public EstadoPedidoDal EstadoPedidoDal => _estadoPedidoDal ?? (_estadoPedidoDal = new EstadoPedidoDal(_repository));
+        public EstadoReservaDal EstadoReservaDal => _estadoReservaDal ?? (_estadoReservaDal = new EstadoReservaDal(_repository));
     }
 }

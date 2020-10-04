@@ -1,4 +1,5 @@
-﻿using RestaurantServices.Restaurant.BLL.Negocio;
+﻿using System;
+using RestaurantServices.Restaurant.BLL.Negocio;
 using RestaurantServices.Restaurant.Modelo.Clases;
 using RestaurantServices.Restaurant.Modelo.Dto;
 using System.Net;
@@ -59,16 +60,18 @@ namespace RestaurantServices.Restaurant.API.Controllers
         {
             var idUsuario = await _usuarioBl.InsertarAsync(usuario);
 
-            if (idUsuario == 0) return ResponseMessage(new HttpResponseMessage(HttpStatusCode.NoContent));
+            if (idUsuario == 0) throw new Exception("No se pudo crear el usuario");
             return Ok(idUsuario);
         }
 
-        [Authorize, HttpPut, Route("")]
-        public async Task<IHttpActionResult> Put([FromBody] Usuario usuario)
+        [Authorize, HttpPut, Route("{id}")]
+        public async Task<IHttpActionResult> Put([FromBody] Usuario usuario, int id)
         {
+            if (id == 0) throw new Exception("El id del usuario debe ser mayor a cero");
+            usuario.Id = id;
             var esActualizado = await _usuarioBl.ActualizarAsync(usuario);
 
-            if (!esActualizado) return ResponseMessage(new HttpResponseMessage(HttpStatusCode.NoContent));
+            if (esActualizado == 0) throw new Exception("No se pudo actualizar el usuario");
             return Ok(esActualizado);
         }
     }

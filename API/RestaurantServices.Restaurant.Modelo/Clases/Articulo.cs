@@ -1,5 +1,9 @@
-﻿namespace RestaurantServices.Restaurant.Modelo.Clases
+﻿using FluentValidation.Attributes;
+using RestaurantServices.Restaurant.Modelo.Validaciones;
+
+namespace RestaurantServices.Restaurant.Modelo.Clases
 {
+    [Validator(typeof(ArticuloValidator))]
     public class Articulo
     {
         public int Id { get; set; }

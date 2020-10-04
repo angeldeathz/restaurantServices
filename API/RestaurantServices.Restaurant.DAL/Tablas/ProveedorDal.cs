@@ -16,7 +16,7 @@ namespace RestaurantServices.Restaurant.DAL.Tablas
             _repository = repository;
         }
 
-        public async Task<IEnumerable<ProveedorJoin>> GetAsync()
+        public Task<IEnumerable<ProveedorJoin>> GetAsync()
         {
             const string query = @"select
                     p.id as idproveedor,
@@ -32,10 +32,10 @@ namespace RestaurantServices.Restaurant.DAL.Tablas
                 from proveedor p
                 join persona pe on p.persona_id = pe.id";
 
-            return await _repository.GetListAsync<ProveedorJoin>(query);
+            return _repository.GetListAsync<ProveedorJoin>(query);
         }
 
-        public async Task<ProveedorJoin> GetAsync(int id)
+        public Task<ProveedorJoin> GetAsync(int id)
         {
             const string query = @"select
                     p.id as idproveedor,
@@ -52,32 +52,46 @@ namespace RestaurantServices.Restaurant.DAL.Tablas
                 join persona pe on p.persona_id = pe.id
                 where p.id = :id";
 
-            return await _repository.GetAsync<ProveedorJoin>(query, new Dictionary<string, object>
+            return _repository.GetAsync<ProveedorJoin>(query, new Dictionary<string, object>
             {
                 {"@id", id}
             });
         }
 
-        public async Task<int> InsertAsync(Proveedor proveedor)
+        public Task<int> InsertAsync(Proveedor proveedor)
         {
-            const string query = "PROCEDURE";
+            const string spName = "sp_insertProveedor";
 
-            return await _repository.ExecuteProcedureAsync<int>(query, new Dictionary<string, object>
+            return _repository.ExecuteProcedureAsync<int>(spName, new Dictionary<string, object>
             {
-                {"@DIRECCION", proveedor.Direccion},
-                {"@PERSONA_ID", proveedor.IdPersona}
+                {"@p_rut", proveedor.Persona.Rut},
+                {"@p_digito_verificador", proveedor.Persona.DigitoVerificador},
+                {"@p_nombre", proveedor.Persona.Nombre},
+                {"@p_apellido", proveedor.Persona.Apellido},
+                {"@p_email", proveedor.Persona.Email},
+                {"@p_telefono", proveedor.Persona.Telefono},
+                {"@p_persona_natural", proveedor.Persona.EsPersonaNatural},
+                {"@P_direccion", proveedor.Direccion},
+                {"@p_return", 0}
             }, CommandType.StoredProcedure);
         }
 
-        public async Task<int> UpdateAsync(Proveedor proveedor)
+        public Task<int> UpdateAsync(Proveedor proveedor)
         {
-            const string query = "PROCEDURE";
+            const string spName = "sp_updateProveedor";
 
-            return await _repository.ExecuteProcedureAsync<int>(query, new Dictionary<string, object>
+            return _repository.ExecuteProcedureAsync<int>(spName, new Dictionary<string, object>
             {
-                {"@id", proveedor.Id},
-                {"@DIRECCION", proveedor.Direccion},
-                {"@PERSONA_ID", proveedor.IdPersona}
+                {"@p_id", proveedor.Id},
+                {"@p_rut", proveedor.Persona.Rut},
+                {"@p_digito_verificador", proveedor.Persona.DigitoVerificador},
+                {"@p_nombre", proveedor.Persona.Nombre},
+                {"@p_apellido", proveedor.Persona.Apellido},
+                {"@p_email", proveedor.Persona.Email},
+                {"@p_telefono", proveedor.Persona.Telefono},
+                {"@p_persona_natural", proveedor.Persona.EsPersonaNatural},
+                {"@P_direccion", proveedor.Direccion},
+                {"@p_return", 0}
             }, CommandType.StoredProcedure);
         }
     }

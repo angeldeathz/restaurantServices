@@ -1,4 +1,5 @@
-﻿using System.Net;
+﻿using System;
+using System.Net;
 using System.Net.Http;
 using System.Threading.Tasks;
 using System.Web.Http;
@@ -21,7 +22,6 @@ namespace RestaurantServices.Restaurant.API.Controllers
         public async Task<IHttpActionResult> Get()
         {
             var articulos = await _articuloBl.ObtenerTodosAsync();
-
             if (articulos.Count == 0) return ResponseMessage(new HttpResponseMessage(HttpStatusCode.NoContent));
             return Ok(articulos);
         }
@@ -30,7 +30,6 @@ namespace RestaurantServices.Restaurant.API.Controllers
         public async Task<IHttpActionResult> Get(int id)
         {
             var articulo = await _articuloBl.ObtenerPorIdAsync(id);
-
             if (articulo == null) return ResponseMessage(new HttpResponseMessage(HttpStatusCode.NoContent));
             return Ok(articulo);
         }
@@ -39,18 +38,19 @@ namespace RestaurantServices.Restaurant.API.Controllers
         public async Task<IHttpActionResult> Post([FromBody] Articulo articulo)
         {
             var idArticulo = await _articuloBl.GuardarAsync(articulo);
-
-            if (idArticulo == 0) return ResponseMessage(new HttpResponseMessage(HttpStatusCode.NoContent));
+            if (idArticulo == 0) throw new Exception("No se pudo crear el articulo");
             return Ok(idArticulo);
         }
 
-        [HttpPut, Route("")]
-        public async Task<IHttpActionResult> Put([FromBody] Articulo articulo)
+        [HttpPut, Route("{id}")]
+        public async Task<IHttpActionResult> Put([FromBody] Articulo articulo, int id)
         {
+            if (id == 0) throw new Exception("El id del articulo debe ser mayor a cero");
+            articulo.Id = id;
             var esActualizado = await _articuloBl.ModificarAsync(articulo);
 
-            if (!esActualizado) return ResponseMessage(new HttpResponseMessage(HttpStatusCode.NoContent));
-            return Ok(esActualizado);
+            if (esActualizado == 0) throw new Exception("No se pudo actualizar el articulo");
+            return Ok(true);
         }
     }
 }

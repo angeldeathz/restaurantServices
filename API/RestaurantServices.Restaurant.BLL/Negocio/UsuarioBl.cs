@@ -119,18 +119,14 @@ namespace RestaurantServices.Restaurant.BLL.Negocio
             return await _unitOfWork.UsuarioDal.ValidaLoginAsync(personaHelper.Rut, usuarioLogin.Contrasena);
         }
 
-        public async Task<int> InsertarAsync(Usuario usuario)
+        public Task<int> InsertarAsync(Usuario usuario)
         {
-            var idUsuario = await _unitOfWork.UsuarioDal.InsertAsync(usuario);
-            await _unitOfWork.PersonaDal.InsertAsync(usuario.Persona);
-            return idUsuario;
+            return _unitOfWork.UsuarioDal.InsertAsync(usuario);
         }
 
-        public async Task<bool> ActualizarAsync(Usuario usuario)
+        public Task<int> ActualizarAsync(Usuario usuario)
         {
-            await _unitOfWork.UsuarioDal.UpdateAsync(usuario);
-            await _unitOfWork.PersonaDal.UpdateAsync(usuario.Persona);
-            return true;
+            return _unitOfWork.UsuarioDal.UpdateAsync(usuario);
         }
     }
 }

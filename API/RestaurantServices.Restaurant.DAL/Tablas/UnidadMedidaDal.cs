@@ -14,7 +14,7 @@ namespace RestaurantServices.Restaurant.DAL.Tablas
             _repository = repository;
         }
 
-        public async Task<IEnumerable<UnidadMedida>> GetAsync()
+        public Task<IEnumerable<UnidadMedida>> GetAsync()
         {
             const string query = @"SELECT
                     id,
@@ -22,10 +22,10 @@ namespace RestaurantServices.Restaurant.DAL.Tablas
                     ABREVIACION
                 from unidad_medida";
 
-            return await _repository.GetListAsync<UnidadMedida>(query);
+            return _repository.GetListAsync<UnidadMedida>(query);
         }
 
-        public async Task<UnidadMedida> GetAsync(int id)
+        public Task<UnidadMedida> GetAsync(int id)
         {
             const string query = @"SELECT
                     id,
@@ -34,7 +34,7 @@ namespace RestaurantServices.Restaurant.DAL.Tablas
                 from unidad_medida
                 where id = :id";
 
-            return await _repository.GetAsync<UnidadMedida>(query, new Dictionary<string, object>
+            return _repository.GetAsync<UnidadMedida>(query, new Dictionary<string, object>
             {
                 {"@id", id}
             });

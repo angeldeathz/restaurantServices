@@ -1,4 +1,5 @@
-﻿using System.Net;
+﻿using System;
+using System.Net;
 using System.Net.Http;
 using System.Threading.Tasks;
 using System.Web.Http;
@@ -35,22 +36,23 @@ namespace RestaurantServices.Restaurant.API.Controllers
             return Ok(proveedor);
         }
 
-        [Authorize, HttpPost, Route("")]
+        [HttpPost, Route("")]
         public async Task<IHttpActionResult> Post([FromBody] Proveedor proveedor)
         {
             var idProveedor = await _proveedorBl.GuardarAsync(proveedor);
-
-            if (idProveedor == 0) return ResponseMessage(new HttpResponseMessage(HttpStatusCode.NoContent));
+            if (idProveedor == 0) throw new Exception("No se pudo crear el proveedor");
             return Ok(idProveedor);
         }
 
-        [Authorize, HttpPut, Route("")]
-        public async Task<IHttpActionResult> Put([FromBody] Proveedor proveedor)
+        [HttpPut, Route("{id}")]
+        public async Task<IHttpActionResult> Put([FromBody] Proveedor proveedor, int id)
         {
+            if (id == 0) throw new Exception("El id del proveedor debe ser mayor a cero");
+            proveedor.Id = id;
             var esActualizado = await _proveedorBl.ModificarAsync(proveedor);
 
-            if (esActualizado == 0) return ResponseMessage(new HttpResponseMessage(HttpStatusCode.NoContent));
-            return Ok(esActualizado);
+            if (esActualizado == 0) throw new Exception("No se pudo actualizar el proveedor");
+            return Ok(true);
         }
     }
 }

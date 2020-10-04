@@ -3,7 +3,6 @@ using System.Data;
 using System.Threading.Tasks;
 using RestaurantServices.Restaurant.DAL.Shared;
 using RestaurantServices.Restaurant.Modelo.Clases;
-using RestaurantServices.Restaurant.Modelo.Dto;
 using RestaurantServices.Restaurant.Modelo.TableJoin;
 
 namespace RestaurantServices.Restaurant.DAL.Tablas
@@ -17,7 +16,7 @@ namespace RestaurantServices.Restaurant.DAL.Tablas
             _repository = repository;
         }
 
-        public async Task<IEnumerable<UsuarioCompleto>> GetAsync()
+        public Task<IEnumerable<UsuarioCompleto>> GetAsync()
         {
             const string query =
                 @"SELECT
@@ -36,14 +35,15 @@ namespace RestaurantServices.Restaurant.DAL.Tablas
                 JOIN persona p on u.persona_id = p.id
                 JOIN tipo_usuario t on t.id = u.tipo_usuario_id";
 
-            return await _repository.GetListAsync<UsuarioCompleto>(query);
+            return _repository.GetListAsync<UsuarioCompleto>(query);
         }
 
-        public async Task<UsuarioCompleto> GetAsync(int id)
+        public Task<UsuarioCompleto> GetAsync(int id)
         {
             const string query =
                 @"SELECT
                     u.id as idUsuario,
+                    u.contrasena,
                     u.tipo_usuario_id as idTipoUsuario,
                     p.id as idPersona,
                     p.rut,
@@ -59,17 +59,18 @@ namespace RestaurantServices.Restaurant.DAL.Tablas
                 JOIN tipo_usuario t on t.id = u.tipo_usuario_id
                 where u.id = :id";
 
-            return await _repository.GetAsync<UsuarioCompleto>(query, new Dictionary<string, object>
+            return _repository.GetAsync<UsuarioCompleto>(query, new Dictionary<string, object>
             {
                 {"@id", id}
             });
         }
 
-        public async Task<UsuarioCompleto> GetByRutAsync(int rut)
+        public Task<UsuarioCompleto> GetByRutAsync(int rut)
         {
             const string query =
                 @"SELECT
                     u.id as idUsuario,
+                    u.contrasena,
                     u.tipo_usuario_id as idTipoUsuario,
                     p.id as idPersona,
                     p.rut,
@@ -85,13 +86,13 @@ namespace RestaurantServices.Restaurant.DAL.Tablas
                 JOIN tipo_usuario t on t.id = u.tipo_usuario_id
                 where p.rut = :rut";
 
-            return await _repository.GetAsync<UsuarioCompleto>(query, new Dictionary<string, object>
+            return _repository.GetAsync<UsuarioCompleto>(query, new Dictionary<string, object>
             {
                 {"@rut", rut}
             });
         }
 
-        public async Task<Usuario> ValidaLoginAsync(int rut, string contrasena)
+        public Task<Usuario> ValidaLoginAsync(int rut, string contrasena)
         {
             const string query =
                 @"SELECT
@@ -100,35 +101,47 @@ namespace RestaurantServices.Restaurant.DAL.Tablas
                 JOIN persona p on u.persona_id = p.id
                 WHERE p.rut = :rut AND u.contrasena = :contrasena";
 
-            return await _repository.GetAsync<Usuario>(query, new Dictionary<string, object>
+            return _repository.GetAsync<Usuario>(query, new Dictionary<string, object>
             {
                 {"@rut", rut},
                 {"@contrasena", contrasena}
             });
         }
 
-        public async Task<int> InsertAsync(Usuario usuario)
+        public Task<int> InsertAsync(Usuario usuario)
         {
-            const string query = "PROCEDURE";
+            const string spName = "sp_insertUsuario";
 
-            return await _repository.ExecuteProcedureAsync<int>(query, new Dictionary<string, object>
+            return _repository.ExecuteProcedureAsync<int>(spName, new Dictionary<string, object>
             {
-                {"@contrasena", usuario.Contrasena},
-                {"@idTipoUsuario", usuario.IdTipoUsuario},
-                {"@personaId", usuario.IdPersona}
+                {"@p_rut", usuario.Persona.Rut},
+                {"@p_digito_verificador", usuario.Persona.DigitoVerificador},
+                {"@p_nombre", usuario.Persona.Nombre},
+                {"@p_apellido", usuario.Persona.Apellido},
+                {"@p_email", usuario.Persona.Email},
+                {"@p_telefono", usuario.Persona.Telefono},
+                {"@p_contrasena", usuario.Persona.Telefono},
+                {"@p_tipo_usuario_id", usuario.Persona.EsPersonaNatural},
+                {"@p_return", 0}
             }, CommandType.StoredProcedure);
         }
 
-        public async Task<bool> UpdateAsync(Usuario usuario)
+        public Task<int> UpdateAsync(Usuario usuario)
         {
-            const string query = "PROCEDURE";
+            const string spName = "sp_updateUsuario";
 
-            return await _repository.ExecuteProcedureAsync<bool>(query, new Dictionary<string, object>
+            return _repository.ExecuteProcedureAsync<int>(spName, new Dictionary<string, object>
             {
-                {"@id", usuario.Id},
-                {"@contrasena", usuario.Contrasena},
-                {"@idTipoUsuario", usuario.IdTipoUsuario},
-                {"@personaId", usuario.IdPersona}
+                {"@p_id", usuario.Id},
+                {"@p_rut", usuario.Persona.Rut},
+                {"@p_digito_verificador", usuario.Persona.DigitoVerificador},
+                {"@p_nombre", usuario.Persona.Nombre},
+                {"@p_apellido", usuario.Persona.Apellido},
+                {"@p_email", usuario.Persona.Email},
+                {"@p_telefono", usuario.Persona.Telefono},
+                {"@p_contrasena", usuario.Contrasena},
+                {"@p_tipo_usuario_id", usuario.IdTipoUsuario},
+                {"@p_return", 0}
             }, CommandType.StoredProcedure);
         }
     }

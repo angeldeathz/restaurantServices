@@ -22,8 +22,13 @@ namespace RestaurantServices.Restaurant.Shared.WebApiConfig
 
             if (!actionContext.ModelState.IsValid)
             {
-                actionContext.Response = actionContext.Request
-                    .CreateErrorResponse(HttpStatusCode.BadRequest, actionContext.ModelState);
+                var error = new
+                {
+                    error = actionContext.ModelState.Values.SelectMany(e => e.Errors.Select(er => er.ErrorMessage)).ToList(),
+                    codigoError = (int)HttpStatusCode.BadRequest
+                };
+
+                actionContext.Response = actionContext.Request.CreateResponse(HttpStatusCode.BadRequest, error);
             }
             else
             {

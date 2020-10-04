@@ -15,7 +15,7 @@ namespace RestaurantServices.Restaurant.DAL.Tablas
             _repository = repository;
         }
 
-        public async Task<IEnumerable<Articulo>> GetAsync()
+        public Task<IEnumerable<Articulo>> GetAsync()
         {
             const string query = @"SELECT
                     id,
@@ -26,10 +26,10 @@ namespace RestaurantServices.Restaurant.DAL.Tablas
                     tipo_consumo_id as IdtipoConsumo
                 from articulo";
 
-            return await _repository.GetListAsync<Articulo>(query);
+            return _repository.GetListAsync<Articulo>(query);
         }
 
-        public async Task<Articulo> GetAsync(int id)
+        public Task<Articulo> GetAsync(int id)
         {
             const string query = @"SELECT
                     id,
@@ -41,38 +41,40 @@ namespace RestaurantServices.Restaurant.DAL.Tablas
                 from articulo
                 where id = :id";
 
-            return await _repository.GetAsync<Articulo>(query, new Dictionary<string, object>
+            return _repository.GetAsync<Articulo>(query, new Dictionary<string, object>
             {
                 {"@id", id}
             });
         }
 
-        public async Task<int> InsertAsync(Articulo articulo)
+        public Task<int> InsertAsync(Articulo articulo)
         {
-            const string query = "PROCEDURE";
+            const string spName = "sp_insertArticulo";
 
-            return await _repository.ExecuteProcedureAsync<int>(query, new Dictionary<string, object>
+            return _repository.ExecuteProcedureAsync<int>(spName, new Dictionary<string, object>
             {
-                {"@NOMBRE", articulo.Nombre},
-                {"@DESCRIPCION", articulo.Descripcion},
-                {"@PRECIO", articulo.Precio},
-                {"@ESTADO_ARTICULO_ID", articulo.IdEstadoArticulo},
-                {"@TIPO_CONSUMO_ID", articulo.IdTipoConsumo}
+                {"@p_nombre", articulo.Nombre},
+                {"@p_descripcion", articulo.Descripcion},
+                {"@p_precio", articulo.Precio},
+                {"@p_estado_articulo_id", articulo.IdEstadoArticulo},
+                {"@p_tipo_consumo_id", articulo.IdTipoConsumo},
+                {"@p_return", 0}
             }, CommandType.StoredProcedure);
         }
 
-        public async Task<bool> UpdateAsync(Articulo articulo)
+        public Task<int> UpdateAsync(Articulo articulo)
         {
-            const string query = "PROCEDURE";
+            const string spName = "sp_updateArticulo";
 
-            return await _repository.ExecuteProcedureAsync<bool>(query, new Dictionary<string, object>
+            return _repository.ExecuteProcedureAsync<int>(spName, new Dictionary<string, object>
             {
-                {"@id", articulo.Id},
-                {"@NOMBRE", articulo.Nombre},
-                {"@DESCRIPCION", articulo.Descripcion},
-                {"@PRECIO", articulo.Precio},
-                {"@ESTADO_ARTICULO_ID", articulo.IdEstadoArticulo},
-                {"@TIPO_CONSUMO_ID", articulo.IdTipoConsumo}
+                {"@p_id", articulo.Id},
+                {"@p_nombre", articulo.Nombre},
+                {"@p_descripcion", articulo.Descripcion},
+                {"@p_precio", articulo.Precio},
+                {"@p_estado_articulo_id", articulo.IdEstadoArticulo},
+                {"@p_tipo_consumo_id", articulo.IdTipoConsumo},
+                {"@p_return", 0}
             }, CommandType.StoredProcedure);
         }
     }
