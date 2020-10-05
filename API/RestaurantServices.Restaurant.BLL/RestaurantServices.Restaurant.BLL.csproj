@@ -36,6 +36,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Negocio\ArticuloBl.cs" />
+    <Compile Include="Negocio\ArticuloPedidoBl.cs" />
     <Compile Include="Negocio\ClienteBl.cs" />
     <Compile Include="Negocio\EstadoOrdenProveedorBl.cs" />
     <Compile Include="Negocio\EstadoMesaBl.cs" />
