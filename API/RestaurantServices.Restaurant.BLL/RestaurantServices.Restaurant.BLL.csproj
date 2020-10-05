@@ -37,6 +37,7 @@
   <ItemGroup>
     <Compile Include="Negocio\ArticuloBl.cs" />
     <Compile Include="Negocio\ClienteBl.cs" />
+    <Compile Include="Negocio\EstadoOrdenProveedorBl.cs" />
     <Compile Include="Negocio\EstadoMesaBl.cs" />
     <Compile Include="Negocio\EstadoReservaBl.cs" />
     <Compile Include="Negocio\EstadoPedidoBl.cs" />
