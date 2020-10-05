@@ -54,7 +54,7 @@
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\RestaurantServices.Restaurant.DAL\RestaurantServices.Restaurant.DAL.csproj">
-      <Project>{0009D986-F837-4244-9BB7-5EA5B90A2F38}</Project>
+      <Project>{0009d986-f837-4244-9bb7-5ea5b90a2f38}</Project>
       <Name>RestaurantServices.Restaurant.DAL</Name>
     </ProjectReference>
     <ProjectReference Include="..\RestaurantServices.Restaurant.Modelo\RestaurantServices.Restaurant.Modelo.csproj">
