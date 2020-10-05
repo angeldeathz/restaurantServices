@@ -9,9 +9,11 @@ namespace RestaurantServices.Restaurant.Modelo.Validaciones
         {
             RuleFor(x => x.Nombre).NotNull().NotEmpty();
             RuleFor(x => x.Descripcion).NotNull().NotEmpty();
-            RuleFor(x => x.IdEstadoArticulo).GreaterThan(0);
             RuleFor(x => x.Precio).NotNull().GreaterThan(0);
+            RuleFor(x => x.IdEstadoArticulo).GreaterThan(0);
             RuleFor(x => x.IdTipoConsumo).NotNull().NotEmpty();
+            RuleFor(x => x.EstadoArticulo).Null();
+            RuleFor(x => x.TipoConsumo).Null();
         }
     }
 }

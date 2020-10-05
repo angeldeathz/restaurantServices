@@ -22,6 +22,7 @@ namespace RestaurantServices.Restaurant.DAL.Shared
         private EstadoReservaDal _estadoReservaDal;
         private EstadoMesaDal _estadoMesaDal;
         private EstadoOrdenProveedorDal _estadoOrdenProveedorDal;
+        private OrdenProveedorDal _ordenProveedorDal;
 
         public UnitOfWork(IRepository repository)
         {
@@ -45,5 +46,6 @@ namespace RestaurantServices.Restaurant.DAL.Shared
         public EstadoReservaDal EstadoReservaDal => _estadoReservaDal ?? (_estadoReservaDal = new EstadoReservaDal(_repository));
         public EstadoMesaDal EstadoMesaDal => _estadoMesaDal ?? (_estadoMesaDal = new EstadoMesaDal(_repository));
         public EstadoOrdenProveedorDal EstadoOrdenProveedorDal => _estadoOrdenProveedorDal ?? (_estadoOrdenProveedorDal = new EstadoOrdenProveedorDal(_repository));
+        public OrdenProveedorDal OrdenProveedorDal => _ordenProveedorDal ?? (_ordenProveedorDal = new OrdenProveedorDal(_repository));
     }
 }

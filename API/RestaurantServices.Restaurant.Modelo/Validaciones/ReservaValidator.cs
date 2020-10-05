@@ -12,6 +12,8 @@ namespace RestaurantServices.Restaurant.Modelo.Validaciones
             RuleFor(x => x.Cliente).NotNull();
             RuleFor(x => x.IdCliente).GreaterThan(0);
             RuleFor(x => x.FechaReserva).NotNull();
+            RuleFor(x => x.Cliente).Null();
+            RuleFor(x => x.Mesa).Null();
         }
     }
 }

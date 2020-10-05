@@ -10,6 +10,7 @@ namespace RestaurantServices.Restaurant.Modelo.Validaciones
             RuleFor(x => x.Nombre).NotNull().NotEmpty();
             RuleFor(x => x.CantidadComensales).GreaterThan(0);
             RuleFor(x => x.IdEstadoMesa).GreaterThan(0);
+            RuleFor(x => x.EstadoMesa).Null();
         }
     }
 }
