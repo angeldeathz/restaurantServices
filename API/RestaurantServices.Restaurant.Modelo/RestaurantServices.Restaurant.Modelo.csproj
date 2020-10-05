@@ -84,6 +84,7 @@
     <Compile Include="Validaciones\ArticuloPedidoValidator.cs" />
     <Compile Include="Validaciones\ArticuloValidator.cs" />
     <Compile Include="Validaciones\ClienteValidator.cs" />
+    <Compile Include="Validaciones\DetalleOrdenProveedorValidator.cs" />
     <Compile Include="Validaciones\InsumoValidator.cs" />
     <Compile Include="Validaciones\MesaValidator.cs" />
     <Compile Include="Validaciones\OrdenProveedorValidator.cs" />

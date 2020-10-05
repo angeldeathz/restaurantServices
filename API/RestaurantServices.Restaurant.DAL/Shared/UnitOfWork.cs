@@ -25,6 +25,7 @@ namespace RestaurantServices.Restaurant.DAL.Shared
         private OrdenProveedorDal _ordenProveedorDal;
         private PedidoDal _pedidoDal;
         private ArticuloPedidoDal _articuloPedidoDal;
+        private DetalleOrdenProveedorDal _detalleOrdenProveedorDal;
 
         public UnitOfWork(IRepository repository)
         {
@@ -51,5 +52,6 @@ namespace RestaurantServices.Restaurant.DAL.Shared
         public OrdenProveedorDal OrdenProveedorDal => _ordenProveedorDal ?? (_ordenProveedorDal = new OrdenProveedorDal(_repository));
         public PedidoDal PedidoDal => _pedidoDal ?? (_pedidoDal = new PedidoDal(_repository));
         public ArticuloPedidoDal ArticuloPedidoDal => _articuloPedidoDal ?? (_articuloPedidoDal = new ArticuloPedidoDal(_repository));
+        public DetalleOrdenProveedorDal DetalleOrdenProveedorDal => _detalleOrdenProveedorDal ?? (_detalleOrdenProveedorDal = new DetalleOrdenProveedorDal(_repository));
     }
 }
