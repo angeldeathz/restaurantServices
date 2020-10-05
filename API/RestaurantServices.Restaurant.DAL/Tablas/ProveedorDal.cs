@@ -73,7 +73,7 @@ namespace RestaurantServices.Restaurant.DAL.Tablas
                     pe.persona_natural as esPersonaNatural
                 from proveedor p
                 join persona pe on p.persona_id = pe.id
-                where p.rut = :rut";
+                where pe.rut = :rut";
 
             return _repository.GetAsync<ProveedorJoin>(query, new Dictionary<string, object>
             {

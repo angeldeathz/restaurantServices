@@ -94,7 +94,7 @@ namespace RestaurantServices.Restaurant.BLL.Negocio
         public async Task<int> GuardarAsync(Proveedor proveedor)
         {
             var proveedorExistente = await this.GetByRutAsync(proveedor.Persona.ObtenerRutCompleto());
-            if (proveedorExistente != null) throw new Exception("Cliente ya existe");
+            if (proveedorExistente != null) throw new Exception("Proveedor ya existe");
             return await _unitOfWork.ProveedorDal.InsertAsync(proveedor);
         }
 
