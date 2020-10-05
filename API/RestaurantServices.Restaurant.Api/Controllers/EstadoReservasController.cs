@@ -11,17 +11,17 @@ namespace RestaurantServices.Restaurant.API.Controllers
     [Authorize, RoutePrefix("api/estadoReservas")]
     public class EstadoReservasController : ApiController
     {
-        private readonly EstadoReservaBl _estaoReservaBl;
+        private readonly EstadoReservaBl _estadoReservaBl;
 
         public EstadoReservasController()
         {
-            _estaoReservaBl = new EstadoReservaBl();
+            _estadoReservaBl = new EstadoReservaBl();
         }
 
         [HttpGet, Route("")]
         public async Task<IHttpActionResult> Get()
         {
-            var estadoReservas = await _estaoReservaBl.ObtenerTodosAsync();
+            var estadoReservas = await _estadoReservaBl.ObtenerTodosAsync();
 
             if (estadoReservas.Count == 0) return ResponseMessage(new HttpResponseMessage(HttpStatusCode.NoContent));
             return Ok(estadoReservas);
@@ -30,7 +30,7 @@ namespace RestaurantServices.Restaurant.API.Controllers
         [HttpGet, Route("{id}")]
         public async Task<IHttpActionResult> Get(int id)
         {
-            var estadoReserva = await _estaoReservaBl.ObtenerPorIdAsync(id);
+            var estadoReserva = await _estadoReservaBl.ObtenerPorIdAsync(id);
 
             if (estadoReserva == null) return ResponseMessage(new HttpResponseMessage(HttpStatusCode.NoContent));
             return Ok(estadoReserva);
@@ -39,7 +39,7 @@ namespace RestaurantServices.Restaurant.API.Controllers
         [HttpPost, Route("")]
         public async Task<IHttpActionResult> Post([FromBody] EstadoReserva estadoReserva)
         {
-            var idEstadoReserva = await _estaoReservaBl.GuardarAsync(estadoReserva);
+            var idEstadoReserva = await _estadoReservaBl.GuardarAsync(estadoReserva);
 
             if (idEstadoReserva == 0) throw new Exception("No se pudo crear el estado reserva");
             return Ok(idEstadoReserva);
@@ -50,7 +50,7 @@ namespace RestaurantServices.Restaurant.API.Controllers
         {
             if (id == 0) throw new Exception("El id del estado reserva debe ser mayor a cero");
             estadoReserva.Id = id;
-            var esActualizado = await _estaoReservaBl.ModificarAsync(estadoReserva);
+            var esActualizado = await _estadoReservaBl.ModificarAsync(estadoReserva);
 
             if (esActualizado == 0) throw new Exception("No se pudo actualizar el estado reserva");
             return Ok(true);

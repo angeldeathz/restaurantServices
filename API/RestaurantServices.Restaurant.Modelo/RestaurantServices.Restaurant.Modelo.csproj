@@ -74,6 +74,7 @@
     <Compile Include="TableJoin\ArticuloJoin.cs" />
     <Compile Include="TableJoin\ClienteJoin.cs" />
     <Compile Include="TableJoin\MesaJoin.cs" />
+    <Compile Include="TableJoin\PedidoJoin.cs" />
     <Compile Include="TableJoin\ReservaJoin.cs" />
     <Compile Include="TableJoin\UsuarioCompleto.cs" />
     <Compile Include="Dto\UsuarioLogin.cs" />
@@ -85,6 +86,7 @@
     <Compile Include="Validaciones\InsumoValidator.cs" />
     <Compile Include="Validaciones\MesaValidator.cs" />
     <Compile Include="Validaciones\OrdenProveedorValidator.cs" />
+    <Compile Include="Validaciones\PedidoValidator.cs" />
     <Compile Include="Validaciones\PersonaValidator.cs" />
     <Compile Include="Validaciones\ProveedorValidator.cs" />
     <Compile Include="Validaciones\ReservaValidator.cs" />

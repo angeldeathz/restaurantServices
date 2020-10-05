@@ -39,9 +39,10 @@
     <Compile Include="Negocio\ClienteBl.cs" />
     <Compile Include="Negocio\EstadoOrdenProveedorBl.cs" />
     <Compile Include="Negocio\EstadoMesaBl.cs" />
-    <Compile Include="Negocio\EstadoReservaBl.cs" />
     <Compile Include="Negocio\EstadoPedidoBl.cs" />
+    <Compile Include="Negocio\EstadoReservaBl.cs" />
     <Compile Include="Negocio\OrdenProveedorBl.cs" />
+    <Compile Include="Negocio\PedidoBl.cs" />
     <Compile Include="Negocio\ReservaBl.cs" />
     <Compile Include="Negocio\TipoPreparacionBl.cs" />
     <Compile Include="Negocio\InsumoBl.cs" />
