@@ -56,6 +56,10 @@
       <Project>{3B77B3CB-EDA8-4B29-8FF2-3B3A6E815E9D}</Project>
       <Name>RestaurantServices.Restaurant.BLL</Name>
     </ProjectReference>
+    <ProjectReference Include="..\..\API\RestaurantServices.Restaurant.DAL\RestaurantServices.Restaurant.DAL.csproj">
+      <Project>{0009d986-f837-4244-9bb7-5ea5b90a2f38}</Project>
+      <Name>RestaurantServices.Restaurant.DAL</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\API\RestaurantServices.Restaurant.Modelo\RestaurantServices.Restaurant.Modelo.csproj">
       <Project>{B8347E32-1A66-4C0F-B5BF-DF814F56A8A9}</Project>
       <Name>RestaurantServices.Restaurant.Modelo</Name>
