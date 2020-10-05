@@ -119,9 +119,11 @@ namespace RestaurantServices.Restaurant.BLL.Negocio
             return await _unitOfWork.UsuarioDal.ValidaLoginAsync(personaHelper.Rut, usuarioLogin.Contrasena);
         }
 
-        public Task<int> InsertarAsync(Usuario usuario)
+        public async Task<int> InsertarAsync(Usuario usuario)
         {
-            return _unitOfWork.UsuarioDal.InsertAsync(usuario);
+            var usuarioExistente = await this.ObtenerPorRutAsync(usuario.Persona.ObtenerRutCompleto());
+            if (usuarioExistente !=  null) throw new Exception("Usuario ya existe");
+            return await _unitOfWork.UsuarioDal.InsertAsync(usuario);
         }
 
         public Task<int> ActualizarAsync(Usuario usuario)
