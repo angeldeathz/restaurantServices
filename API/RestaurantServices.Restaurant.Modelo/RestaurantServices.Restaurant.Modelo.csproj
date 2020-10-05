@@ -42,12 +42,15 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Clases\Articulo.cs" />
+    <Compile Include="Clases\ArticuloConsumoDirecto.cs" />
     <Compile Include="Clases\ArticuloPedido.cs" />
     <Compile Include="Clases\Cliente.cs" />
     <Compile Include="Clases\DetalleOrdenProveedor.cs" />
     <Compile Include="Clases\DocumentoPago.cs" />
     <Compile Include="Clases\EstadoArticulo.cs" />
+    <Compile Include="Clases\EstadoArticuloPedido.cs" />
     <Compile Include="Clases\EstadoMesa.cs" />
+    <Compile Include="Clases\EstadoOrdenProveedor.cs" />
     <Compile Include="Clases\EstadoPedido.cs" />
     <Compile Include="Clases\EstadoReserva.cs" />
     <Compile Include="Clases\HorarioReserva.cs" />
@@ -68,6 +71,7 @@
     <Compile Include="Clases\TipoUsuario.cs" />
     <Compile Include="Clases\UnidadMedida.cs" />
     <Compile Include="Clases\Usuario.cs" />
+    <Compile Include="TableJoin\ArticuloJoin.cs" />
     <Compile Include="TableJoin\ClienteJoin.cs" />
     <Compile Include="TableJoin\MesaJoin.cs" />
     <Compile Include="TableJoin\ReservaJoin.cs" />

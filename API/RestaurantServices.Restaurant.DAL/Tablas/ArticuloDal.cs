@@ -3,6 +3,7 @@ using System.Data;
 using System.Threading.Tasks;
 using RestaurantServices.Restaurant.DAL.Shared;
 using RestaurantServices.Restaurant.Modelo.Clases;
+using RestaurantServices.Restaurant.Modelo.TableJoin;
 
 namespace RestaurantServices.Restaurant.DAL.Tablas
 {
@@ -15,33 +16,41 @@ namespace RestaurantServices.Restaurant.DAL.Tablas
             _repository = repository;
         }
 
-        public Task<IEnumerable<Articulo>> GetAsync()
+        public Task<IEnumerable<ArticuloJoin>> GetAsync()
         {
             const string query = @"SELECT
-                    id,
-                    nombre,
-                    descripcion,
-                    precio,
-                    estado_articulo_id as IdEstadoArticulo,
-                    tipo_consumo_id as IdtipoConsumo
-                from articulo";
+                    a.id,
+                    a.nombre,
+                    a.descripcion,
+                    a.precio,
+                    a.estado_articulo_id as IdEstadoArticulo,
+                    a.tipo_consumo_id as IdtipoConsumo,
+                    ea.nombre as nombreEstadoArticulo,
+                    tc.nombre as nombreTipoConsumo
+                from articulo a
+                join estado_articulo ea on a.estado_articulo_id = ea.id
+                join tipo_consumo tc on tc.id = a.tipo_consumo_id";
 
-            return _repository.GetListAsync<Articulo>(query);
+            return _repository.GetListAsync<ArticuloJoin>(query);
         }
 
-        public Task<Articulo> GetAsync(int id)
+        public Task<ArticuloJoin> GetAsync(int id)
         {
             const string query = @"SELECT
-                    id,
-                    nombre,
-                    descripcion,
-                    precio,
-                    estado_articulo_id as IdEstadoArticulo,
-                    tipo_consumo_id as IdtipoConsumo
-                from articulo
-                where id = :id";
+                    a.id,
+                    a.nombre,
+                    a.descripcion,
+                    a.precio,
+                    a.estado_articulo_id as IdEstadoArticulo,
+                    a.tipo_consumo_id as IdtipoConsumo,
+                    ea.nombre as nombreEstadoArticulo,
+                    tc.nombre as nombreTipoConsumo
+                from articulo a
+                join estado_articulo ea on a.estado_articulo_id = ea.id
+                join tipo_consumo tc on tc.id = a.tipo_consumo_id
+                where a.id = :id";
 
-            return _repository.GetAsync<Articulo>(query, new Dictionary<string, object>
+            return _repository.GetAsync<ArticuloJoin>(query, new Dictionary<string, object>
             {
                 {"@id", id}
             });

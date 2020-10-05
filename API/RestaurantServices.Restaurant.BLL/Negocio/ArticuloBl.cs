@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using RestaurantServices.Restaurant.DAL.Shared;
 using RestaurantServices.Restaurant.Modelo.Clases;
@@ -16,12 +17,51 @@ namespace RestaurantServices.Restaurant.BLL.Negocio
 
         public async Task<List<Articulo>> ObtenerTodosAsync()
         {
-            return (List<Articulo>)await _unitOfWork.ArticuloDal.GetAsync();
+            var articulosJoin = await _unitOfWork.ArticuloDal.GetAsync();
+            return articulosJoin.Select(articulo => new Articulo
+            {
+                Nombre = articulo.Nombre,
+                Descripcion = articulo.Descripcion,
+                Precio = articulo.Precio,
+                IdTipoConsumo = articulo.IdTipoConsumo,
+                IdEstadoArticulo = articulo.IdEstadoArticulo,
+                Id = articulo.IdArticulo,
+                EstadoArticulo = new EstadoArticulo
+                {
+                    Id = articulo.IdEstadoArticulo,
+                    Nombre = articulo.NombreEstadoArticulo
+                },
+                TipoConsumo = new TipoConsumo
+                {
+                    Nombre = articulo.NombreTipoConsumo,
+                    Id = articulo.IdTipoConsumo
+                }
+            }).ToList();
         }
 
-        public Task<Articulo> ObtenerPorIdAsync(int id)
+        public async Task<Articulo> ObtenerPorIdAsync(int id)
         {
-            return _unitOfWork.ArticuloDal.GetAsync(id);
+            var articulo = await _unitOfWork.ArticuloDal.GetAsync(id);
+            if (articulo == null) return null;
+            return new Articulo
+            {
+                Nombre = articulo.Nombre,
+                Descripcion = articulo.Descripcion,
+                Precio = articulo.Precio,
+                IdTipoConsumo = articulo.IdTipoConsumo,
+                IdEstadoArticulo = articulo.IdEstadoArticulo,
+                Id = articulo.IdArticulo,
+                EstadoArticulo = new EstadoArticulo
+                {
+                    Id = articulo.IdEstadoArticulo,
+                    Nombre = articulo.NombreEstadoArticulo
+                },
+                TipoConsumo = new TipoConsumo
+                {
+                    Nombre = articulo.NombreTipoConsumo,
+                    Id = articulo.IdTipoConsumo
+                }
+            };
         }
 
         public Task<int> GuardarAsync(Articulo articulo)
