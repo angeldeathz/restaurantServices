@@ -48,11 +48,15 @@
     <Compile Include="Shared\OracleRepository.cs" />
     <Compile Include="Shared\UnitOfWork.cs" />
     <Compile Include="Tablas\ArticuloDal.cs" />
+    <Compile Include="Tablas\ArticuloPedidoDal.cs" />
     <Compile Include="Tablas\ClienteDal.cs" />
+    <Compile Include="Tablas\DetalleOrdenProveedorDal.cs" />
     <Compile Include="Tablas\EstadoMesaDal.cs" />
     <Compile Include="Tablas\EstadoOrdenProveedorDal.cs" />
     <Compile Include="Tablas\EstadoReservaDal.cs" />
     <Compile Include="Tablas\EstadoPedidoDal.cs" />
+    <Compile Include="Tablas\OrdenProveedorDal.cs" />
+    <Compile Include="Tablas\PedidoDal.cs" />
     <Compile Include="Tablas\ReservaDal.cs" />
     <Compile Include="Tablas\TipoPreparacionDal.cs" />
     <Compile Include="Tablas\InsumoDal.cs" />

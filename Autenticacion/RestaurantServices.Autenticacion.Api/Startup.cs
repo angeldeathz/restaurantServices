@@ -2,6 +2,7 @@
 using System.Linq;
 using System.Net.Http.Formatting;
 using System.Web.Http;
+using System.Web.Http.ExceptionHandling;
 using Microsoft.Owin;
 using Microsoft.Owin.Cors;
 using Microsoft.Owin.Security.OAuth;
@@ -9,6 +10,7 @@ using Newtonsoft.Json.Serialization;
 using Owin;
 using RestaurantServices.Autenticacion.Api;
 using RestaurantServices.Autenticacion.Api.Config;
+using RestaurantServices.Restaurant.Shared.WebApiConfig;
 
 [assembly: OwinStartup(typeof(Startup))]
 namespace RestaurantServices.Autenticacion.Api
@@ -18,6 +20,8 @@ namespace RestaurantServices.Autenticacion.Api
         public void Configuration(IAppBuilder app)
         {
             var config = new HttpConfiguration();
+            config.Filters.Add(new Interceptor());
+            config.Services.Replace(typeof(IExceptionHandler), new ErrorHandler());
             ConfigureOAuth(app);
             Register(config);
             app.UseCors(CorsOptions.AllowAll);

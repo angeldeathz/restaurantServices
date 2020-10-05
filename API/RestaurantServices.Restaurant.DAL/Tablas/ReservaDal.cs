@@ -76,30 +76,30 @@ namespace RestaurantServices.Restaurant.DAL.Tablas
 
         public Task<int> InsertAsync(Reserva reserva)
         {
-            const string spName = "PROCEDURE";
+            const string spName = "sp_insertReserva";
 
             return _repository.ExecuteProcedureAsync<int>(spName, new Dictionary<string, object>
             {
-                {"@FECHA_HORA", reserva.FechaReserva},
-                {"@CANTIDAD_COMENSALES", reserva.CantidadComensales},
-                {"@CLIENTE_ID", reserva.IdCliente},
-                {"@MESA_ID", reserva.IdMesa},
-                {"p_return", 0}
+                {"@p_fechaHora", reserva.FechaReserva},
+                {"@p_cantidad_comensales", reserva.CantidadComensales},
+                {"@p_clienteId", reserva.IdCliente},
+                {"@p_mesaId", reserva.IdMesa},
+                {"@p_return", 0}
             }, CommandType.StoredProcedure);
         }
 
         public Task<int> UpdateAsync(Reserva reserva)
         {
-            const string spName = "PROCEDURE";
+            const string spName = "sp_updateReserva";
 
             return _repository.ExecuteProcedureAsync<int>(spName, new Dictionary<string, object>
             {
-                {"@id", reserva.Id},
-                {"@FECHA_HORA", reserva.FechaReserva},
-                {"@CANTIDAD_COMENSALES", reserva.CantidadComensales},
-                {"@CLIENTE_ID", reserva.IdCliente},
-                {"@MESA_ID", reserva.IdMesa},
-                {"p_return", 0}
+                {"@p_id", reserva.Id},
+                {"@p_fechaHora", reserva.FechaReserva},
+                {"@p_cantidad_comensales", reserva.CantidadComensales},
+                {"@p_clienteId", reserva.IdCliente},
+                {"@p_mesaId", reserva.IdMesa},
+                {"@p_return", 0}
             }, CommandType.StoredProcedure);
         }
     }
