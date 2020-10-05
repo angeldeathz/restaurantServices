@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System.Collections.Generic;
+using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Web.Http.Controllers;
@@ -15,20 +16,29 @@ namespace RestaurantServices.Restaurant.Shared.WebApiConfig
             {
                 if (actionContext.ActionArguments.Values.FirstOrDefault() == null)
                 {
-                    actionContext.Response = actionContext.Request
-                        .CreateErrorResponse(HttpStatusCode.BadRequest, "La solitud no puede estar vacia");
+                    var errores = new
+                    {
+                        errores = new List<string>
+                        {
+                            "La solicitud no puede estar vacía"
+                        },
+                        codigoError = (int)HttpStatusCode.BadRequest
+                    };
+
+                    actionContext.Response = actionContext.Request.CreateResponse(HttpStatusCode.BadRequest, errores);
+                    return;
                 }
             }
 
             if (!actionContext.ModelState.IsValid)
             {
-                var error = new
+                var errores = new
                 {
-                    error = actionContext.ModelState.Values.SelectMany(e => e.Errors.Select(er => er.ErrorMessage)).ToList(),
+                    errores = actionContext.ModelState.Values.SelectMany(e => e.Errors.Select(er => er.ErrorMessage)).ToList(),
                     codigoError = (int)HttpStatusCode.BadRequest
                 };
 
-                actionContext.Response = actionContext.Request.CreateResponse(HttpStatusCode.BadRequest, error);
+                actionContext.Response = actionContext.Request.CreateResponse(HttpStatusCode.BadRequest, errores);
             }
             else
             {
