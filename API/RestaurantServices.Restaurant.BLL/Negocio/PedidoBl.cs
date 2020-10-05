@@ -21,8 +21,8 @@ namespace RestaurantServices.Restaurant.BLL.Negocio
             return pedidos.Select(pedido => new Pedido
             {
                 IdMesa = pedido.IdMesa,
-                FechaTermino = pedido.FechaFinPedido,
-                FechaInicio = pedido.FechaInicioPedido,
+                FechaHoraFin = pedido.FechaFinPedido,
+                FechaHoraInicio = pedido.FechaInicioPedido,
                 IdEstadoPedido = pedido.IdEstadoPedido,
                 Total = pedido.Total,
                 Id = pedido.IdPedido,
@@ -48,8 +48,8 @@ namespace RestaurantServices.Restaurant.BLL.Negocio
             return new Pedido
             {
                 IdMesa = pedido.IdMesa,
-                FechaTermino = pedido.FechaFinPedido,
-                FechaInicio = pedido.FechaInicioPedido,
+                FechaHoraFin = pedido.FechaFinPedido,
+                FechaHoraInicio = pedido.FechaInicioPedido,
                 IdEstadoPedido = pedido.IdEstadoPedido,
                 Total = pedido.Total,
                 Id = pedido.IdPedido,

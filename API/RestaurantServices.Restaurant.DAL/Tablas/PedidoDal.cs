@@ -66,8 +66,8 @@ namespace RestaurantServices.Restaurant.DAL.Tablas
 
             return _repository.ExecuteProcedureAsync<int>(spName, new Dictionary<string, object>
             {
-                {"@p_fecha_hora_inicio", pedido.FechaInicio},
-                {"@p_fecha_hora_fin", pedido.FechaTermino},
+                {"@p_fecha_hora_inicio", pedido.FechaHoraInicio},
+                {"@p_fecha_hora_fin", pedido.FechaHoraFin},
                 {"@p_total", pedido.Total},
                 {"@p_mesa_id", pedido.IdMesa},
                 {"@p_estado_pedido_id", pedido.IdEstadoPedido},
@@ -82,8 +82,8 @@ namespace RestaurantServices.Restaurant.DAL.Tablas
             return _repository.ExecuteProcedureAsync<int>(spName, new Dictionary<string, object>
             {
                 {"@p_id", pedido.Id},
-                {"@p_fecha_hora_inicio", pedido.FechaInicio},
-                {"@p_fecha_hora_fin", pedido.FechaTermino},
+                {"@p_fecha_hora_inicio", pedido.FechaHoraInicio},
+                {"@p_fecha_hora_fin", pedido.FechaHoraFin},
                 {"@p_total", pedido.Total},
                 {"@p_mesa_id", pedido.IdMesa},
                 {"@p_estado_pedido_id", pedido.IdEstadoPedido},

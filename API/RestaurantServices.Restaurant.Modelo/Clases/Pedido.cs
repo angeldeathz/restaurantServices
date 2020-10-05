@@ -8,8 +8,8 @@ namespace RestaurantServices.Restaurant.Modelo.Clases
     public class Pedido
     {
         public int Id { get; set; }
-        public DateTime FechaInicio { get; set; }
-        public DateTime FechaTermino { get; set; }
+        public DateTime FechaHoraInicio { get; set; }
+        public DateTime FechaHoraFin { get; set; }
         public int Total { get; set; }
         public int IdEstadoPedido { get; set; }
         public int IdMesa { get; set; }
