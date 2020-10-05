@@ -19,7 +19,7 @@ namespace RestaurantServices.Restaurant.DAL.Tablas
         public Task<IEnumerable<ArticuloJoin>> GetAsync()
         {
             const string query = @"SELECT
-                    a.id,
+                    a.id as IdArticulo,
                     a.nombre,
                     a.descripcion,
                     a.precio,
@@ -37,7 +37,7 @@ namespace RestaurantServices.Restaurant.DAL.Tablas
         public Task<ArticuloJoin> GetAsync(int id)
         {
             const string query = @"SELECT
-                    a.id,
+                    a.id as IdArticulo,
                     a.nombre,
                     a.descripcion,
                     a.precio,
