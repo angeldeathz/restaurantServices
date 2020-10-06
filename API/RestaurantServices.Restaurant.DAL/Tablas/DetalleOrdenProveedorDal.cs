@@ -55,6 +55,7 @@ namespace RestaurantServices.Restaurant.DAL.Tablas
             {
                 {"@p_precio", estadoArticulo.Precio},
                 {"@p_cantidad", estadoArticulo.Cantidad},
+                {"@p_total", estadoArticulo.Total},
                 {"@p_insumo_id", estadoArticulo.IdInsumo},
                 {"@p_orden_proveedor_id", estadoArticulo.IdOrdenProveedor},
                 {"@p_return", 0}
@@ -70,6 +71,7 @@ namespace RestaurantServices.Restaurant.DAL.Tablas
                 {"@p_id", estadoArticulo.Id},
                 {"@p_precio", estadoArticulo.Precio},
                 {"@p_cantidad", estadoArticulo.Cantidad},
+                {"@p_total", estadoArticulo.Total},
                 {"@p_insumo_id", estadoArticulo.IdInsumo},
                 {"@p_orden_proveedor_id", estadoArticulo.IdOrdenProveedor},
                 {"@p_return", 0}
