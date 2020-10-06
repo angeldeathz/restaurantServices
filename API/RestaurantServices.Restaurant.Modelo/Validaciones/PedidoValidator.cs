@@ -12,11 +12,11 @@ namespace RestaurantServices.Restaurant.Modelo.Validaciones
 
             RuleFor(x => x.FechaHoraInicio)
                 .NotNull()
-                .Must(BeAValidDate).WithMessage("Fecha inicio es inválida");
+                .Must(BeAValidDate).WithMessage("FechaHoraInicio es inválida");
 
             RuleFor(x => x.FechaHoraFin)
                 .NotNull()
-                .Must(BeAValidDate).WithMessage("Fecha término es inválida");
+                .Must(BeAValidDate).WithMessage("FechaHoraFin es inválida");
 
             RuleFor(x => x.Total).GreaterThan(0);
             RuleFor(x => x.IdEstadoPedido).GreaterThan(0);
