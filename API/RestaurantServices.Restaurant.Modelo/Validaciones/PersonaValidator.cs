@@ -15,7 +15,7 @@ namespace RestaurantServices.Restaurant.Modelo.Validaciones
             RuleFor(x => x.ObtenerRutCompleto())
                 .NotNull()
                 .NotEmpty()
-                .Must(ValidaRut).WithMessage("{PropertyName} es inválido");
+                .Must(ValidaRut).WithMessage("Rut es inválido");
         }
 
         private bool ValidaRut(string rut)

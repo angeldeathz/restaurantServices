@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using RestaurantServices.Restaurant.DAL.Shared;
@@ -58,9 +59,39 @@ namespace RestaurantServices.Restaurant.BLL.Negocio
             };
         }
 
-        public Task<int> GuardarAsync(Cliente cliente)
+        public async Task<Cliente> GetByRutAsync(string rut)
         {
-            return _unitOfWork.ClienteDal.InsertAsync(cliente);
+            var personaHelper = new Persona();
+            if (!personaHelper.ValidaRut(rut))
+            {
+                throw new Exception("Rut es inválido");
+            }
+
+            var cliente = await _unitOfWork.ClienteDal.GetByRutAsync(personaHelper.Rut);
+            if (cliente == null) return null;
+            return new Cliente
+            {
+                Id = cliente.IdCliente,
+                IdPersona = cliente.IdPersona,
+                Persona = new Persona
+                {
+                    Nombre = cliente.Nombre,
+                    DigitoVerificador = cliente.DigitoVerificador,
+                    Apellido = cliente.Apellido,
+                    Email = cliente.Email,
+                    Telefono = cliente.Telefono,
+                    Rut = cliente.Rut,
+                    EsPersonaNatural = cliente.EsPersonaNatural,
+                    Id = cliente.IdPersona
+                }
+            };
+        }
+
+        public async Task<int> GuardarAsync(Cliente cliente)
+        {
+            var clienteExistente = await this.GetByRutAsync(cliente.Persona.ObtenerRutCompleto());
+            if (clienteExistente != null) throw new Exception("Cliente ya existe");
+            return await _unitOfWork.ClienteDal.InsertAsync(cliente);
         }
 
         public Task<int> ModificarAsync(Cliente cliente)

@@ -58,6 +58,29 @@ namespace RestaurantServices.Restaurant.DAL.Tablas
             });
         }
 
+        public Task<ProveedorJoin> GetByRutAsync(int rut)
+        {
+            const string query = @"select
+                    p.id as idproveedor,
+                    p.direccion as direccionproveedor,
+                    p.persona_id as idpersona,
+                    pe.rut,
+                    pe.digito_verificador as digitoverificador,
+                    pe.nombre,
+                    pe.apellido,
+                    pe.email,
+                    pe.telefono,
+                    pe.persona_natural as esPersonaNatural
+                from proveedor p
+                join persona pe on p.persona_id = pe.id
+                where pe.rut = :rut";
+
+            return _repository.GetAsync<ProveedorJoin>(query, new Dictionary<string, object>
+            {
+                {"@rut", rut}
+            });
+        }
+
         public Task<int> InsertAsync(Proveedor proveedor)
         {
             const string spName = "sp_insertProveedor";

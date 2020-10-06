@@ -120,8 +120,8 @@ namespace RestaurantServices.Restaurant.DAL.Tablas
                 {"@p_apellido", usuario.Persona.Apellido},
                 {"@p_email", usuario.Persona.Email},
                 {"@p_telefono", usuario.Persona.Telefono},
-                {"@p_contrasena", usuario.Persona.Telefono},
-                {"@p_tipo_usuario_id", usuario.Persona.EsPersonaNatural},
+                {"@p_contrasena", usuario.Contrasena},
+                {"@p_tipo_usuario_id", '1'},
                 {"@p_return", 0}
             }, CommandType.StoredProcedure);
         }
