@@ -1,8 +1,10 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Net;
 using System.Net.Http;
 using System.Threading.Tasks;
 using System.Web.Http;
+using System.Web.Http.Description;
 using RestaurantServices.Restaurant.BLL.Negocio;
 using RestaurantServices.Restaurant.Modelo.Clases;
 
@@ -19,6 +21,7 @@ namespace RestaurantServices.Restaurant.API.Controllers
         }
 
         [HttpGet, Route("")]
+        [ResponseType(typeof(List<Proveedor>))]
         public async Task<IHttpActionResult> Get()
         {
             var proveedores = await _proveedorBl.ObtenerTodosAsync();
@@ -28,6 +31,7 @@ namespace RestaurantServices.Restaurant.API.Controllers
         }
 
         [HttpGet, Route("{id}")]
+        [ResponseType(typeof(Proveedor))]
         public async Task<IHttpActionResult> Get(int id)
         {
             var proveedor = await _proveedorBl.ObtenerPorIdAsync(id);

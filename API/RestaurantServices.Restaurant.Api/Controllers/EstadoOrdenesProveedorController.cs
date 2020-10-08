@@ -1,8 +1,10 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Net;
 using System.Net.Http;
 using System.Threading.Tasks;
 using System.Web.Http;
+using System.Web.Http.Description;
 using RestaurantServices.Restaurant.BLL.Negocio;
 using RestaurantServices.Restaurant.Modelo.Clases;
 
@@ -19,6 +21,7 @@ namespace RestaurantServices.Restaurant.API.Controllers
         }
 
         [HttpGet, Route("")]
+        [ResponseType(typeof(List<EstadoOrdenProveedor>))]
         public async Task<IHttpActionResult> Get()
         {
             var estadoOrdenProveedores = await _estadoOrdenProveedorBl.ObtenerTodosAsync();
@@ -28,6 +31,7 @@ namespace RestaurantServices.Restaurant.API.Controllers
         }
 
         [HttpGet, Route("{id}")]
+        [ResponseType(typeof(EstadoOrdenProveedor))]
         public async Task<IHttpActionResult> Get(int id)
         {
             var estadoOrdenProveedor = await _estadoOrdenProveedorBl.ObtenerPorIdAsync(id);
@@ -37,6 +41,7 @@ namespace RestaurantServices.Restaurant.API.Controllers
         }
 
         [HttpPost, Route("")]
+        [ResponseType(typeof(int))]
         public async Task<IHttpActionResult> Post([FromBody] EstadoOrdenProveedor estadoOrdenProveedor)
         {
             var idEstadoPedido = await _estadoOrdenProveedorBl.GuardarAsync(estadoOrdenProveedor);
@@ -46,6 +51,7 @@ namespace RestaurantServices.Restaurant.API.Controllers
         }
 
         [HttpPut, Route("{id}")]
+        [ResponseType(typeof(bool))]
         public async Task<IHttpActionResult> Put([FromBody] EstadoOrdenProveedor estadoOrdenProveedor, int id)
         {
             if (id == 0) throw new Exception("El id del estado orden proveedor debe ser mayor a cero");

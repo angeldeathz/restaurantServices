@@ -1,8 +1,10 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Net;
 using System.Net.Http;
 using System.Threading.Tasks;
 using System.Web.Http;
+using System.Web.Http.Description;
 using RestaurantServices.Restaurant.BLL.Negocio;
 using RestaurantServices.Restaurant.Modelo.Clases;
 
@@ -19,6 +21,7 @@ namespace RestaurantServices.Restaurant.API.Controllers
         }
 
         [HttpGet, Route("")]
+        [ResponseType(typeof(List<Reserva>))]
         public async Task<IHttpActionResult> Get()
         {
             var reservas = await _reservaBl.ObtenerTodosAsync();
@@ -28,6 +31,7 @@ namespace RestaurantServices.Restaurant.API.Controllers
         }
 
         [HttpGet, Route("{id}")]
+        [ResponseType(typeof(Reserva))]
         public async Task<IHttpActionResult> Get(int id)
         {
             var reserva = await _reservaBl.ObtenerPorIdAsync(id);

@@ -1,8 +1,10 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Net;
 using System.Net.Http;
 using System.Threading.Tasks;
 using System.Web.Http;
+using System.Web.Http.Description;
 using RestaurantServices.Restaurant.BLL.Negocio;
 using RestaurantServices.Restaurant.Modelo.Clases;
 
@@ -19,6 +21,7 @@ namespace RestaurantServices.Restaurant.API.Controllers
         }
 
         [HttpGet, Route("")]
+        [ResponseType(typeof(List<Articulo>))]
         public async Task<IHttpActionResult> Get()
         {
             var articulos = await _articuloBl.ObtenerTodosAsync();
@@ -27,6 +30,7 @@ namespace RestaurantServices.Restaurant.API.Controllers
         }
 
         [HttpGet, Route("{id}")]
+        [ResponseType(typeof(Articulo))]
         public async Task<IHttpActionResult> Get(int id)
         {
             var articulo = await _articuloBl.ObtenerPorIdAsync(id);
@@ -35,6 +39,7 @@ namespace RestaurantServices.Restaurant.API.Controllers
         }
 
         [HttpPost, Route("")]
+        [ResponseType(typeof(int))]
         public async Task<IHttpActionResult> Post([FromBody] Articulo articulo)
         {
             var idArticulo = await _articuloBl.GuardarAsync(articulo);
@@ -43,6 +48,7 @@ namespace RestaurantServices.Restaurant.API.Controllers
         }
 
         [HttpPut, Route("{id}")]
+        [ResponseType(typeof(bool))]
         public async Task<IHttpActionResult> Put([FromBody] Articulo articulo, int id)
         {
             if (id == 0) throw new Exception("El id del articulo debe ser mayor a cero");

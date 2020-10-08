@@ -1,10 +1,13 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Net;
 using System.Net.Http;
 using System.Threading.Tasks;
 using System.Web.Http;
+using System.Web.Http.Description;
 using RestaurantServices.Restaurant.BLL.Negocio;
 using RestaurantServices.Restaurant.Modelo.Clases;
+using Swashbuckle.Swagger.Annotations;
 
 namespace RestaurantServices.Restaurant.API.Controllers
 {
@@ -19,6 +22,7 @@ namespace RestaurantServices.Restaurant.API.Controllers
         }
 
         [HttpGet, Route("")]
+        [ResponseType(typeof(List<EstadoArticulo>))]
         public async Task<IHttpActionResult> Get()
         {
             var estadoArticulos = await _estadoArticuloBl.ObtenerTodosAsync();
@@ -28,6 +32,7 @@ namespace RestaurantServices.Restaurant.API.Controllers
         }
 
         [HttpGet, Route("{id}")]
+        [ResponseType(typeof(EstadoArticulo))]
         public async Task<IHttpActionResult> Get(int id)
         {
             var estadoArticulo = await _estadoArticuloBl.ObtenerPorIdAsync(id);
@@ -37,6 +42,7 @@ namespace RestaurantServices.Restaurant.API.Controllers
         }
 
         [HttpPost, Route("")]
+        [ResponseType(typeof(int))]
         public async Task<IHttpActionResult> Post([FromBody] EstadoArticulo estadoArticulo)
         {
             var idEstadoArticulo = await _estadoArticuloBl.GuardarAsync(estadoArticulo);
@@ -45,6 +51,8 @@ namespace RestaurantServices.Restaurant.API.Controllers
         }
 
         [HttpPut, Route("{id}")]
+        [ResponseType(typeof(bool))]
+        [SwaggerResponse(HttpStatusCode.OK, null, typeof(bool))]
         public async Task<IHttpActionResult> Put([FromBody] EstadoArticulo estadoArticulo, int id)
         {
             if (id == 0) throw new Exception("El id del estado articulo debe ser mayor a cero");

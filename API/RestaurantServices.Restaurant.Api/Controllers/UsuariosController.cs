@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using RestaurantServices.Restaurant.BLL.Negocio;
 using RestaurantServices.Restaurant.Modelo.Clases;
 using RestaurantServices.Restaurant.Modelo.Dto;
@@ -6,6 +7,7 @@ using System.Net;
 using System.Net.Http;
 using System.Threading.Tasks;
 using System.Web.Http;
+using System.Web.Http.Description;
 
 namespace RestaurantServices.Restaurant.API.Controllers
 {
@@ -20,6 +22,7 @@ namespace RestaurantServices.Restaurant.API.Controllers
         }
 
         [HttpPost, Route("login")]
+        [ResponseType(typeof(Usuario))]
         public async Task<IHttpActionResult> ValidarSesion([FromBody] UsuarioLogin usuarioLogin)
         {
             var usuario = await _usuarioBl.ValidaLoginAsync(usuarioLogin);
@@ -29,6 +32,7 @@ namespace RestaurantServices.Restaurant.API.Controllers
         }
 
         [Authorize, HttpGet, Route("")]
+        [ResponseType(typeof(List<Usuario>))]
         public async Task<IHttpActionResult> Get()
         {
             var usuarios = await _usuarioBl.ObtenerTodosAsync();
@@ -38,6 +42,7 @@ namespace RestaurantServices.Restaurant.API.Controllers
         }
 
         [Authorize, HttpGet, Route("{id}")]
+        [ResponseType(typeof(Usuario))]
         public async Task<IHttpActionResult> Get(int id)
         {
             var usuario = await _usuarioBl.ObtenerPorIdAsync(id);
@@ -47,6 +52,7 @@ namespace RestaurantServices.Restaurant.API.Controllers
         }
 
         [Authorize, HttpGet, Route("")]
+        [ResponseType(typeof(Usuario))]
         public async Task<IHttpActionResult> Get([FromUri] string rut)
         {
             var usuario = await _usuarioBl.ObtenerPorRutAsync(rut);
