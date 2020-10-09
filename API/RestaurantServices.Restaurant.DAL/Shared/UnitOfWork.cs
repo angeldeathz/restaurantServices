@@ -26,6 +26,8 @@ namespace RestaurantServices.Restaurant.DAL.Shared
         private PedidoDal _pedidoDal;
         private ArticuloPedidoDal _articuloPedidoDal;
         private DetalleOrdenProveedorDal _detalleOrdenProveedorDal;
+        private MedioPagoDal _medioPagoDal;
+        private TipoDocumentoPagoDal _tipoDocumentoPagoDal;
 
         public UnitOfWork(IRepository repository)
         {
@@ -53,5 +55,7 @@ namespace RestaurantServices.Restaurant.DAL.Shared
         public PedidoDal PedidoDal => _pedidoDal ?? (_pedidoDal = new PedidoDal(_repository));
         public ArticuloPedidoDal ArticuloPedidoDal => _articuloPedidoDal ?? (_articuloPedidoDal = new ArticuloPedidoDal(_repository));
         public DetalleOrdenProveedorDal DetalleOrdenProveedorDal => _detalleOrdenProveedorDal ?? (_detalleOrdenProveedorDal = new DetalleOrdenProveedorDal(_repository));
+        public MedioPagoDal MedioPagoDal => _medioPagoDal ?? (_medioPagoDal = new MedioPagoDal(_repository));
+        public TipoDocumentoPagoDal TipoDocumentoPagoDal => _tipoDocumentoPagoDal ?? (_tipoDocumentoPagoDal = new TipoDocumentoPagoDal(_repository));
     }
 }

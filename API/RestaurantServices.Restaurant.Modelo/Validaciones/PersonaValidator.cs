@@ -10,8 +10,8 @@ namespace RestaurantServices.Restaurant.Modelo.Validaciones
             RuleFor(x => x.Rut).GreaterThan(0);
             RuleFor(x => x.DigitoVerificador).NotNull().NotEmpty();
             RuleFor(x => x.Email).NotNull().NotEmpty().EmailAddress();
-            RuleFor(x => x.Nombre).NotNull().NotEmpty();
-            RuleFor(x => x.Apellido).NotNull().NotEmpty();
+            //RuleFor(x => x.Nombre).NotNull().NotEmpty(); es opcional en bdd
+            //RuleFor(x => x.Apellido).NotNull().NotEmpty(); es opcional en bdd
             RuleFor(x => x.ObtenerRutCompleto())
                 .NotNull()
                 .NotEmpty()

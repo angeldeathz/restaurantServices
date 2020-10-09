@@ -27,7 +27,6 @@ namespace RestaurantServices.Restaurant.API.Config
 
         public async Task ChallengeAsync(HttpAuthenticationChallengeContext context, CancellationToken cancellationToken)
         {
-            return;
         }
 
         public bool AllowMultiple { get; }

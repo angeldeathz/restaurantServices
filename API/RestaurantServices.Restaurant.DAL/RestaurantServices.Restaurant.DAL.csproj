@@ -51,6 +51,8 @@
     <Compile Include="Tablas\ArticuloPedidoDal.cs" />
     <Compile Include="Tablas\ClienteDal.cs" />
     <Compile Include="Tablas\DetalleOrdenProveedorDal.cs" />
+    <Compile Include="Tablas\TipoDocumentoPagoDal.cs" />
+    <Compile Include="Tablas\MedioPagoDal.cs" />
     <Compile Include="Tablas\EstadoMesaDal.cs" />
     <Compile Include="Tablas\EstadoOrdenProveedorDal.cs" />
     <Compile Include="Tablas\EstadoReservaDal.cs" />

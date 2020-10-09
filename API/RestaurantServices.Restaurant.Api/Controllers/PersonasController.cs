@@ -39,9 +39,9 @@ namespace RestaurantServices.Restaurant.API.Controllers
             return Ok(persona);
         }
 
-        [HttpGet, Route("")]
+        [HttpGet, Route("filtro")]
         [ResponseType(typeof(Persona))]
-        public async Task<IHttpActionResult> Get3([FromUri] string rut)
+        public async Task<IHttpActionResult> Get([FromUri] string rut)
         {
             var persona = await _personaBl.ObtenerPorRutAsync(rut);
 

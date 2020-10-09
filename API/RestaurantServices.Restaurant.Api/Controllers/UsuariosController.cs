@@ -51,7 +51,7 @@ namespace RestaurantServices.Restaurant.API.Controllers
             return Ok(usuario);
         }
 
-        [Authorize, HttpGet, Route("")]
+        [Authorize, HttpGet, Route("filtro")]
         [ResponseType(typeof(Usuario))]
         public async Task<IHttpActionResult> Get([FromUri] string rut)
         {

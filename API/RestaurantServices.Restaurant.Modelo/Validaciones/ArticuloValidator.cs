@@ -8,10 +8,11 @@ namespace RestaurantServices.Restaurant.Modelo.Validaciones
         public ArticuloValidator()
         {
             RuleFor(x => x.Nombre).NotNull().NotEmpty();
-            RuleFor(x => x.Descripcion).NotNull().NotEmpty();
-            RuleFor(x => x.Precio).NotNull().GreaterThan(0);
+            //RuleFor(x => x.Descripcion).NotNull().NotEmpty(); es opcional en bdd
+            RuleFor(x => x.Precio).GreaterThan(0);
             RuleFor(x => x.IdEstadoArticulo).GreaterThan(0);
-            RuleFor(x => x.IdTipoConsumo).NotNull().NotEmpty();
+            RuleFor(x => x.IdTipoConsumo).GreaterThan(0);
+
             RuleFor(x => x.EstadoArticulo).Null();
             RuleFor(x => x.TipoConsumo).Null();
         }

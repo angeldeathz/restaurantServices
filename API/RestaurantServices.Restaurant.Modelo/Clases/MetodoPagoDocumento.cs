@@ -7,6 +7,6 @@
         public int IdDocumentoPago { get; set; }
         public int IdMetodoPago { get; set; }
         public DocumentoPago DocumentoPago { get; set; }
-        public MetodoPago MetodoPago { get; set; }
+        public MedioPago MetodoPago { get; set; }
     }
 }
