@@ -8,20 +8,36 @@ namespace RestaurantServices.Restaurant.BLL.Negocio
     public class ArticuloPedidoBl
     {
         private readonly UnitOfWork _unitOfWork;
+        private readonly PedidoBl _pedidoBl;
+        private readonly ArticuloBl _articuloBl;
 
         public ArticuloPedidoBl()
         {
             _unitOfWork = new UnitOfWork(new OracleRepository());
+            _pedidoBl = new PedidoBl();
+            _articuloBl = new ArticuloBl();
         }
 
         public async Task<List<ArticuloPedido>> ObtenerTodosAsync()
         {
-            return (List<ArticuloPedido>)await _unitOfWork.ArticuloPedidoDal.GetAsync();
+            var articuloPedidos = await _unitOfWork.ArticuloPedidoDal.GetAsync();
+
+            foreach (var x in articuloPedidos)
+            {
+                x.Pedido = await _pedidoBl.ObtenerPorIdAsync(x.IdPedido);
+                x.Articulo = await _articuloBl.ObtenerPorIdAsync(x.IdArticulo);
+            }
+
+            return (List<ArticuloPedido>)articuloPedidos;
         }
 
-        public Task<ArticuloPedido> ObtenerPorIdAsync(int id)
+        public async Task<ArticuloPedido> ObtenerPorIdAsync(int id)
         {
-            return _unitOfWork.ArticuloPedidoDal.GetAsync(id);
+            var articuloPedido = await _unitOfWork.ArticuloPedidoDal.GetAsync(id);
+            if (articuloPedido == null) return null;
+            articuloPedido.Pedido = await _pedidoBl.ObtenerPorIdAsync(articuloPedido.IdPedido);
+            articuloPedido.Articulo = await _articuloBl.ObtenerPorIdAsync(articuloPedido.IdArticulo);
+            return articuloPedido;
         }
 
         public Task<int> GuardarAsync(ArticuloPedido articuloPedido)

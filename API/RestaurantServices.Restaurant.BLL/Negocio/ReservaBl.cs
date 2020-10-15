@@ -9,16 +9,18 @@ namespace RestaurantServices.Restaurant.BLL.Negocio
     public class ReservaBl
     {
         private readonly UnitOfWork _unitOfWork;
+        private readonly EstadoMesaBl _estadoMesaBl;
 
         public ReservaBl()
         {
             _unitOfWork = new UnitOfWork(new OracleRepository());
+            _estadoMesaBl = new EstadoMesaBl();
         }
 
         public async Task<List<Reserva>> ObtenerTodosAsync()
         {
             var reservas = await _unitOfWork.ReservaDal.GetAsync();
-            return reservas.Select(reserva => new Reserva
+            var reservasList = reservas.Select(reserva => new Reserva
             {
                 CantidadComensales = reserva.CantidadComensalesReserva,
                 FechaReserva = reserva.FechaReserva,
@@ -49,13 +51,20 @@ namespace RestaurantServices.Restaurant.BLL.Negocio
                     }
                 }
             }).ToList();
+
+            foreach (var x in reservasList)
+            {
+                x.Mesa.EstadoMesa = await _estadoMesaBl.ObtenerPorIdAsync(x.Mesa.IdEstadoMesa);
+            }
+
+            return reservasList;
         }
 
         public async Task<Reserva> ObtenerPorIdAsync(int id)
         {
             var reserva = await _unitOfWork.ReservaDal.GetAsync(id);
             if (reserva == null) return null;
-            return new Reserva
+            var reservaResult = new Reserva
             {
                 CantidadComensales = reserva.CantidadComensalesReserva,
                 FechaReserva = reserva.FechaReserva,
@@ -86,6 +95,9 @@ namespace RestaurantServices.Restaurant.BLL.Negocio
                     }
                 }
             };
+
+            reservaResult.Mesa.EstadoMesa = await _estadoMesaBl.ObtenerPorIdAsync(reservaResult.Mesa.IdEstadoMesa);
+            return reservaResult;
         }
 
         public Task<int> GuardarAsync(Reserva reserva)
