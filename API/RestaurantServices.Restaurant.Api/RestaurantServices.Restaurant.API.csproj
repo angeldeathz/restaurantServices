@@ -122,6 +122,7 @@
     <Compile Include="Controllers\ArticuloPedidoController.cs" />
     <Compile Include="Controllers\ClientesController.cs" />
     <Compile Include="Controllers\DetalleOrdenesProveedorController.cs" />
+    <Compile Include="Controllers\PlatosController.cs" />
     <Compile Include="Controllers\TipoDocumentoPagosController.cs" />
     <Compile Include="Controllers\MedioPagoController.cs" />
     <Compile Include="Controllers\PedidosController.cs" />

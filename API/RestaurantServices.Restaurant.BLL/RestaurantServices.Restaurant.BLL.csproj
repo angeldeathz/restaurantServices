@@ -39,6 +39,7 @@
     <Compile Include="Negocio\ArticuloPedidoBl.cs" />
     <Compile Include="Negocio\ClienteBl.cs" />
     <Compile Include="Negocio\DetalleOrdenProveedorBl.cs" />
+    <Compile Include="Negocio\PlatoBl.cs" />
     <Compile Include="Negocio\TipoDocumentoPagoBl.cs" />
     <Compile Include="Negocio\MedioPagoBl.cs" />
     <Compile Include="Negocio\EstadoOrdenProveedorBl.cs" />
