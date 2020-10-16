@@ -12,6 +12,7 @@ namespace RestaurantServices.Restaurant.Modelo.Clases
         public int CantidadComensales { get; set; }
         public int IdCliente { get; set; }
         public int IdMesa { get; set; }
+        public int IdEstadoReserva { get; set; }
         public Cliente Cliente { get; set; }
         public Mesa Mesa { get; set; }
     }

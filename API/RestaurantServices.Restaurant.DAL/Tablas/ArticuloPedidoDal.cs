@@ -58,6 +58,7 @@ namespace RestaurantServices.Restaurant.DAL.Tablas
                 {"@p_total", articuloPedido.Total},
                 {"@p_articulo_id", articuloPedido.IdArticulo},
                 {"@p_pedidoId", articuloPedido.IdPedido},
+                {"@p_estado_articulo_pedido_id", articuloPedido.IdEstadoArticuloPedido},
                 {"@p_return", 0}
             }, CommandType.StoredProcedure);
         }
@@ -74,6 +75,7 @@ namespace RestaurantServices.Restaurant.DAL.Tablas
                 {"@p_total", articuloPedido.Total},
                 {"@p_articuloId", articuloPedido.IdArticulo},
                 {"@p_pedidoId", articuloPedido.IdPedido},
+                {"@p_estado_articulo_pedido_id", articuloPedido.IdEstadoArticuloPedido},
                 {"@p_return", 0}
             }, CommandType.StoredProcedure);
         }

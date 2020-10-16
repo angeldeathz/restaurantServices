@@ -55,6 +55,7 @@ namespace RestaurantServices.Restaurant.DAL.Tablas
                 {"@p_total", ordenProveedor.Total},
                 {"@p_proveedor_id", ordenProveedor.IdProveedor},
                 {"@p_usuario_id", ordenProveedor.IdUsuario},
+                {"@p_estado_orden_proveedor_id", ordenProveedor.IdEstadoOrden},
                 {"@p_return", 0}
             }, CommandType.StoredProcedure);
         }
@@ -70,6 +71,7 @@ namespace RestaurantServices.Restaurant.DAL.Tablas
                 {"@p_total", ordenProveedor.Total},
                 {"@p_proveedor_id", ordenProveedor.IdProveedor},
                 {"@p_usuario_id", ordenProveedor.IdUsuario},
+                {"@p_estado_orden_proveedor_id", ordenProveedor.IdEstadoOrden},
                 {"@p_return", 0}
             }, CommandType.StoredProcedure);
         }

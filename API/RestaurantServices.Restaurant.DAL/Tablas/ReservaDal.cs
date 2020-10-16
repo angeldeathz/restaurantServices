@@ -84,6 +84,7 @@ namespace RestaurantServices.Restaurant.DAL.Tablas
                 {"@p_cantidad_comensales", reserva.CantidadComensales},
                 {"@p_clienteId", reserva.IdCliente},
                 {"@p_mesaId", reserva.IdMesa},
+                {"@p_estado_reserva_id", reserva.IdEstadoReserva},
                 {"@p_return", 0}
             }, CommandType.StoredProcedure);
         }
@@ -99,6 +100,7 @@ namespace RestaurantServices.Restaurant.DAL.Tablas
                 {"@p_cantidad_comensales", reserva.CantidadComensales},
                 {"@p_clienteId", reserva.IdCliente},
                 {"@p_mesaId", reserva.IdMesa},
+                {"@p_estado_reserva_id", reserva.IdEstadoReserva},
                 {"@p_return", 0}
             }, CommandType.StoredProcedure);
         }
