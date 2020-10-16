@@ -85,11 +85,13 @@
     <Compile Include="Validaciones\ArticuloValidator.cs" />
     <Compile Include="Validaciones\ClienteValidator.cs" />
     <Compile Include="Validaciones\DetalleOrdenProveedorValidator.cs" />
+    <Compile Include="Validaciones\IngredientePlatoValidator.cs" />
     <Compile Include="Validaciones\InsumoValidator.cs" />
     <Compile Include="Validaciones\MesaValidator.cs" />
     <Compile Include="Validaciones\OrdenProveedorValidator.cs" />
     <Compile Include="Validaciones\PedidoValidator.cs" />
     <Compile Include="Validaciones\PersonaValidator.cs" />
+    <Compile Include="Validaciones\PlatoValidator.cs" />
     <Compile Include="Validaciones\ProveedorValidator.cs" />
     <Compile Include="Validaciones\ReservaValidator.cs" />
     <Compile Include="Validaciones\UsuarioLoginValidator.cs" />

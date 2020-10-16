@@ -47,10 +47,12 @@
     <Compile Include="Shared\IRepository.cs" />
     <Compile Include="Shared\OracleRepository.cs" />
     <Compile Include="Shared\UnitOfWork.cs" />
+    <Compile Include="Tablas\ArticuloConsumoDirectoDal.cs" />
     <Compile Include="Tablas\ArticuloDal.cs" />
     <Compile Include="Tablas\ArticuloPedidoDal.cs" />
     <Compile Include="Tablas\ClienteDal.cs" />
     <Compile Include="Tablas\DetalleOrdenProveedorDal.cs" />
+    <Compile Include="Tablas\IngredientePlatoDal.cs" />
     <Compile Include="Tablas\PlatoDal.cs" />
     <Compile Include="Tablas\TipoDocumentoPagoDal.cs" />
     <Compile Include="Tablas\MedioPagoDal.cs" />
