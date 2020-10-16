@@ -13,5 +13,6 @@ namespace RestaurantServices.Restaurant.Modelo.Clases
         public int IdInsumo { get; set; }
         public int IdOrdenProveedor { get; set; }
         public Insumo Insumo { get; set; }
+        public OrdenProveedor OrdenProveedor { get; set; }
     }
 }
