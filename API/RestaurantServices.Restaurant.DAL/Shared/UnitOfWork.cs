@@ -33,6 +33,8 @@ namespace RestaurantServices.Restaurant.DAL.Shared
         private ArticuloConsumoDirectoDal _articuloConsumoDirectoDal;
         private HorarioReservaDal _horarioReservaDal;
         private EstadoArticuloPedidoDal _estadoArticuloPedidoDal;
+        private DocumentoPagoDal _documentoPagoDal;
+        private MedioPagoDocumentoDal _medioPagoDocumentoDal;
 
         public UnitOfWork(IRepository repository)
         {
@@ -67,5 +69,7 @@ namespace RestaurantServices.Restaurant.DAL.Shared
         public ArticuloConsumoDirectoDal ArticuloConsumoDirectoDal => _articuloConsumoDirectoDal ?? (_articuloConsumoDirectoDal = new ArticuloConsumoDirectoDal(_repository));
         public HorarioReservaDal HorarioReservaDal => _horarioReservaDal ?? (_horarioReservaDal = new HorarioReservaDal(_repository));
         public EstadoArticuloPedidoDal EstadoArticuloPedidoDal => _estadoArticuloPedidoDal ?? (_estadoArticuloPedidoDal = new EstadoArticuloPedidoDal(_repository));
+        public DocumentoPagoDal DocumentoPagoDal => _documentoPagoDal ?? (_documentoPagoDal = new DocumentoPagoDal(_repository));
+        public MedioPagoDocumentoDal MedioPagoDocumentoDal => _medioPagoDocumentoDal ?? (_medioPagoDocumentoDal = new MedioPagoDocumentoDal(_repository));
     }
 }

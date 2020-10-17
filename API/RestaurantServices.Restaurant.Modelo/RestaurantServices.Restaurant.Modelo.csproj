@@ -58,7 +58,7 @@
     <Compile Include="Clases\Insumo.cs" />
     <Compile Include="Clases\Mesa.cs" />
     <Compile Include="Clases\MedioPago.cs" />
-    <Compile Include="Clases\MetodoPagoDocumento.cs" />
+    <Compile Include="Clases\MedioPagoDocumento.cs" />
     <Compile Include="Clases\OrdenProveedor.cs" />
     <Compile Include="Clases\Pedido.cs" />
     <Compile Include="Clases\Persona.cs" />

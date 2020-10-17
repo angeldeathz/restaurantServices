@@ -119,6 +119,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Config\AuthFilter.cs" />
+    <Compile Include="Controllers\MedioPagoDocumentosController.cs" />
+    <Compile Include="Controllers\DocumentoPagosController.cs" />
     <Compile Include="Controllers\EstadoArticuloPedidosController.cs" />
     <Compile Include="Controllers\ArticuloPedidoController.cs" />
     <Compile Include="Controllers\ClientesController.cs" />
