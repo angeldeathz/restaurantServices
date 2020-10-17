@@ -1,4 +1,5 @@
-﻿using FluentValidation.Attributes;
+﻿using System.Collections.Generic;
+using FluentValidation.Attributes;
 using RestaurantServices.Restaurant.Modelo.Validaciones;
 
 namespace RestaurantServices.Restaurant.Modelo.Clases
@@ -15,5 +16,6 @@ namespace RestaurantServices.Restaurant.Modelo.Clases
         public int IdEstadoArticuloPedido { get; set; }
         public Pedido Pedido { get; set; }
         public Articulo Articulo { get; set; }
+        public List<EstadoArticuloPedido> EstadosArticuloPedido { get; set; }
     }
 }

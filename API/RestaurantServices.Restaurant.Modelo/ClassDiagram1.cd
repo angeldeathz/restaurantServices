@@ -1,0 +1,341 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1" MembersFormat="NameAndType">
+  <Class Name="RestaurantServices.Restaurant.Modelo.Clases.Articulo">
+    <Position X="13.75" Y="5" Width="1.75" />
+    <AssociationLine Name="TipoConsumo" Type="RestaurantServices.Restaurant.Modelo.Clases.TipoConsumo" ManuallyRouted="true" FixedFromPoint="true" FixedToPoint="true">
+      <Path>
+        <Point X="15.5" Y="5.25" />
+        <Point X="17.5" Y="5.25" />
+        <Point X="17.5" Y="3.796" />
+      </Path>
+    </AssociationLine>
+    <AssociationLine Name="EstadoArticulo" Type="RestaurantServices.Restaurant.Modelo.Clases.EstadoArticulo" FixedFromPoint="true">
+      <Path>
+        <Point X="14.625" Y="5" />
+        <Point X="14.625" Y="3.796" />
+      </Path>
+    </AssociationLine>
+    <TypeIdentifier>
+      <HashCode>AAACAAAAEAAAAAAAAAAAgAARABAAAAAAAAACAAIAAAA=</HashCode>
+      <FileName>Clases\Articulo.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Property Name="TipoConsumo" />
+      <Property Name="EstadoArticulo" />
+    </ShowAsAssociation>
+  </Class>
+  <Class Name="RestaurantServices.Restaurant.Modelo.Clases.ArticuloConsumoDirecto">
+    <Position X="13.5" Y="8" Width="2" />
+    <TypeIdentifier>
+      <HashCode>AAECAAAAAAABAAAAAAAAAABAAAAAAIAAAAAAAAAAAAA=</HashCode>
+      <FileName>Clases\ArticuloConsumoDirecto.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Property Name="Insumo" />
+      <Property Name="Articulo" />
+    </ShowAsAssociation>
+  </Class>
+  <Class Name="RestaurantServices.Restaurant.Modelo.Clases.ArticuloPedido">
+    <Position X="10.25" Y="5" Width="2.25" />
+    <TypeIdentifier>
+      <HashCode>AAECAAEAAAAAAAEAAAAAgABQACAAQAAAAAAAAQAAAAA=</HashCode>
+      <FileName>Clases\ArticuloPedido.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Property Name="Articulo" />
+      <Property Name="Pedido" />
+    </ShowAsAssociation>
+    <ShowAsCollectionAssociation>
+      <Property Name="EstadosArticuloPedido" />
+    </ShowAsCollectionAssociation>
+  </Class>
+  <Class Name="RestaurantServices.Restaurant.Modelo.Clases.Cliente">
+    <Position X="4.75" Y="11" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAACAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAIEAAAAAAA=</HashCode>
+      <FileName>Clases\Cliente.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Property Name="Persona" />
+    </ShowAsAssociation>
+  </Class>
+  <Class Name="RestaurantServices.Restaurant.Modelo.Clases.DetalleOrdenProveedor">
+    <Position X="10.5" Y="8.75" Width="2" />
+    <AssociationLine Name="Insumo" Type="RestaurantServices.Restaurant.Modelo.Clases.Insumo" FixedFromPoint="true">
+      <Path>
+        <Point X="12.5" Y="9.938" />
+        <Point X="16.75" Y="9.938" />
+      </Path>
+    </AssociationLine>
+    <TypeIdentifier>
+      <HashCode>AAACAAEAAAARAAAAAAAAAAAQAAAAQKAAAAAAAAAAAAA=</HashCode>
+      <FileName>Clases\DetalleOrdenProveedor.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Property Name="Insumo" />
+      <Property Name="OrdenProveedor" />
+    </ShowAsAssociation>
+  </Class>
+  <Class Name="RestaurantServices.Restaurant.Modelo.Clases.DocumentoPago">
+    <Position X="7.25" Y="8.25" Width="2.25" />
+    <TypeIdentifier>
+      <HashCode>AAACIAAAAAAAAAEAAAAAgAAAAAEAQAAAAAAAAAAQAAA=</HashCode>
+      <FileName>Clases\DocumentoPago.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Property Name="TipoDocumentoPago" />
+      <Property Name="Pedido" />
+    </ShowAsAssociation>
+  </Class>
+  <Class Name="RestaurantServices.Restaurant.Modelo.Clases.EstadoArticulo">
+    <Position X="13.75" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAACAAAAAAAAAAAAAAAAgAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Clases\EstadoArticulo.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="RestaurantServices.Restaurant.Modelo.Clases.EstadoArticuloPedido">
+    <Position X="11" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAACAAAAAAAAAAAAAAAAgAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Clases\EstadoArticuloPedido.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="RestaurantServices.Restaurant.Modelo.Clases.EstadoMesa">
+    <Position X="0.5" Y="6" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAACAAAAAAAAAAAAAAAAgAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Clases\EstadoMesa.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="RestaurantServices.Restaurant.Modelo.Clases.EstadoOrdenProveedor">
+    <Position X="8" Y="13.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAACAAAAAAAAAAAAAAAAgAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Clases\EstadoOrdenProveedor.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="RestaurantServices.Restaurant.Modelo.Clases.EstadoPedido">
+    <Position X="7.25" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAACAAAAAAAAAAAAAAAAgAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Clases\EstadoPedido.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="RestaurantServices.Restaurant.Modelo.Clases.EstadoReserva">
+    <Position X="0.5" Y="3" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAACAAAAAAAAAAAAAAAAgAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Clases\EstadoReserva.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="RestaurantServices.Restaurant.Modelo.Clases.HorarioReserva">
+    <Position X="1.5" Y="11" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>BAACAAAAAAAAAEAAAAAAAAAEAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Clases\HorarioReserva.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="RestaurantServices.Restaurant.Modelo.Clases.IngredientePlato">
+    <Position X="19.75" Y="7.75" Width="2" />
+    <AssociationLine Name="Plato" Type="RestaurantServices.Restaurant.Modelo.Clases.Plato" FixedFromPoint="true">
+      <Path>
+        <Point X="20.688" Y="7.75" />
+        <Point X="20.688" Y="6.873" />
+      </Path>
+    </AssociationLine>
+    <TypeIdentifier>
+      <HashCode>gAACAAAAAAABAAAAAAAAAAAAAAAAAICAAAAAAAAAAAA=</HashCode>
+      <FileName>Clases\IngredientePlato.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Property Name="Insumo" />
+      <Property Name="Plato" />
+    </ShowAsAssociation>
+  </Class>
+  <Class Name="RestaurantServices.Restaurant.Modelo.Clases.Insumo">
+    <Position X="16.75" Y="8" Width="2" />
+    <AssociationLine Name="UnidadMedida" Type="RestaurantServices.Restaurant.Modelo.Clases.UnidadMedida" FixedFromPoint="true" FixedToPoint="true">
+      <Path>
+        <Point X="18.75" Y="9.687" />
+        <Point X="19.125" Y="9.687" />
+        <Point X="19.125" Y="11.369" />
+        <Point X="20" Y="11.369" />
+      </Path>
+    </AssociationLine>
+    <AssociationLine Name="Proveedor" Type="RestaurantServices.Restaurant.Modelo.Clases.Proveedor" FixedToPoint="true">
+      <Path>
+        <Point X="17.75" Y="10.257" />
+        <Point X="17.75" Y="11.5" />
+      </Path>
+    </AssociationLine>
+    <TypeIdentifier>
+      <HashCode>AAACAAAoAAAEgAAAAAAAggIBAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Clases\Insumo.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Property Name="UnidadMedida" />
+      <Property Name="Proveedor" />
+    </ShowAsAssociation>
+  </Class>
+  <Class Name="RestaurantServices.Restaurant.Modelo.Clases.MedioPago">
+    <Position X="0.5" Y="8.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAACAAAAAAAAAAAAAAAAgAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Clases\MedioPago.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="RestaurantServices.Restaurant.Modelo.Clases.MedioPagoDocumento">
+    <Position X="3" Y="8.75" Width="2" />
+    <TypeIdentifier>
+      <HashCode>QAACgAAAAAAAAAAAAAAAIAAIAAAAAAABAAAAAAAAAAA=</HashCode>
+      <FileName>Clases\MedioPagoDocumento.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Property Name="DocumentoPago" />
+      <Property Name="MedioPago" />
+    </ShowAsAssociation>
+  </Class>
+  <Class Name="RestaurantServices.Restaurant.Modelo.Clases.Mesa">
+    <Position X="3" Y="5.75" Width="2" />
+    <TypeIdentifier>
+      <HashCode>AAACAAAAAAAAAAAAAAAggAAAAAABAQAAAAAAAAAAAAA=</HashCode>
+      <FileName>Clases\Mesa.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Property Name="EstadoMesa" />
+    </ShowAsAssociation>
+  </Class>
+  <Class Name="RestaurantServices.Restaurant.Modelo.Clases.OrdenProveedor">
+    <Position X="13.25" Y="11.5" Width="2" />
+    <AssociationLine Name="Usuario" Type="RestaurantServices.Restaurant.Modelo.Clases.Usuario" FixedToPoint="true">
+      <Path>
+        <Point X="14.375" Y="13.565" />
+        <Point X="14.375" Y="15.75" />
+      </Path>
+    </AssociationLine>
+    <TypeIdentifier>
+      <HashCode>CAASAAQAAAAAgAAAAAAAIAABAAAAQAAAAAAEAAAAAAA=</HashCode>
+      <FileName>Clases\OrdenProveedor.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Property Name="Proveedor" />
+      <Property Name="Usuario" />
+    </ShowAsAssociation>
+    <ShowAsCollectionAssociation>
+      <Property Name="EstadosOrdenProveedor" />
+    </ShowAsCollectionAssociation>
+  </Class>
+  <Class Name="RestaurantServices.Restaurant.Modelo.Clases.Pedido">
+    <Position X="6.75" Y="5" Width="2.25" />
+    <TypeIdentifier>
+      <HashCode>AAACAAAAAAAAAAAAAAAEAAAAAAAIwIAQAAIAAAAAAAA=</HashCode>
+      <FileName>Clases\Pedido.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Property Name="Mesa" />
+      <Property Name="EstadoPedido" />
+    </ShowAsAssociation>
+  </Class>
+  <Class Name="RestaurantServices.Restaurant.Modelo.Clases.Persona">
+    <Position X="3.75" Y="13.5" Width="2.5" />
+    <TypeIdentifier>
+      <HashCode>AAACAAAAACAAAAAEAAAAgEEACAAAAAIgAAAAAgAAAAI=</HashCode>
+      <FileName>Clases\Persona.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="RestaurantServices.Restaurant.Modelo.Clases.Plato">
+    <Position X="19.5" Y="5" Width="2.25" />
+    <AssociationLine Name="TipoPreparacion" Type="RestaurantServices.Restaurant.Modelo.Clases.TipoPreparacion" FixedFromPoint="true">
+      <Path>
+        <Point X="20.562" Y="5" />
+        <Point X="20.562" Y="3.796" />
+      </Path>
+    </AssociationLine>
+    <TypeIdentifier>
+      <HashCode>AAECAAAAAAAAAAAAAAAAgABAAAAAAABAAABAAAAAQAA=</HashCode>
+      <FileName>Clases\Plato.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Property Name="Articulo" />
+      <Property Name="TipoPreparacion" />
+    </ShowAsAssociation>
+  </Class>
+  <Class Name="RestaurantServices.Restaurant.Modelo.Clases.Proveedor">
+    <Position X="17" Y="11.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAACAAAAAAAAAAAAACAAAAAAAAAAAAAAAAIEAAAAAAA=</HashCode>
+      <FileName>Clases\Proveedor.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Property Name="Persona" />
+    </ShowAsAssociation>
+  </Class>
+  <Class Name="RestaurantServices.Restaurant.Modelo.Clases.Reserva">
+    <Position X="3.25" Y="2.5" Width="3" />
+    <TypeIdentifier>
+      <HashCode>AAADAAAAAAAACAAAAACAAAAAAAAIAYACAAAABAAAAAA=</HashCode>
+      <FileName>Clases\Reserva.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Property Name="Mesa" />
+      <Property Name="Cliente" />
+    </ShowAsAssociation>
+    <ShowAsCollectionAssociation>
+      <Property Name="EstadosReserva" />
+    </ShowAsCollectionAssociation>
+  </Class>
+  <Class Name="RestaurantServices.Restaurant.Modelo.Clases.TipoConsumo">
+    <Position X="16.75" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAACAAAAAAAAAAAAAAAAgAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Clases\TipoConsumo.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="RestaurantServices.Restaurant.Modelo.Clases.TipoDocumentoPago">
+    <Position X="7.75" Y="11" Width="1.75" />
+    <TypeIdentifier>
+      <HashCode>AAACAAAAAAAAAAAAAAAAgAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Clases\TipoDocumentoPago.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="RestaurantServices.Restaurant.Modelo.Clases.TipoPreparacion">
+    <Position X="20" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAACAAAAAAAAAAAAAAAAgAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Clases\TipoPreparacion.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="RestaurantServices.Restaurant.Modelo.Clases.TipoUsuario">
+    <Position X="17" Y="15.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAACAAAAAAAAAAAAAAAAgAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Clases\TipoUsuario.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="RestaurantServices.Restaurant.Modelo.Clases.UnidadMedida">
+    <Position X="20" Y="10.25" Width="1.75" />
+    <TypeIdentifier>
+      <HashCode>AAACAAAAAAAAAAAIAAAAgAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Clases\UnidadMedida.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="RestaurantServices.Restaurant.Modelo.Clases.Usuario">
+    <Position X="13.25" Y="15.75" Width="1.75" />
+    <AssociationLine Name="Persona" Type="RestaurantServices.Restaurant.Modelo.Clases.Persona" FixedFromPoint="true">
+      <Path>
+        <Point X="13.25" Y="16" />
+        <Point X="6.25" Y="16" />
+      </Path>
+    </AssociationLine>
+    <TypeIdentifier>
+      <HashCode>AEACAAAAAAAAAAIAAAAgAAAAAAAAAAAAAAIEAAAAAAA=</HashCode>
+      <FileName>Clases\Usuario.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Property Name="Persona" />
+      <Property Name="TipoUsuario" />
+    </ShowAsAssociation>
+  </Class>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>

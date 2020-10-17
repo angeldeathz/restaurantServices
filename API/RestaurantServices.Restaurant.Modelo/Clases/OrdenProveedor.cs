@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using FluentValidation.Attributes;
 using RestaurantServices.Restaurant.Modelo.Validaciones;
 
@@ -15,5 +16,6 @@ namespace RestaurantServices.Restaurant.Modelo.Clases
         public int IdEstadoOrden { get; set; }
         public Proveedor Proveedor { get; set; }
         public Usuario Usuario { get; set; }
+        public List<EstadoOrdenProveedor> EstadosOrdenProveedor { get; set; }
     }
 }
