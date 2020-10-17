@@ -124,6 +124,7 @@
     <Compile Include="Controllers\DetalleOrdenesProveedorController.cs" />
     <Compile Include="Controllers\ArticulosConsumoDirectoController.cs" />
     <Compile Include="Controllers\IngredientePlatosController.cs" />
+    <Compile Include="Controllers\HorarioReservasController.cs" />
     <Compile Include="Controllers\PlatosController.cs" />
     <Compile Include="Controllers\TipoDocumentoPagosController.cs" />
     <Compile Include="Controllers\MedioPagoController.cs" />

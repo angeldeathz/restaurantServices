@@ -40,6 +40,7 @@
     <Compile Include="Negocio\ClienteBl.cs" />
     <Compile Include="Negocio\DetalleOrdenProveedorBl.cs" />
     <Compile Include="Negocio\ArticuloConsumoDirectoBl.cs" />
+    <Compile Include="Negocio\HorarioReservaBl.cs" />
     <Compile Include="Negocio\IngredientePlatoBl.cs" />
     <Compile Include="Negocio\PlatoBl.cs" />
     <Compile Include="Negocio\TipoDocumentoPagoBl.cs" />
