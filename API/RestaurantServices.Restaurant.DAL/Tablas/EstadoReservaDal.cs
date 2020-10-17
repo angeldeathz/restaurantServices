@@ -39,6 +39,22 @@ namespace RestaurantServices.Restaurant.DAL.Tablas
             });
         }
 
+        public Task<IEnumerable<EstadoReserva>> GetByReservaAsync(int idReserva)
+        {
+            const string query = @"SELECT
+                    e.id,
+                    e.nombre,
+                    c.fecha
+                from estado_reserva e
+                join cambio_estado_reserva c on e.id = c.estado_reserva_id
+                where c.reserva_id = :idReserva";
+
+            return _repository.GetListAsync<EstadoReserva>(query, new Dictionary<string, object>
+            {
+                {"@idReserva", idReserva}
+            });
+        }
+
         public Task<int> InsertAsync(EstadoReserva estadoPedido)
         {
             const string spName = "PROCEDURE";

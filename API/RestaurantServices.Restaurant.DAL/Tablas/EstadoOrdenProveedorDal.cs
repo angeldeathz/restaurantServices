@@ -39,6 +39,22 @@ namespace RestaurantServices.Restaurant.DAL.Tablas
             });
         }
 
+        public Task<IEnumerable<EstadoOrdenProveedor>> GetByOrdenProveedorAsync(int idOrdenProveedor)
+        {
+            const string query = @"SELECT
+                    ee.id,
+                    ee.nombre,
+                    c.fecha
+                from estado_orden_proveedor ee
+                join cambio_estado_orden_proveedor c on ee.id = c.estado_orden_proveedor_id
+                where c.orden_proveedor_id = :idOrdenProveedor";
+
+            return _repository.GetListAsync<EstadoOrdenProveedor>(query, new Dictionary<string, object>
+            {
+                {"@idOrdenProveedor", idOrdenProveedor}
+            });
+        }
+
         public Task<int> InsertAsync(EstadoOrdenProveedor estadoPedido)
         {
             const string spName = "PROCEDURE";

@@ -37,5 +37,21 @@ namespace RestaurantServices.Restaurant.DAL.Tablas
                 {"@id", id}
             });
         }
+
+        public Task<IEnumerable<EstadoArticuloPedido>> GetByArticuloPedido(int idArticuloPedido)
+        {
+            const string query = @"SELECT
+                    ee.id,
+                    ee.nombre,
+                    c.fecha
+                from estado_articulo_pedido ee
+                join cambio_estado_articulo_pedido c on ee.id = c.estado_articulo_pedido_id
+                where c.articulo_pedido_id = :idArticuloPedido";
+
+            return _repository.GetListAsync<EstadoArticuloPedido>(query, new Dictionary<string, object>
+            {
+                {"@idArticuloPedido", idArticuloPedido}
+            });
+        }
     }
 }

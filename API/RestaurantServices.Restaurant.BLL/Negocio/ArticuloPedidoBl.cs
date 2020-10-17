@@ -26,6 +26,8 @@ namespace RestaurantServices.Restaurant.BLL.Negocio
             {
                 x.Pedido = await _pedidoBl.ObtenerPorIdAsync(x.IdPedido);
                 x.Articulo = await _articuloBl.ObtenerPorIdAsync(x.IdArticulo);
+                var estados = await _unitOfWork.EstadoArticuloPedidoDal.GetByArticuloPedido(x.Id);
+                x.EstadosArticuloPedido = (List<EstadoArticuloPedido>)estados;
             }
 
             return (List<ArticuloPedido>)articuloPedidos;
@@ -37,6 +39,10 @@ namespace RestaurantServices.Restaurant.BLL.Negocio
             if (articuloPedido == null) return null;
             articuloPedido.Pedido = await _pedidoBl.ObtenerPorIdAsync(articuloPedido.IdPedido);
             articuloPedido.Articulo = await _articuloBl.ObtenerPorIdAsync(articuloPedido.IdArticulo);
+
+            var estados = await _unitOfWork.EstadoArticuloPedidoDal.GetByArticuloPedido(articuloPedido.Id);
+            articuloPedido.EstadosArticuloPedido = (List<EstadoArticuloPedido>)estados;
+
             return articuloPedido;
         }
 

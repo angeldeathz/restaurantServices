@@ -26,6 +26,8 @@ namespace RestaurantServices.Restaurant.BLL.Negocio
             {
                 x.Proveedor = await _proveedorBl.ObtenerPorIdAsync(x.IdProveedor);
                 x.Usuario = await _usuarioBl.ObtenerPorIdAsync(x.IdUsuario);
+                var estados = await _unitOfWork.EstadoOrdenProveedorDal.GetByOrdenProveedorAsync(x.Id);
+                x.EstadosOrdenProveedor = (List<EstadoOrdenProveedor>)estados;
             }
 
             return (List<OrdenProveedor>) ordenesProveedor;
@@ -38,6 +40,10 @@ namespace RestaurantServices.Restaurant.BLL.Negocio
 
             orden.Proveedor = await _proveedorBl.ObtenerPorIdAsync(orden.IdProveedor);
             orden.Usuario = await _usuarioBl.ObtenerPorIdAsync(orden.IdUsuario);
+
+            var estados = await _unitOfWork.EstadoOrdenProveedorDal.GetByOrdenProveedorAsync(orden.Id);
+            orden.EstadosOrdenProveedor = (List<EstadoOrdenProveedor>)estados;
+
             return orden;
         }
 
