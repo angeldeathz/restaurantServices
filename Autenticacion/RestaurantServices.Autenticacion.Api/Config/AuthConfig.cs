@@ -15,7 +15,17 @@ namespace RestaurantServices.Autenticacion.Api.Config
 
         public override async Task GrantResourceOwnerCredentials(OAuthGrantResourceOwnerCredentialsContext context)
         {
-            context.OwinContext.Response.Headers.Add("Access-Control-Allow-Origin", new[] {"*"});
+            var body = await context.Request.ReadFormAsync();
+            var cliente = body["user_type"];
+
+            if (cliente != null && cliente.ToLower().Equals("cliente"))
+            {
+                var identity = new ClaimsIdentity(context.Options.AuthenticationType);
+                context.Validated(identity);
+                return;
+            }
+
+            context.OwinContext.Response.Headers.Add("Access-Control-Allow-Origin", new[] { "*" });
             var esInicioSesionValido = await ValidarCredencialesUsuarioAsync(context.UserName, context.Password);
 
             if (esInicioSesionValido)
@@ -36,7 +46,8 @@ namespace RestaurantServices.Autenticacion.Api.Config
             var restClient = new RestClient();
             var respuesta = await restClient.PostAsync($"http://localhost/restaurant/api/usuarios/login", new
             {
-                rut, contrasena
+                rut,
+                contrasena
             });
             return respuesta.StatusName == HttpStatusCode.OK;
         }
