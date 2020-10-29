@@ -49,6 +49,19 @@ namespace RestaurantServices.Restaurant.DAL.Shared
 
         #endregion
 
+        #region Insert
+
+        public async Task<int> InsertAsync(string query, Dictionary<string, object> parameters)
+        {
+            GetConnection.Open();
+            var dynamicParameters = new DynamicParameters(parameters);
+            var result = await GetConnection.ExecuteScalarAsync<int>(query, dynamicParameters);
+            GetConnection.Close();
+            return result;
+        }
+
+        #endregion
+
         #region Get
 
         public async Task<IEnumerable<T>> GetListAsync<T>(string query)

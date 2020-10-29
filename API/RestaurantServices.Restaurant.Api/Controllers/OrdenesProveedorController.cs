@@ -7,6 +7,7 @@ using System.Web.Http;
 using System.Web.Http.Description;
 using RestaurantServices.Restaurant.BLL.Negocio;
 using RestaurantServices.Restaurant.Modelo.Clases;
+using RestaurantServices.Restaurant.Modelo.Dto;
 
 namespace RestaurantServices.Restaurant.API.Controllers
 {
@@ -56,6 +57,13 @@ namespace RestaurantServices.Restaurant.API.Controllers
             var esActualizado = await _ordenProveedorBl.ModificarAsync(ordenProveedor);
 
             if (esActualizado == 0) throw new Exception("No se pudo actualizar la orden proveedor");
+            return Ok(true);
+        }
+
+        [HttpPost, Route("NuevoEstado")]
+        public async Task<IHttpActionResult> PostNuevoEstado([FromBody] OrdenProveedorEstado estado)
+        {
+            await _ordenProveedorBl.AgregarEstadoAsync(estado);
             return Ok(true);
         }
     }

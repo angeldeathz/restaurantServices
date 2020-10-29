@@ -2,6 +2,7 @@
 using System.Threading.Tasks;
 using RestaurantServices.Restaurant.DAL.Shared;
 using RestaurantServices.Restaurant.Modelo.Clases;
+using RestaurantServices.Restaurant.Modelo.Dto;
 
 namespace RestaurantServices.Restaurant.BLL.Negocio
 {
@@ -54,6 +55,11 @@ namespace RestaurantServices.Restaurant.BLL.Negocio
         public Task<int> ModificarAsync(ArticuloPedido articuloPedido)
         {
             return _unitOfWork.ArticuloPedidoDal.UpdateAsync(articuloPedido);
+        }
+
+        public Task<int> AgregarEstadoAsync(ArticuloPedidoEstado estado)
+        {
+            return _unitOfWork.ArticuloPedidoDal.InsertEstadoAsync(estado);
         }
     }
 }

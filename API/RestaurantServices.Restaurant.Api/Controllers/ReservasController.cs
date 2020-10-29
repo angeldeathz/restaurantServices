@@ -7,6 +7,7 @@ using System.Web.Http;
 using System.Web.Http.Description;
 using RestaurantServices.Restaurant.BLL.Negocio;
 using RestaurantServices.Restaurant.Modelo.Clases;
+using RestaurantServices.Restaurant.Modelo.Dto;
 
 namespace RestaurantServices.Restaurant.API.Controllers
 {
@@ -57,6 +58,13 @@ namespace RestaurantServices.Restaurant.API.Controllers
             var esActualizado = await _reservaBl.ModificarAsync(reserva);
 
             if (esActualizado == 0) throw new Exception("No se pudo actualizar la reserva");
+            return Ok(true);
+        }
+
+        [HttpPost, Route("NuevoEstado")]
+        public async Task<IHttpActionResult> PostNuevoEstado([FromBody] ReservaEstado estado)
+        {
+            await _reservaBl.AgregarEstadoAsync(estado);
             return Ok(true);
         }
     }

@@ -6,6 +6,7 @@ namespace RestaurantServices.Restaurant.DAL.Shared
 {
     public interface IRepository
     {
+        Task<int> InsertAsync(string query, Dictionary<string, object> parameters);
         Task<IEnumerable<T>> GetListAsync<T>(string query);
         Task<IEnumerable<T>> GetListAsync<T>(string query, Dictionary<string, object> parameters);
         Task<T> GetAsync<T>(string query);

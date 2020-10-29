@@ -2,6 +2,7 @@
 using System.Threading.Tasks;
 using RestaurantServices.Restaurant.DAL.Shared;
 using RestaurantServices.Restaurant.Modelo.Clases;
+using RestaurantServices.Restaurant.Modelo.Dto;
 
 namespace RestaurantServices.Restaurant.BLL.Negocio
 {
@@ -30,7 +31,7 @@ namespace RestaurantServices.Restaurant.BLL.Negocio
                 x.EstadosOrdenProveedor = (List<EstadoOrdenProveedor>)estados;
             }
 
-            return (List<OrdenProveedor>) ordenesProveedor;
+            return (List<OrdenProveedor>)ordenesProveedor;
         }
 
         public async Task<OrdenProveedor> ObtenerPorIdAsync(int id)
@@ -55,6 +56,11 @@ namespace RestaurantServices.Restaurant.BLL.Negocio
         public Task<int> ModificarAsync(OrdenProveedor ordenProveedor)
         {
             return _unitOfWork.OrdenProveedorDal.UpdateAsync(ordenProveedor);
+        }
+
+        public Task<int> AgregarEstadoAsync(OrdenProveedorEstado estado)
+        {
+            return _unitOfWork.OrdenProveedorDal.InsertEstadoAsync(estado);
         }
     }
 }

@@ -3,6 +3,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using RestaurantServices.Restaurant.DAL.Shared;
 using RestaurantServices.Restaurant.Modelo.Clases;
+using RestaurantServices.Restaurant.Modelo.Dto;
 
 namespace RestaurantServices.Restaurant.BLL.Negocio
 {
@@ -113,6 +114,11 @@ namespace RestaurantServices.Restaurant.BLL.Negocio
         public Task<int> ModificarAsync(Reserva reserva)
         {
             return _unitOfWork.ReservaDal.UpdateAsync(reserva);
+        }
+
+        public Task<int> AgregarEstadoAsync(ReservaEstado estado)
+        {
+            return _unitOfWork.ReservaDal.InsertEstadoAsync(estado);
         }
     }
 }

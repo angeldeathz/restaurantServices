@@ -1,8 +1,10 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Data;
 using System.Threading.Tasks;
 using RestaurantServices.Restaurant.DAL.Shared;
 using RestaurantServices.Restaurant.Modelo.Clases;
+using RestaurantServices.Restaurant.Modelo.Dto;
 
 namespace RestaurantServices.Restaurant.DAL.Tablas
 {
@@ -78,6 +80,20 @@ namespace RestaurantServices.Restaurant.DAL.Tablas
                 {"@p_estado_articulo_pedido_id", articuloPedido.IdEstadoArticuloPedido},
                 {"@p_return", 0}
             }, CommandType.StoredProcedure);
+        }
+
+        public Task<int> InsertEstadoAsync(ArticuloPedidoEstado estado)
+        {
+            const string spName =
+                @"insert into cambio_estado_articulo_pedido (ESTADO_ARTICULO_PEDIDO_ID, ARTICULO_PEDIDO_ID, fecha)
+                  values (:EstadoArticuloPedidoId, :ArticuloPedidoId, :Fecha)";
+
+            return _repository.InsertAsync(spName, new Dictionary<string, object>
+            {
+                {"@EstadoArticuloPedidoId", estado.IdEstadoArticuloPedido},
+                {"@ArticuloPedidoId", estado.IdArticuloPedido},
+                {"@Fecha", DateTime.Now}
+            });
         }
     }
 }

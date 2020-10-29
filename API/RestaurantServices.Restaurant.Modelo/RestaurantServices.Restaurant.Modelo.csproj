@@ -71,6 +71,9 @@
     <Compile Include="Clases\TipoUsuario.cs" />
     <Compile Include="Clases\UnidadMedida.cs" />
     <Compile Include="Clases\Usuario.cs" />
+    <Compile Include="Dto\ArticuloPedidoEstado.cs" />
+    <Compile Include="Dto\OrdenProveedorEstado.cs" />
+    <Compile Include="Dto\ReservaEstado.cs" />
     <Compile Include="TableJoin\ArticuloJoin.cs" />
     <Compile Include="TableJoin\ClienteJoin.cs" />
     <Compile Include="TableJoin\MesaJoin.cs" />
