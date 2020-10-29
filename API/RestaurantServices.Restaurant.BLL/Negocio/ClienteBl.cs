@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using RestaurantServices.Restaurant.DAL.Shared;
 using RestaurantServices.Restaurant.Modelo.Clases;
+using RestaurantServices.Restaurant.Modelo.Dto;
 
 namespace RestaurantServices.Restaurant.BLL.Negocio
 {
@@ -87,10 +88,51 @@ namespace RestaurantServices.Restaurant.BLL.Negocio
             };
         }
 
+        public async Task<Cliente> ObtenerPorEmailAsync(string email)
+        {
+            var cliente = await _unitOfWork.ClienteDal.GetByEmailAsync(email);
+            if (cliente == null) return null;
+            return new Cliente
+            {
+                Id = cliente.IdCliente,
+                IdPersona = cliente.IdPersona,
+                Persona = new Persona
+                {
+                    Nombre = cliente.Nombre,
+                    DigitoVerificador = cliente.DigitoVerificador,
+                    Apellido = cliente.Apellido,
+                    Email = cliente.Email,
+                    Telefono = cliente.Telefono,
+                    Rut = cliente.Rut,
+                    EsPersonaNatural = cliente.EsPersonaNatural,
+                    Id = cliente.IdPersona
+                }
+            };
+        }
+
         public async Task<int> GuardarAsync(Cliente cliente)
         {
             var clienteExistente = await this.GetByRutAsync(cliente.Persona.ObtenerRutCompleto());
             if (clienteExistente != null) throw new Exception("Cliente ya existe");
+            return await _unitOfWork.ClienteDal.InsertAsync(cliente);
+        }
+
+        public async Task<int> GuardarNuevoAsync(ClienteNuevoDto clienteNuevo)
+        {
+            var clienteEntity = await _unitOfWork.ClienteDal.GetByEmailAsync(clienteNuevo.Email);
+            if (clienteEntity != null) throw new Exception("Ya hay un cliente con el mismo email");
+
+            var cliente = new Cliente
+            {
+                Persona = new Persona
+                {
+                    Email = clienteNuevo.Email,
+                    Rut = 0,
+                    DigitoVerificador = "0",
+                    EsPersonaNatural = '1'
+                }
+            };
+
             return await _unitOfWork.ClienteDal.InsertAsync(cliente);
         }
 

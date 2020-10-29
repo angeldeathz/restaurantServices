@@ -72,6 +72,7 @@
     <Compile Include="Clases\UnidadMedida.cs" />
     <Compile Include="Clases\Usuario.cs" />
     <Compile Include="Dto\ArticuloPedidoEstado.cs" />
+    <Compile Include="Dto\ClienteNuevoDto.cs" />
     <Compile Include="Dto\OrdenProveedorEstado.cs" />
     <Compile Include="Dto\ReservaEstado.cs" />
     <Compile Include="TableJoin\ArticuloJoin.cs" />
@@ -86,6 +87,7 @@
     <Compile Include="TableJoin\ProveedorJoin.cs" />
     <Compile Include="Validaciones\ArticuloPedidoValidator.cs" />
     <Compile Include="Validaciones\ArticuloValidator.cs" />
+    <Compile Include="Validaciones\ClienteNuevoDtoValidator.cs" />
     <Compile Include="Validaciones\ClienteValidator.cs" />
     <Compile Include="Validaciones\DetalleOrdenProveedorValidator.cs" />
     <Compile Include="Validaciones\IngredientePlatoValidator.cs" />

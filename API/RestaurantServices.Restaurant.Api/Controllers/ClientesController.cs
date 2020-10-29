@@ -7,6 +7,7 @@ using System.Web.Http;
 using System.Web.Http.Description;
 using RestaurantServices.Restaurant.BLL.Negocio;
 using RestaurantServices.Restaurant.Modelo.Clases;
+using RestaurantServices.Restaurant.Modelo.Dto;
 
 namespace RestaurantServices.Restaurant.API.Controllers
 {
@@ -40,11 +41,31 @@ namespace RestaurantServices.Restaurant.API.Controllers
             return Ok(cliente);
         }
 
+        [HttpGet, Route("filtro")]
+        [ResponseType(typeof(Cliente))]
+        public async Task<IHttpActionResult> Get([FromUri] string email)
+        {
+            var cliente = await _clienteBl.ObtenerPorEmailAsync(email);
+
+            if (cliente == null) return ResponseMessage(new HttpResponseMessage(HttpStatusCode.NoContent));
+            return Ok(cliente);
+        }
+
         [HttpPost, Route("")]
         [ResponseType(typeof(int))]
         public async Task<IHttpActionResult> Post([FromBody] Cliente cliente)
         {
             var idCliente = await _clienteBl.GuardarAsync(cliente);
+
+            if (idCliente == 0) throw new Exception("No se pudo crear el cliente");
+            return Ok(idCliente);
+        }
+
+        [HttpPost, Route("nuevos")]
+        [ResponseType(typeof(int))]
+        public async Task<IHttpActionResult> PostClientesNuevos([FromBody] ClienteNuevoDto clienteNuevo)
+        {
+            var idCliente = await _clienteBl.GuardarNuevoAsync(clienteNuevo);
 
             if (idCliente == 0) throw new Exception("No se pudo crear el cliente");
             return Ok(idCliente);

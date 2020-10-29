@@ -78,6 +78,28 @@ namespace RestaurantServices.Restaurant.DAL.Tablas
             });
         }
 
+        public Task<ClienteJoin> GetByEmailAsync(string email)
+        {
+            const string query = @"SELECT
+                    c.id as idCliente,
+                    p.id as idPersona,
+                    p.rut,
+                    p.digito_verificador as digitoVerificador,
+                    p.nombre,
+                    p.apellido,
+                    p.email,
+                    p.telefono,
+                    p.persona_natural as esPersonaNatural
+                FROM CLIENTE c
+                JOIN PERSONA p on c.persona_id = p.id
+                where p.email = :email";
+
+            return _repository.GetAsync<ClienteJoin>(query, new Dictionary<string, object>
+            {
+                {"@email", email}
+            });
+        }
+
         public Task<int> InsertAsync(Cliente cliente)
         {
             const string spName = "sp_insertCliente";
