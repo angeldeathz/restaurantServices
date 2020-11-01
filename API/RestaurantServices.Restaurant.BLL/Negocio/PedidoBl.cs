@@ -45,6 +45,7 @@ namespace RestaurantServices.Restaurant.BLL.Negocio
             foreach (var x in pedidosList)
             {
                 x.Mesa.EstadoMesa = await _estadoMesaBl.ObtenerPorIdAsync(x.Mesa.IdEstadoMesa);
+                x.EstadoPedido = await _unitOfWork.EstadoPedidoDal.GetAsync(x.IdEstadoPedido);
             }
 
             return pedidosList;
@@ -77,6 +78,7 @@ namespace RestaurantServices.Restaurant.BLL.Negocio
             };
 
             pedidoReturn.Mesa.EstadoMesa = await _estadoMesaBl.ObtenerPorIdAsync(pedidoReturn.Mesa.IdEstadoMesa);
+            pedidoReturn.EstadoPedido = await _unitOfWork.EstadoPedidoDal.GetAsync(pedidoReturn.IdEstadoPedido);
             return pedidoReturn;
         }
 
