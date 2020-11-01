@@ -7,5 +7,7 @@ namespace RestaurantServices.Restaurant.Modelo.Dto
     public class ClienteNuevoDto
     {
         public string Email { get; set; }
+        public string Nombre { get; set; }
+        public string Apellido { get; set; }
     }
 }

@@ -112,7 +112,7 @@ namespace RestaurantServices.Restaurant.BLL.Negocio
 
         public async Task<int> GuardarAsync(Cliente cliente)
         {
-            var clienteExistente = await this.GetByRutAsync(cliente.Persona.ObtenerRutCompleto());
+            var clienteExistente = await GetByRutAsync(cliente.Persona.ObtenerRutCompleto());
             if (clienteExistente != null) throw new Exception("Cliente ya existe");
             return await _unitOfWork.ClienteDal.InsertAsync(cliente);
         }
@@ -129,7 +129,9 @@ namespace RestaurantServices.Restaurant.BLL.Negocio
                     Email = clienteNuevo.Email,
                     Rut = 0,
                     DigitoVerificador = "0",
-                    EsPersonaNatural = '1'
+                    EsPersonaNatural = '1',
+                    Nombre = clienteNuevo.Nombre,
+                    Apellido = clienteNuevo.Apellido
                 }
             };
 
