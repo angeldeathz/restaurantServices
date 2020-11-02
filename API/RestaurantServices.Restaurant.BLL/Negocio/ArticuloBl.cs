@@ -26,6 +26,7 @@ namespace RestaurantServices.Restaurant.BLL.Negocio
                 IdTipoConsumo = articulo.IdTipoConsumo,
                 IdEstadoArticulo = articulo.IdEstadoArticulo,
                 Id = articulo.IdArticulo,
+                UrlImagen = articulo.UrlImagen,
                 EstadoArticulo = new EstadoArticulo
                 {
                     Id = articulo.IdEstadoArticulo,
@@ -51,6 +52,7 @@ namespace RestaurantServices.Restaurant.BLL.Negocio
                 IdTipoConsumo = articulo.IdTipoConsumo,
                 IdEstadoArticulo = articulo.IdEstadoArticulo,
                 Id = articulo.IdArticulo,
+                UrlImagen = articulo.UrlImagen,
                 EstadoArticulo = new EstadoArticulo
                 {
                     Id = articulo.IdEstadoArticulo,

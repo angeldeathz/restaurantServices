@@ -12,6 +12,7 @@ namespace RestaurantServices.Restaurant.Modelo.Clases
         public int Precio { get; set; }
         public int IdEstadoArticulo { get; set; }
         public int IdTipoConsumo { get; set; }
+        public string UrlImagen { get; set; }
         public EstadoArticulo EstadoArticulo { get; set; }
         public TipoConsumo TipoConsumo { get; set; }
     }

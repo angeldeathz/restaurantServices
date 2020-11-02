@@ -26,7 +26,8 @@ namespace RestaurantServices.Restaurant.DAL.Tablas
                     a.estado_articulo_id as IdEstadoArticulo,
                     a.tipo_consumo_id as IdtipoConsumo,
                     ea.nombre as nombreEstadoArticulo,
-                    tc.nombre as nombreTipoConsumo
+                    tc.nombre as nombreTipoConsumo,
+                    a.url_imagen as urlImagen
                 from articulo a
                 join estado_articulo ea on a.estado_articulo_id = ea.id
                 join tipo_consumo tc on tc.id = a.tipo_consumo_id";
@@ -44,7 +45,8 @@ namespace RestaurantServices.Restaurant.DAL.Tablas
                     a.estado_articulo_id as IdEstadoArticulo,
                     a.tipo_consumo_id as IdtipoConsumo,
                     ea.nombre as nombreEstadoArticulo,
-                    tc.nombre as nombreTipoConsumo
+                    tc.nombre as nombreTipoConsumo,
+                    a.url_imagen as urlImagen
                 from articulo a
                 join estado_articulo ea on a.estado_articulo_id = ea.id
                 join tipo_consumo tc on tc.id = a.tipo_consumo_id
@@ -67,6 +69,7 @@ namespace RestaurantServices.Restaurant.DAL.Tablas
                 {"@p_precio", articulo.Precio},
                 {"@p_estado_articulo_id", articulo.IdEstadoArticulo},
                 {"@p_tipo_consumo_id", articulo.IdTipoConsumo},
+                {"@p_url_imagen", articulo.UrlImagen},
                 {"@p_return", 0}
             }, CommandType.StoredProcedure);
         }
@@ -83,6 +86,7 @@ namespace RestaurantServices.Restaurant.DAL.Tablas
                 {"@p_precio", articulo.Precio},
                 {"@p_estado_articulo_id", articulo.IdEstadoArticulo},
                 {"@p_tipo_consumo_id", articulo.IdTipoConsumo},
+                {"@p_url_imagen", articulo.UrlImagen},
                 {"@p_return", 0}
             }, CommandType.StoredProcedure);
         }

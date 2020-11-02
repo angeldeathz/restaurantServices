@@ -14,6 +14,7 @@ namespace RestaurantServices.Restaurant.Modelo.Clases
         public int IdPedido { get; set; }
         public int IdArticulo { get; set; }
         public int IdEstadoArticuloPedido { get; set; }
+        public string Comentarios { get; set; }
         public Pedido Pedido { get; set; }
         public Articulo Articulo { get; set; }
         public List<EstadoArticuloPedido> EstadosArticuloPedido { get; set; }

@@ -25,7 +25,8 @@ namespace RestaurantServices.Restaurant.DAL.Tablas
                     cantidad,
                     total,
                     articulo_id as idArticulo,
-                    pedido_id as idPedido
+                    pedido_id as idPedido,
+                    comentarios
                 from articulo_pedido";
 
             return _repository.GetListAsync<ArticuloPedido>(query);
@@ -39,7 +40,8 @@ namespace RestaurantServices.Restaurant.DAL.Tablas
                     cantidad,
                     total,
                     articulo_id as idArticulo,
-                    pedido_id as idPedido
+                    pedido_id as idPedido,
+                    comentarios
                 from articulo_pedido
                 where id = :id";
 
@@ -61,6 +63,7 @@ namespace RestaurantServices.Restaurant.DAL.Tablas
                 {"@p_articulo_id", articuloPedido.IdArticulo},
                 {"@p_pedidoId", articuloPedido.IdPedido},
                 {"@p_estado_articulo_pedido_id", articuloPedido.IdEstadoArticuloPedido},
+                {"@p_comentarios", articuloPedido.Comentarios},
                 {"@p_return", 0}
             }, CommandType.StoredProcedure);
         }
@@ -78,6 +81,7 @@ namespace RestaurantServices.Restaurant.DAL.Tablas
                 {"@p_articuloId", articuloPedido.IdArticulo},
                 {"@p_pedidoId", articuloPedido.IdPedido},
                 {"@p_estado_articulo_pedido_id", articuloPedido.IdEstadoArticuloPedido},
+                {"@p_comentarios", articuloPedido.Comentarios},
                 {"@p_return", 0}
             }, CommandType.StoredProcedure);
         }
