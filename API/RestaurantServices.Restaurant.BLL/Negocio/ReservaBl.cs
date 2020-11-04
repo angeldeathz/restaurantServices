@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using RestaurantServices.Restaurant.DAL.Shared;
@@ -106,9 +107,45 @@ namespace RestaurantServices.Restaurant.BLL.Negocio
             return reservaResult;
         }
 
-        public Task<int> GuardarAsync(Reserva reserva)
+        public async Task<int> GuardarAsync(Reserva reserva)
         {
-            return _unitOfWork.ReservaDal.InsertAsync(reserva);
+            var mesa = await _unitOfWork.MesaDal.GetAsync(reserva.IdMesa);
+
+            // Validación OK
+            if (reserva.CantidadComensales > mesa.CantidadComensales)
+                throw new Exception($"La mesa solo acepta {mesa.CantidadComensales} comensales");
+
+            var reservas = await ObtenerTodosAsync();
+            var reservaOcupada = false;
+
+            foreach (var x in reservas)
+            {
+                if (x.IdMesa != reserva.IdMesa) continue;
+
+                if (reserva.FechaReserva == x.FechaReserva)
+                    reservaOcupada = true;
+
+                if (reserva.FechaReserva < x.FechaReserva)
+                {
+                    if (reserva.FechaReserva >= x.FechaReserva.AddHours(-1))
+                    {
+                        reservaOcupada = true;
+                    }
+                }
+
+                if (reserva.FechaReserva > x.FechaReserva)
+                {
+                    if (reserva.FechaReserva <= x.FechaReserva.AddHours(1))
+                    {
+                        reservaOcupada = true;
+                    }
+                }
+            }
+
+            if (reservaOcupada)
+                throw new Exception($"Ya hay una reserva para la {mesa.NombreMesa}. Debe haber 1 hora de diferencia entre las reservas.");
+
+            return await _unitOfWork.ReservaDal.InsertAsync(reserva);
         }
 
         public Task<int> ModificarAsync(Reserva reserva)
