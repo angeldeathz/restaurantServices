@@ -63,6 +63,8 @@
   <ItemGroup>
     <Compile Include="Http\RestClient.cs" />
     <Compile Include="Http\RestClientResponse.cs" />
+    <Compile Include="Mail\Email.cs" />
+    <Compile Include="Mail\EmailClient.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="WebApiConfig\ErrorHandler.cs" />
     <Compile Include="WebApiConfig\Interceptor.cs" />

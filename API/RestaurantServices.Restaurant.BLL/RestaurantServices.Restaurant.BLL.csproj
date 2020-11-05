@@ -76,6 +76,10 @@
       <Project>{B8347E32-1A66-4C0F-B5BF-DF814F56A8A9}</Project>
       <Name>RestaurantServices.Restaurant.Modelo</Name>
     </ProjectReference>
+    <ProjectReference Include="..\RestaurantServices.Restaurant.Shared\RestaurantServices.Restaurant.Shared.csproj">
+      <Project>{BB132222-54B2-4A6A-80FD-D33FD0EC3EB6}</Project>
+      <Name>RestaurantServices.Restaurant.Shared</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

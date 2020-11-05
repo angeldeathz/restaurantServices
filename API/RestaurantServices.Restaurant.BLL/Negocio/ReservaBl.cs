@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using RestaurantServices.Restaurant.DAL.Shared;
 using RestaurantServices.Restaurant.Modelo.Clases;
 using RestaurantServices.Restaurant.Modelo.Dto;
+using RestaurantServices.Restaurant.Shared.Mail;
 
 namespace RestaurantServices.Restaurant.BLL.Negocio
 {
@@ -12,11 +13,15 @@ namespace RestaurantServices.Restaurant.BLL.Negocio
     {
         private readonly UnitOfWork _unitOfWork;
         private readonly EstadoMesaBl _estadoMesaBl;
+        private readonly EmailClient _emailClient;
+        private readonly ClienteBl _clienteBl;
 
         public ReservaBl()
         {
             _unitOfWork = new UnitOfWork(new OracleRepository());
             _estadoMesaBl = new EstadoMesaBl();
+            _emailClient = new EmailClient();
+            _clienteBl = new ClienteBl();
         }
 
         public async Task<List<Reserva>> ObtenerTodosAsync()
@@ -146,17 +151,121 @@ namespace RestaurantServices.Restaurant.BLL.Negocio
             if (reservaOcupada)
                 throw new Exception($"Ya hay una reserva para la {mesa.NombreMesa}. Debe haber 1 hora de diferencia entre las reservas.");
 
-            return await _unitOfWork.ReservaDal.InsertAsync(reserva);
+            var idReserva = await _unitOfWork.ReservaDal.InsertAsync(reserva);
+
+            if (idReserva > 0)
+            {
+                var cliente = await _clienteBl.ObtenerPorIdAsync(reserva.IdCliente);
+                var cabeceraNombre = cliente.Persona.Nombre == null ? "Estimado Cliente:" : $"Estimado {cliente.Persona.Nombre} {cliente.Persona.Apellido}:";
+
+                _emailClient.Send(new Email
+                {
+                    ReceptorEmail = cliente.Persona.Email,
+                    ReceptorNombre = cabeceraNombre,
+                    Asunto = $"Reserva {idReserva} creada",
+                    Contenido =
+                        $@"{cabeceraNombre} <br/><br/>
+                           Gracias por reservar en Restaurante Siglo XXI, <br/><br/>
+                           Su reserva es la N° {idReserva} <br/>
+                           Cantidad Comensales: {reserva.CantidadComensales} <br/>
+                           {mesa.NombreMesa} <br/>
+                           Fecha de la Reserva: {reserva.FechaReserva:dd-MM-yyyy hh:mm} <br/><br/>
+
+                           Atte, <br/>
+                           Restaurante Siglo XXI. <br/>"
+                });
+            }
+
+            return idReserva;
         }
 
-        public Task<int> ModificarAsync(Reserva reserva)
+        public async Task<int> ModificarAsync(Reserva reserva)
         {
-            return _unitOfWork.ReservaDal.UpdateAsync(reserva);
+            var mesa = await _unitOfWork.MesaDal.GetAsync(reserva.IdMesa);
+
+            // Validación OK
+            if (reserva.CantidadComensales > mesa.CantidadComensales)
+                throw new Exception($"La mesa solo acepta {mesa.CantidadComensales} comensales");
+
+            var reservas = await ObtenerTodosAsync();
+            var reservaOcupada = false;
+
+            foreach (var x in reservas)
+            {
+                if (x.IdMesa != reserva.IdMesa) continue;
+
+                if (reserva.FechaReserva == x.FechaReserva)
+                    reservaOcupada = true;
+
+                if (reserva.FechaReserva < x.FechaReserva)
+                {
+                    if (reserva.FechaReserva >= x.FechaReserva.AddHours(-1))
+                    {
+                        reservaOcupada = true;
+                    }
+                }
+
+                if (reserva.FechaReserva > x.FechaReserva)
+                {
+                    if (reserva.FechaReserva <= x.FechaReserva.AddHours(1))
+                    {
+                        reservaOcupada = true;
+                    }
+                }
+            }
+
+            if (reservaOcupada)
+                throw new Exception($"Ya hay una reserva para la {mesa.NombreMesa}. Debe haber 1 hora de diferencia entre las reservas.");
+
+            var modificado = await _unitOfWork.ReservaDal.UpdateAsync(reserva);
+
+            var cliente = await _clienteBl.ObtenerPorIdAsync(reserva.IdCliente);
+            var cabeceraNombre = cliente.Persona.Nombre == null ? "Estimado Cliente:" : $"Estimado {cliente.Persona.Nombre} {cliente.Persona.Apellido}:";
+            var estadoReserva = await _unitOfWork.EstadoReservaDal.GetAsync(reserva.IdEstadoReserva);
+
+            _emailClient.Send(new Email
+            {
+                ReceptorEmail = cliente.Persona.Email,
+                ReceptorNombre = cabeceraNombre,
+                Asunto = $"Reserva {reserva.Id} ha sido Modificada",
+                Contenido =
+                    $@"{cabeceraNombre} <br/><br/>
+                           Su reserva N° {reserva.Id} ha sido modificada, <br/>
+                           El estado de la reserva ahora es {estadoReserva.Nombre} <br/>
+                           Cantidad Comensales: {reserva.CantidadComensales} <br/>
+                           {mesa.NombreMesa} <br/>
+                           Fecha de la Reserva: {reserva.FechaReserva:dd-MM-yyyy hh:mm} <br/><br/>
+
+                           Atte, <br/>
+                           Restaurante Siglo XXI. <br/>"
+            });
+
+            return modificado;
         }
 
-        public Task<int> AgregarEstadoAsync(ReservaEstado estado)
+        public async Task<int> AgregarEstadoAsync(ReservaEstado estado)
         {
-            return _unitOfWork.ReservaDal.InsertEstadoAsync(estado);
+            var idEstado = await _unitOfWork.ReservaDal.InsertEstadoAsync(estado);
+            var estadoReserva = await _unitOfWork.EstadoReservaDal.GetAsync(estado.IdEstadoReserva);
+            var reserva = await ObtenerPorIdAsync(estado.IdReserva);
+
+            var cabeceraNombre = reserva.Cliente.Persona.Nombre == null ? "Estimado Cliente:" : $"Estimado {reserva.Cliente.Persona.Nombre} {reserva.Cliente.Persona.Apellido}:";
+
+            _emailClient.Send(new Email
+            {
+                ReceptorEmail = reserva.Cliente.Persona.Email,
+                ReceptorNombre = cabeceraNombre,
+                Asunto = $"Reserva {estado.IdReserva} {estadoReserva.Nombre}",
+                Contenido =
+                    $@"{cabeceraNombre} <br/><br/>
+                           Su reserva N° {estado.IdReserva} con fecha {reserva.FechaReserva:dd-MM-yyyy hh:mm},
+                           cambió de estado a {estadoReserva.Nombre}. <br/><br/>
+
+                           Atte, <br/>
+                           Restaurante Siglo XXI. <br/>"
+            });
+
+            return idEstado;
         }
     }
 }
