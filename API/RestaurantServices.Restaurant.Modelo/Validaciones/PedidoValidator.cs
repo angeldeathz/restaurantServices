@@ -20,8 +20,8 @@ namespace RestaurantServices.Restaurant.Modelo.Validaciones
 
             RuleFor(x => x.Total).GreaterThan(0);
             RuleFor(x => x.IdEstadoPedido).GreaterThan(0);
-            RuleFor(x => x.IdMesa).GreaterThan(0);
-            RuleFor(x => x.Mesa).Null();
+            RuleFor(x => x.IdReserva).GreaterThan(0);
+            RuleFor(x => x.Reserva).Null();
             RuleFor(x => x.EstadoPedido).Null();
         }
 

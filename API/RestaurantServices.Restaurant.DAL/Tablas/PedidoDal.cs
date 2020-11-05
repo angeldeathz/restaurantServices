@@ -3,7 +3,6 @@ using System.Data;
 using System.Threading.Tasks;
 using RestaurantServices.Restaurant.DAL.Shared;
 using RestaurantServices.Restaurant.Modelo.Clases;
-using RestaurantServices.Restaurant.Modelo.TableJoin;
 
 namespace RestaurantServices.Restaurant.DAL.Tablas
 {
@@ -16,45 +15,33 @@ namespace RestaurantServices.Restaurant.DAL.Tablas
             _repository = repository;
         }
 
-        public Task<IEnumerable<PedidoJoin>> GetAsync()
+        public Task<IEnumerable<Pedido>> GetAsync()
         {
             const string query = @"SELECT
-                p.id as idPedido,
-                p.fecha_hora_inicio as fechaInicioPedido,
-                p.fecha_hora_fin as fechaFinPedido,
-                p.total,
-                p.mesa_id as idMesa,
-                p.estado_pedido_id as idEstadoPedido,
-                m.nombre as nombreMesa,
-                m.cantidad_comensales as CantidadComensales,
-                m.estado_mesa_id as idEstadoMesa,
-                ep.nombre as nombreEstadoPedido
-            FROM PEDIDO p
-            JOIN mesa m on p.mesa_id = m.id
-            JOIN estado_pedido ep on p.estado_pedido_id = ep.id";
+                    id,
+                    fecha_hora_inicio as FechaHoraInicio,
+                    fecha_hora_fin as FechaHoraFin,
+                    total,
+                    reserva_id as IdReserva,
+                    estado_pedido_id as IdEstadoPedido
+                from pedido";
 
-            return _repository.GetListAsync<PedidoJoin>(query);
+            return _repository.GetListAsync<Pedido>(query);
         }
 
-        public Task<PedidoJoin> GetAsync(int id)
+        public Task<Pedido> GetAsync(int id)
         {
             const string query = @"SELECT
-                    p.id as idPedido,
-                    p.fecha_hora_inicio as fechaInicioPedido,
-                    p.fecha_hora_fin as fechaFinPedido,
-                    p.total,
-                    p.mesa_id as idMesa,
-                    p.estado_pedido_id as idEstadoPedido,
-                    m.nombre as nombreMesa,
-                    m.cantidad_comensales as CantidadComensales,
-                    m.estado_mesa_id as idEstadoMesa,
-                    ep.nombre as nombreEstadoPedido
-                FROM PEDIDO p
-                JOIN mesa m on p.mesa_id = m.id
-                JOIN estado_pedido ep on p.estado_pedido_id = ep.id
-                where p.id = :id";
+                    id,
+                    fecha_hora_inicio as FechaHoraInicio,
+                    fecha_hora_fin as FechaHoraFin,
+                    total,
+                    reserva_id as IdReserva,
+                    estado_pedido_id as IdEstadoPedido
+                from pedido
+                where id = :id";
 
-            return _repository.GetAsync<PedidoJoin>(query, new Dictionary<string, object>
+            return _repository.GetAsync<Pedido>(query, new Dictionary<string, object>
             {
                 {"@id", id}
             });
@@ -69,7 +56,7 @@ namespace RestaurantServices.Restaurant.DAL.Tablas
                 {"@p_fecha_hora_inicio", pedido.FechaHoraInicio},
                 {"@p_fecha_hora_fin", pedido.FechaHoraFin},
                 {"@p_total", pedido.Total},
-                {"@p_mesa_id", pedido.IdMesa},
+                {"@p_reserva_id", pedido.IdReserva},
                 {"@p_estado_pedido_id", pedido.IdEstadoPedido},
                 {"@p_return", 0}
             }, CommandType.StoredProcedure);
@@ -85,7 +72,7 @@ namespace RestaurantServices.Restaurant.DAL.Tablas
                 {"@p_fecha_hora_inicio", pedido.FechaHoraInicio},
                 {"@p_fecha_hora_fin", pedido.FechaHoraFin},
                 {"@p_total", pedido.Total},
-                {"@p_mesa_id", pedido.IdMesa},
+                {"@p_reserva_id", pedido.IdReserva},
                 {"@p_estado_pedido_id", pedido.IdEstadoPedido},
                 {"@p_return", 0}
             }, CommandType.StoredProcedure);

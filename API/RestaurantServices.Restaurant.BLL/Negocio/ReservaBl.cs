@@ -68,6 +68,7 @@ namespace RestaurantServices.Restaurant.BLL.Negocio
         {
             var reserva = await _unitOfWork.ReservaDal.GetAsync(id);
             if (reserva == null) return null;
+
             var reservaResult = new Reserva
             {
                 CantidadComensales = reserva.CantidadComensalesReserva,

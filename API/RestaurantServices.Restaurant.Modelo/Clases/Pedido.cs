@@ -12,8 +12,8 @@ namespace RestaurantServices.Restaurant.Modelo.Clases
         public DateTime FechaHoraFin { get; set; }
         public int Total { get; set; }
         public int IdEstadoPedido { get; set; }
-        public int IdMesa { get; set; }
-        public Mesa Mesa { get; set; }
+        public int IdReserva { get; set; }
         public EstadoPedido EstadoPedido { get; set; }
+        public Reserva Reserva { get; set; }
     }
 }
