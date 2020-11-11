@@ -156,13 +156,13 @@ namespace RestaurantServices.Restaurant.BLL.Negocio
             if (idReserva > 0)
             {
                 var cliente = await _clienteBl.ObtenerPorIdAsync(reserva.IdCliente);
-                var cabeceraNombre = cliente.Persona.Nombre == null ? "Estimado Cliente:" : $"Estimado {cliente.Persona.Nombre} {cliente.Persona.Apellido}:";
+                var cabeceraNombre = cliente.Persona.Nombre == null ? "Estimado Cliente:" : $"Estimad@ {cliente.Persona.Nombre} {cliente.Persona.Apellido}:";
 
                 _emailClient.Send(new Email
                 {
                     ReceptorEmail = cliente.Persona.Email,
                     ReceptorNombre = cabeceraNombre,
-                    Asunto = $"Reserva {idReserva} creada",
+                    Asunto = $"Reserva N° {idReserva} creada",
                     Contenido =
                         $@"{cabeceraNombre} <br/><br/>
                            Gracias por reservar en Restaurante Siglo XXI, <br/><br/>
@@ -249,13 +249,13 @@ namespace RestaurantServices.Restaurant.BLL.Negocio
             var estadoReserva = await _unitOfWork.EstadoReservaDal.GetAsync(estado.IdEstadoReserva);
             var reserva = await ObtenerPorIdAsync(estado.IdReserva);
 
-            var cabeceraNombre = reserva.Cliente.Persona.Nombre == null ? "Estimado Cliente:" : $"Estimado {reserva.Cliente.Persona.Nombre} {reserva.Cliente.Persona.Apellido}:";
+            var cabeceraNombre = reserva.Cliente.Persona.Nombre == null ? "Estimado Cliente:" : $"Estimad@ {reserva.Cliente.Persona.Nombre} {reserva.Cliente.Persona.Apellido}:";
 
             _emailClient.Send(new Email
             {
                 ReceptorEmail = reserva.Cliente.Persona.Email,
                 ReceptorNombre = cabeceraNombre,
-                Asunto = $"Reserva {estado.IdReserva} {estadoReserva.Nombre}",
+                Asunto = $"Reserva N° {estado.IdReserva} {estadoReserva.Nombre}",
                 Contenido =
                     $@"{cabeceraNombre} <br/><br/>
                            Su reserva N° {estado.IdReserva} con fecha {reserva.FechaReserva:dd-MM-yyyy hh:mm},
