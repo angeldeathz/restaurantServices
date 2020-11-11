@@ -46,7 +46,8 @@ namespace RestaurantServices.Restaurant.DAL.Tablas
                     c.fecha
                 from estado_articulo_pedido ee
                 join cambio_estado_articulo_pedido c on ee.id = c.estado_articulo_pedido_id
-                where c.articulo_pedido_id = :idArticuloPedido";
+                where c.articulo_pedido_id = :idArticuloPedido
+                order by c.estado_articulo_pedido_id asc";
 
             return _repository.GetListAsync<EstadoArticuloPedido>(query, new Dictionary<string, object>
             {
