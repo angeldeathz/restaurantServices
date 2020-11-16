@@ -66,7 +66,7 @@ namespace RestaurantServices.Restaurant.BLL.Negocio
                            -------------------------------------------------------------------- <br/>
                            N° Documento.......: {documentoPago.Id}                              <br/>
                            -------------------------------------------------------------------- <br/>
-                           Tip Documento......: {documentoPago.TipoDocumentoPago.Nombre}        <br/>
+                           Tipo Documento.....: {documentoPago.TipoDocumentoPago.Nombre}        <br/>
                            -------------------------------------------------------------------- <br/>
                            Método de Pago.....: {medioPago.MedioPago.Nombre}                    <br/>
                            -------------------------------------------------------------------- <br/>
