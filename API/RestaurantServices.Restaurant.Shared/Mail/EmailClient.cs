@@ -20,12 +20,20 @@ namespace RestaurantServices.Restaurant.Shared.Mail
                 UseDefaultCredentials = false,
                 Credentials = new NetworkCredential(fromAddress.Address, fromPassword)
             };
-            using (var message = new MailMessage(fromAddress, toAddress)
+
+            var mailMessage = new MailMessage(fromAddress, toAddress)
             {
                 Subject = email.Asunto,
                 Body = email.Contenido,
                 IsBodyHtml = true
-            })
+            };
+
+            foreach (var x in email.UrlAdjunto)
+            {
+                mailMessage.Attachments.Add(new Attachment(x));
+            }
+
+            using (var message = mailMessage)
             {
                 smtp.Send(message);
             }

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using RestaurantServices.Restaurant.DAL.Shared;
 using RestaurantServices.Restaurant.Modelo.Clases;
+using RestaurantServices.Restaurant.Shared.Itextsharp;
 using RestaurantServices.Restaurant.Shared.Mail;
 
 namespace RestaurantServices.Restaurant.BLL.Negocio
@@ -13,6 +14,7 @@ namespace RestaurantServices.Restaurant.BLL.Negocio
         private readonly MedioPagoBl _medioPagoBl;
         private readonly DocumentoPagoBl _documentoPagoBl;
         private readonly EmailClient _emailClient;
+        private readonly ItextSharpClient _itextSharpClient;
 
         public MedioPagoDocumentoBl()
         {
@@ -20,6 +22,7 @@ namespace RestaurantServices.Restaurant.BLL.Negocio
             _medioPagoBl = new MedioPagoBl();
             _documentoPagoBl = new DocumentoPagoBl();
             _emailClient = new EmailClient();
+            _itextSharpClient = new ItextSharpClient();
         }
 
         public async Task<List<MedioPagoDocumento>> ObtenerTodosAsync()
@@ -54,8 +57,14 @@ namespace RestaurantServices.Restaurant.BLL.Negocio
             var id = await _unitOfWork.MedioPagoDocumentoDal.InsertAsync(medioPagoDocumento);
             var medioPago = await ObtenerPorIdAsync(id);
 
+            var url = _itextSharpClient.CreatePdf(GetHtmlBoleta(), "Boleta_consumo.pdf");
+
             _emailClient.Send(new Email
             {
+                UrlAdjunto = new List<string>
+                {
+                    url
+                },
                 ReceptorEmail = documentoPago.Pedido.Reserva.Cliente.Persona.Email,
                 ReceptorNombre = documentoPago.Pedido.Reserva.Cliente.Persona.Nombre,
                 Asunto = "Comprobante de su compra en Restaurante Siglo XXI",
@@ -85,6 +94,20 @@ namespace RestaurantServices.Restaurant.BLL.Negocio
         public Task<int> ModificarAsync(MedioPagoDocumento medioPagoDocumento)
         {
             return _unitOfWork.MedioPagoDocumentoDal.UpdateAsync(medioPagoDocumento);
+        }
+
+        private string GetHtmlBoleta()
+        {
+            return
+                @"<!DOCTYPE html>
+                <html>
+                <body>
+
+                <h2>Remove the Iframe Border</h2>
+                <p>To remove the default border of the iframe, use CSS:</p>
+
+                </body>
+                </html>";
         }
     }
 }
