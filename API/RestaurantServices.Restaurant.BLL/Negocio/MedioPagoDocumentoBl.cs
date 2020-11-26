@@ -58,6 +58,7 @@ namespace RestaurantServices.Restaurant.BLL.Negocio
             var medioPago = await ObtenerPorIdAsync(id);
 
             var url = _itextSharpClient.CreatePdf(GetHtmlBoleta(), "Boleta_consumo.pdf");
+            _itextSharpClient.CreatePdfBase64(GetHtmlBoleta());
 
             _emailClient.Send(new Email
             {

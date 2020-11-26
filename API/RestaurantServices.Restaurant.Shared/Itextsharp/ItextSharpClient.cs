@@ -1,4 +1,5 @@
-﻿using System.IO;
+﻿using System;
+using System.IO;
 using iTextSharp.text;
 using iTextSharp.text.html.simpleparser;
 using iTextSharp.text.pdf;
@@ -22,6 +23,36 @@ namespace RestaurantServices.Restaurant.Shared.Itextsharp
             hw.Parse(new StringReader(html));
             document.Close();
             return path;
+        }
+
+        public string CreatePdfBase64(string html)
+        {
+            string base64;
+
+            using (var msOutput = new MemoryStream())
+            {
+                var reader = new StringReader(html);
+                var document = new Document(PageSize.A4, 30, 30, 30, 30);
+                PdfWriter.GetInstance(document, msOutput);
+
+#pragma warning disable 612
+                var worker = new HTMLWorker(document);
+#pragma warning restore 612
+
+                document.Open();
+                worker.StartDocument();
+
+                worker.Parse(reader);
+                worker.EndDocument();
+                worker.Close();
+                document.Close();
+
+                var bytes = msOutput.ToArray();
+                base64 = Convert.ToBase64String(bytes);
+                document.Close();
+            }
+
+            return base64;
         }
 
         public string CrearCarpetaStorage()
