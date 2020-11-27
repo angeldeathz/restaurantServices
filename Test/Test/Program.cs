@@ -1,9 +1,114 @@
-﻿namespace Test
+﻿using System.IO;
+using iTextSharp.text;
+using iTextSharp.text.pdf;
+using iTextSharp.tool.xml;
+
+namespace Test
 {
     class Program
     {
         static void Main(string[] args)
         {
+            Document pdfDoc = new Document();
+
+            var path = "C:\\Storage";
+            var exists = Directory.Exists(path);
+
+            if (!exists)
+                Directory.CreateDirectory(path);
+
+            path = path + "\\documento.pdf";
+
+            var file = new FileStream(path, FileMode.Create);
+
+            PdfWriter writer = PdfWriter.GetInstance(pdfDoc, file);
+            pdfDoc.Open();
+            XMLWorkerHelper.GetInstance().ParseXHtml(writer, pdfDoc, new StringReader(GetHtml()));
+            pdfDoc.Close();
+        }
+
+        public static string GetHtml()
+        {
+            return
+                @"<table cellpadding='4' cellspacing='4' border='1' width='100%' style='width:100%'>
+    <tr style='background-color:#000000'>
+        <td colspan='2' align='center' valign='middle'>
+            <font face='Calibri' size='6' color='#FFFFFF'>XXXX XXXXX XXXXX</font>
+        </td>
+    </tr>
+    <tr>
+        <td colspan='2'>&nbsp;</td>
+    </tr>
+    <tr>
+        <td width='90%' style='width:90%'>
+            <table cellpadding='0' cellspacing='0' border='1' width='100%'>
+                <tr>
+                    <td width='42%'>
+                        <font face='Calibri' size='4'>
+                            <b>Deal Number</b>
+                        </font>
+                    </td>
+                    <td width='1%'>&nbsp;</td>
+                    <td width='57%'>
+                        <font face='Calibri' size='4'>
+                            <b>XXXXXXXXXX</b>
+                        </font>
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan='3' width='100%'>&nbsp;</td>
+                </tr>
+                <tr>
+                    <td width='42%'>
+                        <font face='Calibri' size='2'>
+                            <b>Trade Date</b>
+                        </font>
+                    </td>
+                    <td width='1%'>&nbsp;</td>
+                    <td width='57%'>
+                        <font face='Calibri' size='2'>February 09, 2015</font>
+                    </td>
+                </tr>
+                <tr>
+                    <td width='42%'>
+                        <font face='Calibri' size='2'>
+                            <b>Price Date</b>
+                        </font>
+                    </td>
+                    <td width='1%'>&nbsp;</td>
+                    <td width='57%'>
+                        <font face='Calibri' size='2'>February 09, 2015</font>
+                    </td>
+                </tr>
+                <tr>
+                    <td width='42%'>
+                        <font face='Calibri' size='2'>
+                            <b>Authorize Date</b>
+                        </font>
+                    </td>
+                    <td width='1%'>&nbsp;</td>
+                    <td width='57%'>
+                        <font face='Calibri' size='2'>February 09, 2015</font>
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan='3' width='100%'>&nbsp;</td>
+                </tr>
+            </table>
+        </td>
+        <td width='10%' style='width:10%' valign='top'>
+            <table cellpadding='0' cellspacing='0' border='1' width='100%'>
+                <tr>
+                    <td colspan='2' align='center' width='100%'>
+                        <font face='Calibri' size='2'>
+                            <b>Xxxxxxx (XXXXXXX)</b>
+                        </font>
+                    </td>
+                </tr>
+            </table>
+        </td>
+    </tr>
+</table>";
         }
     }
 }

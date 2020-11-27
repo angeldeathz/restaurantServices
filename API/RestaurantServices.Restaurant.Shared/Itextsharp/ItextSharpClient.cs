@@ -3,12 +3,13 @@ using System.IO;
 using iTextSharp.text;
 using iTextSharp.text.html.simpleparser;
 using iTextSharp.text.pdf;
+using iTextSharp.tool.xml;
 
 namespace RestaurantServices.Restaurant.Shared.Itextsharp
 {
     public class ItextSharpClient
     {
-        public string CreatePdf(string html, string fileName)
+        public string CreatePdf2(string html, string fileName)
         {
             var path = CrearCarpetaStorage();
             path = $"{path}\\{fileName}";
@@ -24,6 +25,25 @@ namespace RestaurantServices.Restaurant.Shared.Itextsharp
             document.Close();
             return path;
         }
+
+        public string CreatePdf(string html, string fileName)
+        {
+            var path = CrearCarpetaStorage();
+            path = $"{path}\\{fileName}";
+
+            Document pdfDoc = new Document();
+            //Document pdfDoc = new Document(PageSize.A4, 10f, 10f, 10f, 0f);
+            //HTMLWorker htmlparser = new HTMLWorker(pdfDoc);
+
+            var file = new FileStream(path, FileMode.Create);
+
+            PdfWriter writer = PdfWriter.GetInstance(pdfDoc, file);
+            pdfDoc.Open();
+            XMLWorkerHelper.GetInstance().ParseXHtml(writer, pdfDoc, new StringReader(html));
+            pdfDoc.Close();
+            return path;
+        }
+
 
         public string CreatePdfBase64(string html)
         {
