@@ -28,11 +28,14 @@ namespace RestaurantServices.Restaurant.Shared.Mail
                 IsBodyHtml = true
             };
 
-            foreach (var x in email.UrlAdjunto)
+            if (email.UrlAdjunto != null && email.UrlAdjunto.Count > 0)
             {
-                mailMessage.Attachments.Add(new Attachment(x));
+                foreach (var x in email.UrlAdjunto)
+                {
+                    mailMessage.Attachments.Add(new Attachment(x));
+                }
             }
-
+            
             using (var message = mailMessage)
             {
                 smtp.Send(message);

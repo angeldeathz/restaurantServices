@@ -15,6 +15,7 @@ namespace RestaurantServices.Restaurant.BLL.Negocio
         private readonly DocumentoPagoBl _documentoPagoBl;
         private readonly EmailClient _emailClient;
         private readonly ItextSharpClient _itextSharpClient;
+        private readonly ArticuloPedidoBl _articuloPedidoBl;
 
         public MedioPagoDocumentoBl()
         {
@@ -23,6 +24,7 @@ namespace RestaurantServices.Restaurant.BLL.Negocio
             _documentoPagoBl = new DocumentoPagoBl();
             _emailClient = new EmailClient();
             _itextSharpClient = new ItextSharpClient();
+            _articuloPedidoBl = new ArticuloPedidoBl();
         }
 
         public async Task<List<MedioPagoDocumento>> ObtenerTodosAsync()
@@ -57,7 +59,9 @@ namespace RestaurantServices.Restaurant.BLL.Negocio
             var id = await _unitOfWork.MedioPagoDocumentoDal.InsertAsync(medioPagoDocumento);
             var medioPago = await ObtenerPorIdAsync(id);
 
-            var url = _itextSharpClient.CreatePdf(GetHtmlBoleta(), "Boleta_consumo.pdf");
+            var articulos = await _articuloPedidoBl.ObtenerPorIdPedidoAsync(documentoPago.IdPedido);
+
+            var url = _itextSharpClient.CreatePdf(GetHtmlBoleta(documentoPago, medioPago, articulos), "Boleta_consumo.pdf");
 
             _emailClient.Send(new Email
             {
@@ -96,165 +100,26 @@ namespace RestaurantServices.Restaurant.BLL.Negocio
             return _unitOfWork.MedioPagoDocumentoDal.UpdateAsync(medioPagoDocumento);
         }
 
-        private string GetHtmlBoleta()
+        private string GetHtmlBoleta(DocumentoPago documentoPago, MedioPagoDocumento medioPago, List<ArticuloPedido> articulos)
         {
-            return @"<div id=""container"" style=""width: 1000px;height: 1200px;margin-top: 100px;margin-left: 40px;"">
-	<div id=""emisor"" style=""font-weight: 500;position: absolute;line-height: 10%;margin-top: 10px;font-size: 18px;"">
-		<p class=""azul b2"" style=""color: #2d89ad;font-weight: bold;font-size: 21px;"">Siglo XX2 Restaurante SPA</p>
-		<p>Restaurantes, cafes y otros establecimientos que expenden comidas y bebidas</p>
-		<p>Casa Matriz: Vicuña Mackenna 5602, La Florida, Santiago.</p>
-		<p>Fonos: 2 2269901, 9 5508912</p>
-	</div>
-	<div id=""datosFactura"" style=""position: absolute;margin-left: 700px;"">
-		<div id=""factura"" class=""rojo"" style=""color: #d64431;border-width: 3px;border-style: solid;border-color: #d64431;padding: 0px 8px 0px 8px;text-align: center;font-weight: bold;line-height: 90%;width: 235px;"">
-			<p>R.U.T. : 76161082-1</p>
-			<p>BOLETA ELECTRÓNICA</p>
-			<p>N° ""+Id+""</p>
-		</div>
-		<div id=""sii"" class=""rojo b"" style=""color: #d64431;font-weight: bold;text-align: center;"">S.I.I. -  La Florida</div>
-	</div>
-	<div id=""receptor"" style=""position: absolute;width: 950px;height: 70px;margin-top: 230px;padding-top: 15px;padding-left: 5px;padding-bottom: 15px;border: 1px solid #929292;border-radius: 6px;"">
-		<div class=""tabla1"" style=""position: absolute;width: 350px;margin-left: 20px;"">
-			<table id=""tablaReceptor1"" style=""border-collapse: separate;border-spacing: 0px 3px 5px 0;"">
-				<tr>
-				<td style=""padding-bottom: 3px;padding-right: 4px;font-weight: bold;"">Fecha Emisión</td>
-				<td style=""padding-bottom: 3px;padding-right: 4px;"">: ""+FechHora+""</td>
-			</tr>
-			<tr>
-				<td style=""padding-bottom: 3px;padding-right: 4px;font-weight: bold;"">Medio de Pago</td>
-				<td style=""padding-bottom: 3px;padding-right: 4px;"">: ""+TipoDocumentoPago.Nombre+""</td>
-			</tr>
-			</table>
-		</div>
-		<div class=""tabla2"" style=""position: absolute;margin-left: 500px;width: 400px;"">
-		</div>
-	</div>
-	<div id=""detalle"" style=""position: absolute;margin-top: 375px;height: 300px;"">
-		<table id=""tablaDetalle"" style=""border-collapse: collapse;width: 950px;text-align: center;"">
-			<tr>
-				<th style=""padding-left: 10px;padding-right: 10px;background-color: #53a9be;color: white;font-weight: bold;border: 1px solid #53a9be;height: 12px;"">Descripción</th>
-				<th style=""padding-left: 10px;padding-right: 10px;background-color: #53a9be;color: white;font-weight: bold;border: 1px solid #53a9be;height: 12px;"">Precio</th>
-				<th style=""padding-left: 10px;padding-right: 10px;background-color: #53a9be;color: white;font-weight: bold;border: 1px solid #53a9be;height: 12px;"">Cantidad</th>				
-				<th style=""padding-left: 10px;padding-right: 10px;background-color: #53a9be;color: white;font-weight: bold;border: 1px solid #53a9be;height: 12px;"">Sub Total</th>
-			</tr>
-			""+detalles+""
-		</table>
-	<table id=""valores"" style=""table-layout: fixed;width: 190px;margin-left: 760px;margin-top: 5px;font-weight: bold;border-collapse: collapse;border: 1px solid grey;"">
-		<tr>
-			<td style=""width: 60%;padding: 5px 10px 2px 10px;"">Total $</td><td style=""border: 1px solid #929292;background-color: #ececec;text-align: right;width: 40%;"">""+Total+""</td>
-		</tr>
-	</table>
-	</div>
-	<div id=""recibo"" style=""position: absolute;margin-top: 1150px;margin-left: 370px;width: 350px;float: right;padding: 5px;text-align: justify;"">
-		<table id=""datosRecibo"">
-        <tr>
-            <td style=""font-weight: bold;"">Nombre</td><td> ....................................................................................</td>
-        </tr>
-        <tr>
-            <td style=""font-weight: bold;"">R.U.T.</td><td> ....................................................................................</td>
-        </tr>
-        <tr>
-            <td style=""font-weight: bold;"">Fecha</td><td> ....................................................................................</td>
-        </tr>
-    	</table>
-    	<table id=""datosRecibo"">
-        <tr>    
-            <td>Recinto</td><td> .............................................</td>
-            <td class=""b"" style=""font-weight: bold;"">Firma</td><td> .............................</td>
-        </tr>
-        </table>
-        
-        <div id=""acuse"" style=""border: 1px solid black;border-radius: 5px;padding: 9px 9px 9px 9px;width: 570px;font-size: 13px;"">
-        	EL ACUSE DE RECIBO QUE SE DECLARA EN ESTE ACTO, DE ACUERDO A LO DISPUESTO EN LA LETRA B) DEL ART. 4°, Y LA LETRA C) DEL ART. 5°DE LA LEY 19.983, ACREDITA QUE LA ENTREGA DE MERCADERÍAS O SERVICIO (S) PRESTADO (S) HA (N) SIDO RECIBIDO (S).
-    	</div>
-    </div>
+            var id = documentoPago.Id;
+            var fechaHora = $"{documentoPago.FechaHora:dd-MM-yyyy hh:mm}";
+            var total = $"$ {medioPago.Monto:N}";
+            var tipoDocumentoPago = medioPago.MedioPago.Nombre;
 
-    <div id=""timbre"" style=""position: absolute;margin-left: 10px;margin-top: 1150px;text-align: center;"">                           
-			<p style=""line-height: 10%;font-size: 14px;font-weight: bold;color: #d64431;"">Timbre Electr&oacute;nico SII</p>
-            <p style=""line-height: 10%;font-size: 14px;font-weight: bold;color: #d64431;"">Verifique documento: www.sii.cl</p>
-    </div>     
-</div>";
+            var detalles = string.Empty;
 
-//            return
-//                @"<table cellpadding='4' cellspacing='4' border='1' width='100%' style='width:100%'>
-//    <tr style='background-color:#000000'>
-//        <td colspan='2' align='center' valign='middle'>
-//            <font face='Calibri' size='6' color='#FFFFFF'>XXXX XXXXX XXXXX</font>
-//        </td>
-//    </tr>
-//    <tr>
-//        <td colspan='2'>&nbsp;</td>
-//    </tr>
-//    <tr>
-//        <td width='90%' style='width:90%'>
-//            <table cellpadding='0' cellspacing='0' border='1' width='100%'>
-//                <tr>
-//                    <td width='42%'>
-//                        <font face='Calibri' size='4'>
-//                            <b>Deal Number</b>
-//                        </font>
-//                    </td>
-//                    <td width='1%'>&nbsp;</td>
-//                    <td width='57%'>
-//                        <font face='Calibri' size='4'>
-//                            <b>XXXXXXXXXX</b>
-//                        </font>
-//                    </td>
-//                </tr>
-//                <tr>
-//                    <td colspan='3' width='100%'>&nbsp;</td>
-//                </tr>
-//                <tr>
-//                    <td width='42%'>
-//                        <font face='Calibri' size='2'>
-//                            <b>Trade Date</b>
-//                        </font>
-//                    </td>
-//                    <td width='1%'>&nbsp;</td>
-//                    <td width='57%'>
-//                        <font face='Calibri' size='2'>February 09, 2015</font>
-//                    </td>
-//                </tr>
-//                <tr>
-//                    <td width='42%'>
-//                        <font face='Calibri' size='2'>
-//                            <b>Price Date</b>
-//                        </font>
-//                    </td>
-//                    <td width='1%'>&nbsp;</td>
-//                    <td width='57%'>
-//                        <font face='Calibri' size='2'>February 09, 2015</font>
-//                    </td>
-//                </tr>
-//                <tr>
-//                    <td width='42%'>
-//                        <font face='Calibri' size='2'>
-//                            <b>Authorize Date</b>
-//                        </font>
-//                    </td>
-//                    <td width='1%'>&nbsp;</td>
-//                    <td width='57%'>
-//                        <font face='Calibri' size='2'>February 09, 2015</font>
-//                    </td>
-//                </tr>
-//                <tr>
-//                    <td colspan='3' width='100%'>&nbsp;</td>
-//                </tr>
-//            </table>
-//        </td>
-//        <td width='10%' style='width:10%' valign='top'>
-//            <table cellpadding='0' cellspacing='0' border='1' width='100%'>
-//                <tr>
-//                    <td colspan='2' align='center' width='100%'>
-//                        <font face='Calibri' size='2'>
-//                            <b>Xxxxxxx (XXXXXXX)</b>
-//                        </font>
-//                    </td>
-//                </tr>
-//            </table>
-//        </td>
-//    </tr>
-//</table>";
+            foreach (var x in articulos)
+            {
+                detalles += "<tr>";
+                detalles += $"<td>{x.Articulo.Descripcion}</td>";
+                detalles += $"<td>$ {x.Articulo.Precio}</td>";
+                detalles += $"<td>{x.Cantidad}</td>";
+                detalles += $"<td>$ {x.Cantidad * x.Articulo.Precio}</td>";
+                detalles += "</tr>";
+            }
+
+            return @"<!DOCTYPE html><html><head><meta charset='utf-8'><title></title><style>body{font-family: 'Arial', 'Verdana', 'Helvetica', Sans-serif;font-size: 12px;}h2{color: #22776b;font-weight: bold;}#container{width: 700px;height: 1000px;margin-left: 30px;}#emisor{font-weight: 500;position: absolute;line-height: 10%;margin-top: 10px;}#datosFactura{position: absolute;margin-left: 460px;}#factura{border-width: 3px;border-style: solid;border-color: #d64431;padding: 0px 8px 0px 8px;text-align: center;font-weight: bold;line-height: 90%;width: 160px;}#sii{text-align: center;}#receptor{position: absolute;width: 650px;height: 70px;margin-top: 160px;padding-top: 15px;padding-left: 5px;padding-bottom: 15px;border: 2px solid #22776b;border-radius: 6px;}#receptor table tr td:first-child{font-weight: bold;}#receptor table td{padding-bottom: 3px;padding-right: 4px;}.tabla1{position: absolute;width: 350px;margin-left: 20px;}#tablaReceptor1{border-collapse: separate; border-spacing: 0px 3px 5px 0;}.tabla2{position: absolute;margin-left: 500px;width: 400px;}#tablaReceptor2{border-collapse: separate; border-spacing: 0px 3px;}#fecha{position: absolute;margin-top: 125px;margin-left: 580px;}#detalle{position: absolute;margin-top: 300px;height: 300px;}#tablaDetalle{border-collapse: collapse; width: 650px; text-align: center;}#tablaDetalle td, #tablaDetalle th{padding-left: 10px; padding-right: 10px;}#tablaDetalle th{background-color: #22776b;color: white;font-weight: bold;border: 1px solid #22776b;height: 12px;}#tablaDetalle th:first-child{width: 45%;}#tablaDetalle th:nth-child(3){width: 15%;}#tablaDetalle td{border-left: 1px solid #929292; border-right: 1px solid #929292; height: 15px;}#tablaDetalle tr:last-child td{border-bottom: 1px solid #929292;}#valores{table-layout: fixed;width: 190px; margin-left: 460px;margin-top: 5px; font-weight: bold; border-collapse: collapse; border: 1px solid grey;}#valores td:first-child{width: 40%;padding: 5px 10px 2px 10px;}#valores td:nth-child(2){border: 1px solid #929292;background-color: #ececec;text-align: right;width: 60%;}#recibo{position: absolute;margin-top: 650px;margin-left: 270px;width: 450px;padding: 5px;text-align: justify;}#datosRecibo td:nth-child(1){font-weight: bold;}#datosRecibo2 td:nth-child(1){font-weight: bold;}#acuse{border: 1px solid black;border-radius: 5px;padding: 9px 9px 9px 9px;width: 380px;font-size: 9px;}#timbre{position: absolute;margin-left: 10px;margin-top: 750px;text-align: center;}#timbre p{line-height: 10%;font-size: 14px;font-weight: bold;color: #d64431;;}.rojo{color:#d64431;}.b{font-weight: bold;}.b2{font-weight: bold;}</style></head><body><div id='container'><div id='emisor'><h2 class='b2'>Restaurante Siglo XXI SPA</h2><h4>Restaurantes, cafes y otros establecimientos que expenden comidas y bebidas</h4><p>Casa Matriz: Vicuña Mackenna 5602, La Florida, Santiago.</p><p>Fonos: 2 2269901, 9 5508912</p></div><div id='datosFactura'><div id='factura' class='rojo'><p>R.U.T. : 76161082-1</p><p>BOLETA ELECTRÓNICA</p><p>N° " + id + "</p></div><div id='sii' class='rojo b'>S.I.I. - La Florida</div></div><div id='receptor'><div class='tabla1'><table id='tablaReceptor1'><tr><td>Fecha Emisión</td><td>: " + fechaHora + "</td></tr><tr><td>Medio de Pago</td><td>: " + tipoDocumentoPago + "</td></tr></table></div><div class='tabla2'></div></div><div id='detalle'><table id='tablaDetalle'><tr><th>Descripción</th><th>Precio</th><th>Cantidad</th><th>Sub Total</th></tr>" + detalles + "</table><table id='valores'><tr><td>Total</td><td>" + total + "</td></tr></table></div><div id=recibo><table id=datosRecibo> <tr> <td>Nombre</td><td> ....................................................................................</td></tr><tr> <td>R.U.T.</td><td> ....................................................................................</td></tr><tr> <td>Fecha</td><td> ....................................................................................</td></tr></table> <table id=datosRecibo> <tr> <td>Recinto</td><td> .............................................</td><td class=b>Firma</td><td> .......................................</td></tr></table> <br><div id=acuse> EL ACUSE DE RECIBO QUE SE DECLARA EN ESTE ACTO, DE ACUERDO A LO DISPUESTO EN LA LETRA B) DEL ART. 4°, Y LA LETRA C) DEL ART. 5°DE LA LEY 19.983, ACREDITA QUE LA ENTREGA DE MERCADERÍAS O SERVICIO (S) PRESTADO (S) HA (N) SIDO RECIBIDO (S). </div></div><div id='timbre'> <p>Timbre Electr&oacute;nico SII</p><p>Verifique documento: www.sii.cl</p></div></div></body></html>";
         }
     }
 }

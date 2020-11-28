@@ -32,6 +32,25 @@ namespace RestaurantServices.Restaurant.DAL.Tablas
             return _repository.GetListAsync<ArticuloPedido>(query);
         }
 
+        public Task<IEnumerable<ArticuloPedido>> GetByPedidoAsync(int idPedido)
+        {
+            const string query = @"select
+                    id,
+                    precio,
+                    cantidad,
+                    total,
+                    articulo_id as idArticulo,
+                    pedido_id as idPedido,
+                    comentarios
+                from articulo_pedido
+                where pedido_id = :idPedido";
+
+            return _repository.GetListAsync<ArticuloPedido>(query, new Dictionary<string, object>
+            {
+                {"@idPedido", idPedido}
+            });
+        }
+
         public Task<ArticuloPedido> GetAsync(int id)
         {
             const string query = @"select

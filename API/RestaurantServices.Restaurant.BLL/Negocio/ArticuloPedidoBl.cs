@@ -34,6 +34,21 @@ namespace RestaurantServices.Restaurant.BLL.Negocio
             return (List<ArticuloPedido>)articuloPedidos;
         }
 
+        public async Task<List<ArticuloPedido>> ObtenerPorIdPedidoAsync(int idPedido)
+        {
+            var articuloPedidos = await _unitOfWork.ArticuloPedidoDal.GetByPedidoAsync(idPedido);
+
+            foreach (var x in articuloPedidos)
+            {
+                x.Pedido = await _pedidoBl.ObtenerPorIdAsync(x.IdPedido);
+                x.Articulo = await _articuloBl.ObtenerPorIdAsync(x.IdArticulo);
+                var estados = await _unitOfWork.EstadoArticuloPedidoDal.GetByArticuloPedido(x.Id);
+                x.EstadosArticuloPedido = (List<EstadoArticuloPedido>)estados;
+            }
+
+            return (List<ArticuloPedido>)articuloPedidos;
+        }
+
         public async Task<ArticuloPedido> ObtenerPorIdAsync(int id)
         {
             var articuloPedido = await _unitOfWork.ArticuloPedidoDal.GetAsync(id);
