@@ -56,10 +56,12 @@ namespace RestaurantServices.Restaurant.BLL.Negocio
             var documentoPago = await _documentoPagoBl.ObtenerPorIdAsync(medioPagoDocumento.IdDocumentoPago);
             if (documentoPago == null) throw new Exception($"No se ha encontrado el documento de pago {medioPagoDocumento.IdDocumentoPago}");
 
+            var articulos = await _articuloPedidoBl.ObtenerPorIdPedidoAsync(documentoPago.IdPedido);
+            if (articulos == null || articulos.Count <= 0)
+                throw new Exception("No se puede generar un pago que no tenga articulos");
+
             var id = await _unitOfWork.MedioPagoDocumentoDal.InsertAsync(medioPagoDocumento);
             var medioPago = await ObtenerPorIdAsync(id);
-
-            var articulos = await _articuloPedidoBl.ObtenerPorIdPedidoAsync(documentoPago.IdPedido);
 
             var url = _itextSharpClient.CreatePdf(GetHtmlBoleta(documentoPago, medioPago, articulos), "Boleta_consumo.pdf");
 
