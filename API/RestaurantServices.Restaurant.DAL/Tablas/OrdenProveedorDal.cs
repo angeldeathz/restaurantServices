@@ -53,7 +53,7 @@ namespace RestaurantServices.Restaurant.DAL.Tablas
 
             return _repository.ExecuteProcedureAsync<int>(spName, new Dictionary<string, object>
             {
-                {"@p_fecha_hora", ordenProveedor.FechaHora},
+                {"@p_fecha_hora", DateTime.Now},
                 {"@p_total", ordenProveedor.Total},
                 {"@p_proveedor_id", ordenProveedor.IdProveedor},
                 {"@p_usuario_id", ordenProveedor.IdUsuario},
@@ -69,7 +69,7 @@ namespace RestaurantServices.Restaurant.DAL.Tablas
             return _repository.ExecuteProcedureAsync<int>(spName, new Dictionary<string, object>
             {
                 {"@p_id", ordenProveedor.Id},
-                {"@p_fecha_hora", ordenProveedor.FechaHora},
+                {"@p_fecha_hora", DateTime.Now},
                 {"@p_total", ordenProveedor.Total},
                 {"@p_proveedor_id", ordenProveedor.IdProveedor},
                 {"@p_usuario_id", ordenProveedor.IdUsuario},

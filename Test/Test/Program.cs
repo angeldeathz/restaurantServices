@@ -19,40 +19,6 @@ namespace Test
             var file = new FileStream(path, FileMode.Create);
             HtmlConverter.ConvertToPdf(GetHtmlReporteDiario(), file);
             file.Close();
-
-
-            //using (var pdfWriter = new PdfWriter(path))
-            //{
-            //    using (var pdfDocument = new PdfDocument(pdfWriter))
-            //    {
-            //        var converterProperties = new ConverterProperties();
-
-            //        pdfDocument.SetDefaultPageSize(PageSize.A4);
-
-            //        using (var document = new Document(pdfDocument))
-            //        {
-            //            //NOTE: If this line is commented then the "page-break-inside: avoid" style behaves as expected.
-            //            document.SetMargins(40, 40, 40, 40);
-
-            //            foreach (var element in HtmlConverter.ConvertToElements(GetHtmlReporteMensual(), converterProperties).OfType<IBlockElement>())
-            //            {
-            //                document.Add(element);
-            //            }
-            //        }
-            //    }
-            //}
-
-            //Select.HtmlToPdf            
-            //HtmlToPdf converter = new HtmlToPdf();
-            //converter.Options.PdfPageSize = PdfPageSize.A4;
-            //converter.Options.PdfPageOrientation = PdfPageOrientation.Portrait;
-            //converter.Options.MarginLeft = 40;
-            //converter.Options.MarginRight = 40;
-            //converter.Options.MarginTop = 20;
-            //converter.Options.MarginBottom = 40;
-            //PdfDocument doc = converter.ConvertHtmlString(GetHtmlReporteMensual(), path_base);
-            //doc.Save(path2);
-            //doc.Close();
         }
 
         public static string GetHtmlDocumentoPago()

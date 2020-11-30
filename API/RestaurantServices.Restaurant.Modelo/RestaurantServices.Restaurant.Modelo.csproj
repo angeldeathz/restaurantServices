@@ -74,6 +74,7 @@
     <Compile Include="Dto\ArticuloPedidoEstado.cs" />
     <Compile Include="Dto\ClienteNuevoDto.cs" />
     <Compile Include="Dto\OrdenProveedorEstado.cs" />
+    <Compile Include="Dto\ReporteDto.cs" />
     <Compile Include="Dto\ReservaEstado.cs" />
     <Compile Include="TableJoin\ArticuloJoin.cs" />
     <Compile Include="TableJoin\ClienteJoin.cs" />

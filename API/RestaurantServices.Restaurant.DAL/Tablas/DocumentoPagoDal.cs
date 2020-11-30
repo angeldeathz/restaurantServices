@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Data;
 using System.Threading.Tasks;
 using RestaurantServices.Restaurant.DAL.Shared;
@@ -51,7 +52,7 @@ namespace RestaurantServices.Restaurant.DAL.Tablas
 
             return _repository.ExecuteProcedureAsync<int>(spName, new Dictionary<string, object>
             {
-                {"@p_fecha_hora", documentoPago.FechaHora},
+                {"@p_fecha_hora", DateTime.Now},
                 {"@p_total", documentoPago.Total},
                 {"@p_tipo_documento_pago_id", documentoPago.IdTipoDocumentoPago},
                 {"@p_pedido_id", documentoPago.IdPedido},
@@ -66,7 +67,7 @@ namespace RestaurantServices.Restaurant.DAL.Tablas
             return _repository.ExecuteProcedureAsync<int>(spName, new Dictionary<string, object>
             {
                 {"@p_id", documentoPago.Id},
-                {"@p_fecha_hora", documentoPago.FechaHora},
+                {"@p_fecha_hora", DateTime.Now},
                 {"@p_total", documentoPago.Total},
                 {"@p_tipo_documento_pago_id", documentoPago.IdTipoDocumentoPago},
                 {"@p_pedido_id", documentoPago.IdPedido},
