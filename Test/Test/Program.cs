@@ -1,7 +1,5 @@
-﻿using System;
-using System.IO;
+﻿using System.IO;
 using iText.Html2pdf;
-using SelectPdf;
 
 namespace Test
 {
@@ -16,24 +14,45 @@ namespace Test
                 Directory.CreateDirectory(path_base);
 
             var path = path_base + "\\documento.pdf";
-            var path2 = path_base + "\\documento2.pdf";
 
             //iText7
             var file = new FileStream(path, FileMode.Create);
             HtmlConverter.ConvertToPdf(GetHtmlReporteMensual(), file);
             file.Close();
 
+
+            //using (var pdfWriter = new PdfWriter(path))
+            //{
+            //    using (var pdfDocument = new PdfDocument(pdfWriter))
+            //    {
+            //        var converterProperties = new ConverterProperties();
+
+            //        pdfDocument.SetDefaultPageSize(PageSize.A4);
+
+            //        using (var document = new Document(pdfDocument))
+            //        {
+            //            //NOTE: If this line is commented then the "page-break-inside: avoid" style behaves as expected.
+            //            document.SetMargins(40, 40, 40, 40);
+
+            //            foreach (var element in HtmlConverter.ConvertToElements(GetHtmlReporteMensual(), converterProperties).OfType<IBlockElement>())
+            //            {
+            //                document.Add(element);
+            //            }
+            //        }
+            //    }
+            //}
+
             //Select.HtmlToPdf            
-            HtmlToPdf converter = new HtmlToPdf();
-            converter.Options.PdfPageSize = PdfPageSize.A4;
-            converter.Options.PdfPageOrientation = PdfPageOrientation.Portrait;
-            converter.Options.MarginLeft = 40;
-            converter.Options.MarginRight = 40;
-            converter.Options.MarginTop = 20;
-            converter.Options.MarginBottom = 40;
-            PdfDocument doc = converter.ConvertHtmlString(GetHtmlReporteMensual(), path_base);
-            doc.Save(path2);
-            doc.Close();
+            //HtmlToPdf converter = new HtmlToPdf();
+            //converter.Options.PdfPageSize = PdfPageSize.A4;
+            //converter.Options.PdfPageOrientation = PdfPageOrientation.Portrait;
+            //converter.Options.MarginLeft = 40;
+            //converter.Options.MarginRight = 40;
+            //converter.Options.MarginTop = 20;
+            //converter.Options.MarginBottom = 40;
+            //PdfDocument doc = converter.ConvertHtmlString(GetHtmlReporteMensual(), path_base);
+            //doc.Save(path2);
+            //doc.Close();
         }
 
         public static string GetHtmlDocumentoPago()
@@ -101,7 +120,7 @@ namespace Test
             //Recorrer las boletas/facturas del mes y las ordenes de compra a proveedores INGRESADAS 
             var detalleIngresos = "";
             var detalleEgresos = "";
-            for (var i = 1; i < 32; i++)
+            for (var i = 1; i < 28; i++)
             {
                 detalleEgresos += "<tr>";
                 detalleEgresos += "<td>0" + i + "/10/2020</td>";
@@ -114,14 +133,9 @@ namespace Test
                 detalleIngresos += "<td>22</td>";
                 detalleIngresos += "<td>$223.980</td>";
                 detalleIngresos += "</tr>";
-                if (i == 14)
-                {
-                    detalleEgresos += "<tr style='page-break-before: always'></tr>";
-                    detalleIngresos += "<tr style='page-break-before: always'></tr>";
-                }
             }
             return
-                @"<!DOCTYPE html><html><head><meta charset='utf-8'><title></title><style>body{font-family: 'Arial', 'Verdana', 'Helvetica', Sans-serif;font-size: 12px;}#container{width: 700px;height: 1000px;}h1{color: #22776b;}h3{color: #383838;}.center{margin: 0 auto;}.w-100{width: 100%;}.w-50{width: 49%;}.logo{width: 100px;}.text-center{text-align: center;}.text-left{text-align: left;}.d-inline-block{display: inline-block;vertical-align: top;}.tabla-estilizada{width: 100%; margin: 25px 0; font-size: 0.9em;}.tabla-estilizada thead tr{background-color: #009879; color: #ffffff; text-align: left;}.tabla-estilizada.egresos thead tr{background-color: #d49292;}.tabla-estilizada.ingresos thead tr{background-color: #71a2a5;}.tabla-estilizada thead tr th.transparente{background-color: #ffffff !important;}.tabla-estilizada th,.tabla-estilizada td{padding: 12px 15px;}.tabla-estilizada tbody tr{border-bottom: 1px solid #dddddd;}.tabla-estilizada tbody tr:nth-of-type(even){background-color: #f3f3f3;}.tabla-estilizada tbody tr:last:child{border-bottom: 2px solid #009879;}.tabla-estilizada.tabla-estilizada-resumen th,.tabla-estilizada.tabla-estilizada-resumen td{padding: 12px 11px;}.tabla-estilizada.tabla-estilizada-resumen th:nth-child(even){background-color: #efefef;color: #2d2d2d;}.tabla-estilizada.tabla-estilizada-resumen{font-size: 1.1em;}</style></head><body><div id='container'><div class='w-100'><img class='logo' src='" + rutaImagen + "'/></div><div class='w-100 text-center'><h1>Reporte de utilidad mensual</h1></div><div class='w-100'><div class='w-50 d-inline-block' style='margin-bottom: 68px;'><table class='tabla-estilizada tabla-estilizada-resumen'><thead><tr><th>Mes:</th><th>" + mes + "</th><th class='transparente'></th><th class='transparente'></th></tr><tr><th>Solicitante:</th><th>" + solicitante + "</th><th class='transparente'></th><th class='transparente'></th></tr></thead></table></div><div class='w-50 d-inline-block'><table class='tabla-estilizada tabla-estilizada-resumen'><thead><tr><th>N° órdenes</th><th>" + cantOrdenes + "</th><th>Egresos</th><th>" + montoEgresos + "</th></tr><tr><th>N° pedidos</th><th>" + cantPedidos + "</th><th>Ingresos</th><th>" + montoIngresos + "</th></tr><tr><th colspan='4' class='transparente'></th><tr><th class='transparente'></th><th class='transparente'></th><th>Utilidades</th><th>" + montoBalance + "</th></tr></thead></table></div></div><div class='w-100'><div class='w-50 d-inline-block'><h3>Detalle de Egresos</h3><table class='tabla-estilizada egresos text-left'><thead><tr><th>Fecha</th><th>Cantidad órdenes</th><th>Total</th></tr></thead><tbody>" + detalleEgresos + "</tbody></table></div><div class='w-50 d-inline-block'><h3>Detalle de Ingresos</h3><table class='tabla-estilizada ingresos text-left'><thead><tr><th>Fecha</th><th>Cantidad pedidos</th><th>Total</th></tr></thead><tbody>" + detalleIngresos + "</tbody></table></div></div></div>";
+                @"<!DOCTYPE html><html><meta charset='utf-8'><title></title><style type='text/css'> table { page-break-inside:auto } tr { page-break-inside:avoid; page-break-after:auto } thead { display:table-header-group } tfoot { display:table-footer-group } body{font-family: 'Arial', 'Verdana', 'Helvetica', Sans-serif;font-size: 12px;}h1{color: #22776b;}h3{color: #383838;}.center{margin: 0 auto;}.w-100{width: 100%;}.w-50{width: 49%;}.logo{width: 100px;}.text-center{text-align: center;}.text-left{text-align: left;}.d-inline-block{display: inline-block;vertical-align: top;}.tabla-estilizada{width: 100%; margin: 25px 0; font-size: 0.9em;}.tabla-estilizada thead tr{background-color: #009879; color: #ffffff; text-align: left;}.tabla-estilizada.egresos thead tr{background-color: #d49292;}.tabla-estilizada.ingresos thead tr{background-color: #71a2a5;}.tabla-estilizada thead tr th.transparente{background-color: #ffffff !important;}.tabla-estilizada th,.tabla-estilizada td{padding: 12px 15px;}.tabla-estilizada tbody tr{border-bottom: 1px solid #dddddd;}.tabla-estilizada tbody tr:nth-of-type(even){background-color: #f3f3f3;}.tabla-estilizada tbody tr:last:child{border-bottom: 2px solid #009879;}.tabla-estilizada.tabla-estilizada-resumen th,.tabla-estilizada.tabla-estilizada-resumen td{padding: 12px 11px;}.tabla-estilizada.tabla-estilizada-resumen th:nth-child(even){background-color: #efefef;color: #2d2d2d;}.tabla-estilizada.tabla-estilizada-resumen{font-size: 1.1em;}</style></head><body><div id='container'><div class='w-100'><img class='logo' src='" + rutaImagen + "'/></div><div class='w-100 text-center'><h1>Reporte de utilidad mensual</h1></div><div class='w-100'><div class='w-50 d-inline-block' style='margin-bottom: 68px;'><table class='tabla-estilizada tabla-estilizada-resumen'><thead><tr><th>Mes:</th><th>" + mes + "</th><th class='transparente'></th><th class='transparente'></th></tr><tr><th>Solicitante:</th><th>" + solicitante + "</th><th class='transparente'></th><th class='transparente'></th></tr></thead></table></div><div class='w-50 d-inline-block'><table class='tabla-estilizada tabla-estilizada-resumen'><thead><tr><th>N° órdenes</th><th>" + cantOrdenes + "</th><th>Egresos</th><th>" + montoEgresos + "</th></tr><tr><th>N° pedidos</th><th>" + cantPedidos + "</th><th>Ingresos</th><th>" + montoIngresos + "</th></tr><tr><th colspan='4' class='transparente'></th><tr><th class='transparente'></th><th class='transparente'></th><th>Utilidades</th><th>" + montoBalance + "</th></tr></thead></table></div></div><div><div><h3>Detalle de Egresos</h3><table class='tabla-estilizada egresos text-left'><thead><tr><th>Fecha</th><th>Cantidad órdenes</th><th>Total</th></tr></thead><tbody>" + detalleEgresos + "</tbody></table></div><div><h3>Detalle de Ingresos</h3><table class='tabla-estilizada ingresos text-left'><thead><tr><th>Fecha</th><th>Cantidad pedidos</th><th>Total</th></tr></thead><tbody>" + detalleIngresos + "</tbody></table></div></div></div></div></body></html>";
         }
     }
 }
