@@ -7,9 +7,9 @@ namespace RestaurantServices.Restaurant.Modelo.Validaciones
     {
         public IngredientePlatoValidator()
         {
-            RuleFor(x => x.CantidadInsumo).GreaterThan(0);
-            RuleFor(x => x.IdInsumo).GreaterThan(0);
-            RuleFor(x => x.IdPlato).GreaterThan(0);
+            RuleFor(x => x.CantidadInsumo).GreaterThan(0).LessThan(99999999);
+            RuleFor(x => x.IdInsumo).GreaterThan(0).LessThan(99999999);
+            RuleFor(x => x.IdPlato).GreaterThan(0).LessThan(99999999);
         }
     }
 }

@@ -8,10 +8,10 @@ namespace RestaurantServices.Restaurant.Modelo.Validaciones
         public PersonaValidator()
         {
             RuleFor(x => x.Rut).GreaterThan(0);
-            RuleFor(x => x.DigitoVerificador).NotNull().NotEmpty();
-            RuleFor(x => x.Email).NotNull().NotEmpty().EmailAddress();
-            //RuleFor(x => x.Nombre).NotNull().NotEmpty(); es opcional en bdd
-            //RuleFor(x => x.Apellido).NotNull().NotEmpty(); es opcional en bdd
+            RuleFor(x => x.DigitoVerificador).NotNull().NotEmpty().MaximumLength(1);
+            RuleFor(x => x.Email).NotNull().NotEmpty().EmailAddress().MaximumLength(100);
+            RuleFor(x => x.Nombre).MaximumLength(150);
+            RuleFor(x => x.Apellido).MaximumLength(150);
             RuleFor(x => x.ObtenerRutCompleto())
                 .NotNull()
                 .NotEmpty()

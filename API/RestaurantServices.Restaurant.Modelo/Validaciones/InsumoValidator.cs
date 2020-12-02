@@ -7,7 +7,7 @@ namespace RestaurantServices.Restaurant.Modelo.Validaciones
     {
         public InsumoValidator()
         {
-            RuleFor(x => x.Nombre).NotNull().NotEmpty();
+            RuleFor(x => x.Nombre).NotNull().NotEmpty().MaximumLength(150);
             RuleFor(x => x.IdProveedor).GreaterThan(0);
             RuleFor(x => x.IdUnidadDeMedida).GreaterThan(0);
             RuleFor(x => x.StockActual).GreaterThan(0);

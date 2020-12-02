@@ -7,7 +7,7 @@ namespace RestaurantServices.Restaurant.Modelo.Validaciones
     {
         public ProveedorValidator()
         {
-            RuleFor(x => x.Direccion).NotNull().NotEmpty();
+            RuleFor(x => x.Direccion).NotNull().NotEmpty().MaximumLength(225);
             RuleFor(x => x.Persona).NotNull().NotEmpty();
         }
     }

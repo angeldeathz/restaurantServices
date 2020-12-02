@@ -7,11 +7,11 @@ namespace RestaurantServices.Restaurant.Modelo.Validaciones
     {
         public DetalleOrdenProveedorValidator()
         {
-            RuleFor(x => x.Precio).GreaterThan(0);
-            RuleFor(x => x.Cantidad).GreaterThan(0);
-            RuleFor(x => x.IdInsumo).GreaterThan(0);
-            RuleFor(x => x.Total).GreaterThan(0);
-            RuleFor(x => x.IdOrdenProveedor).GreaterThan(0);
+            RuleFor(x => x.Precio).GreaterThan(0).LessThan(99999999);
+            RuleFor(x => x.Cantidad).GreaterThan(0).LessThan(99999999);
+            RuleFor(x => x.IdInsumo).GreaterThan(0).LessThan(99999999);
+            RuleFor(x => x.Total).GreaterThan(0).LessThan(99999999);
+            RuleFor(x => x.IdOrdenProveedor).GreaterThan(0).LessThan(99999999);
             RuleFor(x => x.Insumo).Null();
         }
     }

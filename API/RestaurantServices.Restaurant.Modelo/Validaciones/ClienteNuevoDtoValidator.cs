@@ -7,7 +7,7 @@ namespace RestaurantServices.Restaurant.Modelo.Validaciones
     {
         public ClienteNuevoDtoValidator()
         {
-            RuleFor(x => x.Email).NotNull().NotEmpty().EmailAddress();
+            RuleFor(x => x.Email).NotNull().NotEmpty().MaximumLength(100).EmailAddress();
         }
     }
 }

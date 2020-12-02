@@ -9,7 +9,7 @@ namespace RestaurantServices.Restaurant.Modelo.Validaciones
         public UsuarioLoginValidator()
         {
             CascadeMode = CascadeMode.StopOnFirstFailure;
-            RuleFor(x => x.Contrasena).NotNull().NotEmpty();
+            RuleFor(x => x.Contrasena).NotNull().NotEmpty().MaximumLength(100);
             RuleFor(x => x.Rut)
                 .NotNull()
                 .NotEmpty()
