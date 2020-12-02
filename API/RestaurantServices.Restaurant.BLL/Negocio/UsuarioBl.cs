@@ -48,11 +48,15 @@ namespace RestaurantServices.Restaurant.BLL.Negocio
         {
             var usuarioCompleto = await _unitOfWork.UsuarioDal.GetAsync(id);
             if (usuarioCompleto == null) return null;
+
+            usuarioCompleto.Contrasena = new Usuario().DecryptPassword(usuarioCompleto.Contrasena);
+
             return new Usuario
             {
                 Id = usuarioCompleto.IdUsuario,
                 IdPersona = usuarioCompleto.IdPersona,
                 IdTipoUsuario = usuarioCompleto.IdTipoUsuario,
+                Contrasena = usuarioCompleto.Contrasena,
                 Persona = new Persona
                 {
                     DigitoVerificador = usuarioCompleto.DigitoVerificador,
@@ -83,11 +87,14 @@ namespace RestaurantServices.Restaurant.BLL.Negocio
             var usuarioCompleto = await _unitOfWork.UsuarioDal.GetByRutAsync(personaHelper.Rut);
             if (usuarioCompleto == null) return null;
 
+            usuarioCompleto.Contrasena = new Usuario().DecryptPassword(usuarioCompleto.Contrasena);
+
             return new Usuario
             {
                 Id = usuarioCompleto.IdUsuario,
                 IdPersona = usuarioCompleto.IdPersona,
                 IdTipoUsuario = usuarioCompleto.IdTipoUsuario,
+                Contrasena = usuarioCompleto.Contrasena,
                 Persona = new Persona
                 {
                     DigitoVerificador = usuarioCompleto.DigitoVerificador,
@@ -116,19 +123,29 @@ namespace RestaurantServices.Restaurant.BLL.Negocio
                 return null;
             }
 
+            usuarioLogin.Contrasena = new Usuario().EncryptPassword(usuarioLogin.Contrasena);
+
             return await _unitOfWork.UsuarioDal.ValidaLoginAsync(personaHelper.Rut, usuarioLogin.Contrasena);
         }
 
         public async Task<int> InsertarAsync(Usuario usuario)
         {
-            var usuarioExistente = await this.ObtenerPorRutAsync(usuario.Persona.ObtenerRutCompleto());
+            var usuarioExistente = await ObtenerPorRutAsync(usuario.Persona.ObtenerRutCompleto());
             if (usuarioExistente !=  null) throw new Exception("Usuario ya existe");
+
+            usuario.EncryptPassword(usuario.Contrasena);
+
             return await _unitOfWork.UsuarioDal.InsertAsync(usuario);
         }
 
-        public Task<int> ActualizarAsync(Usuario usuario)
+        public async Task<int> ActualizarAsync(Usuario usuario)
         {
-            return _unitOfWork.UsuarioDal.UpdateAsync(usuario);
+            var usuarioExistente = await ObtenerPorRutAsync(usuario.Persona.ObtenerRutCompleto());
+            if (usuarioExistente ==  null) throw new Exception("Usuario no existe");
+
+            usuario.EncryptPassword(usuario.Contrasena);
+
+            return await _unitOfWork.UsuarioDal.UpdateAsync(usuario);
         }
     }
 }
