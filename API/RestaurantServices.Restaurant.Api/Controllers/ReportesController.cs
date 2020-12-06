@@ -18,6 +18,20 @@ namespace RestaurantServices.Restaurant.API.Controllers
             _reportesBl = new ReportesBl();
         }
 
+        /// <summary>
+        /// Obtiene un reporte en formato base64
+        /// </summary>
+        /// <remarks>
+        /// Opciones Id Reporte:
+        ///
+        ///     1 = Reporte diario
+        ///     2 = Reporte filtrado por fecha
+        ///     3 = Reporte clientes
+        ///     4 = Reporte platos
+        ///     5 = Reporte tiempos
+        /// </remarks>
+        /// <param name="reporte"></param>
+        /// <returns></returns>
         [HttpGet, Route("")]
         [ResponseType(typeof(string))]
         public async Task<IHttpActionResult> Get([FromUri] ReporteDto reporte)

@@ -14,6 +14,8 @@ namespace RestaurantServices.Restaurant.BLL.Negocio
         private readonly OrdenProveedorBl _proveedorBl;
         private readonly DocumentoPagoBl _documentoPagoBl;
         private readonly ItextSharpClient _itextSharpClient;
+        private readonly PedidoBl _pedidoBl;
+        private readonly ArticuloPedidoBl _articuloPedidoBl;
 
         public ReportesBl()
         {
@@ -21,6 +23,8 @@ namespace RestaurantServices.Restaurant.BLL.Negocio
             _proveedorBl = new OrdenProveedorBl();
             _itextSharpClient = new ItextSharpClient();
             _documentoPagoBl = new DocumentoPagoBl();
+            _pedidoBl = new PedidoBl();
+            _articuloPedidoBl = new ArticuloPedidoBl();
         }
 
         public async Task<string> ObtenerReporteAsync(ReporteDto reporte)
@@ -28,20 +32,24 @@ namespace RestaurantServices.Restaurant.BLL.Negocio
             var usuario = await _usuarioBl.ObtenerPorIdAsync(reporte.IdUsuario);
             if (usuario == null) throw new Exception($"No existe el usuario con ID {reporte.IdUsuario}");
 
-            var ordenes = await _proveedorBl.ObtenerTodosAsync();
-            var documentoPagos = await _documentoPagoBl.ObtenerTodosAsync();
-
             string html;
 
             switch (reporte.IdReporte)
             {
                 case 1:
-                    html = GetHtmlReporteDiario(usuario, ordenes, documentoPagos);  
+                    html = await GetHtmlReporteDiario(usuario);
                     break;
                 case 2:
-                    ordenes = ordenes.Where(x => x.FechaHora.Date >= reporte.FechaDesde.Date && x.FechaHora.Date <= reporte.FechaHasta.Date).ToList();
-                    documentoPagos = documentoPagos.Where(x => x.FechaHora.Date >= reporte.FechaDesde.Date && x.FechaHora.Date <= reporte.FechaHasta.Date).ToList();
-                    html = GetHtmlReporteMensual(usuario, ordenes, documentoPagos, reporte);
+                    html = await GetHtmlReporteMensual(usuario, reporte);
+                    break;
+                case 3:
+                    html = await GetHtmlReporteClientes(usuario, reporte);
+                    break;
+                case 4:
+                    html = await GetHtmlReportePlatos(usuario, reporte);
+                    break;
+                case 5:
+                    html = await GetHtmlReporteTiempos(usuario, reporte);
                     break;
                 default:
                     throw new Exception("Id reporte debe ser 1 o 2");
@@ -50,8 +58,11 @@ namespace RestaurantServices.Restaurant.BLL.Negocio
             return _itextSharpClient.CreatePdfBase64(html);
         }
 
-        private string GetHtmlReporteDiario(Usuario usuario, List<OrdenProveedor> ordenes, List<DocumentoPago> documentoPagos)
+        private async Task<string> GetHtmlReporteDiario(Usuario usuario)
         {
+            var ordenes = await _proveedorBl.ObtenerTodosAsync();
+            var documentoPagos = await _documentoPagoBl.ObtenerTodosAsync();
+
             ordenes = ordenes.Where(x => x.FechaHora.Date == DateTime.Now.Date).ToList();
             documentoPagos = documentoPagos.Where(x => x.FechaHora.Date == DateTime.Now.Date).ToList();
 
@@ -92,8 +103,14 @@ namespace RestaurantServices.Restaurant.BLL.Negocio
                 @"<!DOCTYPE html><html><head><meta charset='utf-8'></meta><style>table{page-break-inside:auto}tr{page-break-inside:avoid; page-break-after:auto}thead{display:table-header-group}tfoot{display:table-footer-group}body{font-family: 'Arial', 'Verdana', 'Helvetica', Sans-serif;font-size: 13px;}h1{color: #22776b;}h3{color: #383838;}.center{margin: 0 auto;}.w-100{width: 100%;}.w-50{width: 49%;}.logo{width: 100px;}.text-center{text-align: center;}.text-left{text-align: left;}.text-right{text-align: right;}.d-inline-block{display: inline-block;vertical-align: top;}.tabla-estilizada{width: 100%;margin: 25px 0;}.tabla-estilizada thead tr{background-color: #009879;color: #ffffff;text-align: left;}.tabla-estilizada thead tr th.transparente{background-color: #ffffff !important;}.tabla-estilizada th,.tabla-estilizada td{padding: 12px 15px;}.tabla-estilizada tbody tr{border-bottom: 1px solid #dddddd;}.tabla-estilizada tbody tr:nth-of-type(even){background-color: #f3f3f3;}.tabla-estilizada tbody tr:last:child{border-bottom: 2px solid #009879;}.tabla-estilizada.tabla-estilizada-resumen th:nth-child(even){background-color: #efefef;color: #2d2d2d;}.tabla-estilizada.egresos thead tr{background-color: #d49292;}.tabla-estilizada.ingresos thead tr{background-color: #71a2a5;}.tabla-estilizada.egresos td, .tabla-estilizada.ingresos td{text-align: center;}.tabla-estilizada.egresos td:last-child, .tabla-estilizada.ingresos td:last-child{text-align: right;}</style></head><body><div id='container'><div class='w-100'><img class='logo' src='" + rutaImagen + "'/></div><div class='w-100 text-center'><h1>Reporte de utilidad diaria</h1></div><div class='w-100'><div class='w-50 d-inline-block' style='margin-bottom: 68px;'><table class='tabla-estilizada tabla-estilizada-resumen'><thead><tr><th>Fecha:</th><th>" + fecha + "</th><th class='transparente'></th><th class='transparente'></th></tr><tr><th>Solicitante:</th><th>" + solicitante + "</th><th class='transparente'></th><th class='transparente'></th></tr></thead></table></div><div class='w-50 d-inline-block'><table class='tabla-estilizada tabla-estilizada-resumen'><thead><tr><th>N° órdenes</th><th>" + cantOrdenes + "</th><th>Egresos</th><th class='text-right'>" + montoEgresos + "</th></tr><tr><th>N° pedidos</th><th>" + cantPedidos + "</th><th>Ingresos</th><th class='text-right'>" + montoIngresos + "</th></tr><tr><th colspan='4' class='transparente'></th><tr><th class='transparente'></th><th class='transparente'></th><th>Utilidades</th><th class='text-right'>" + montoBalance + "</th></tr></thead></table></div></div><div><h3>Detalle de Egresos</h3><table class='tabla-estilizada egresos text-left'><thead><tr><th>Id Orden</th><th class='text-center'>Hora</th><th class='text-center'>Estado</th><th class='text-center'>Total</th></tr></thead><tbody>" + detalleEgresos + "</tbody></table></div><div><h3>Detalle de Ingresos</h3><table class='tabla-estilizada ingresos text-left'><thead><tr><th>Id Pedido</th><th class='text-center'>Hora</th><th class='text-center'>Medio de pago</th><th class='text-center'>Total</th></tr></thead><tbody>" + detalleIngresos + "</tbody></table></div></div></div></body></html>";
         }
 
-        private string GetHtmlReporteMensual(Usuario usuario, List<OrdenProveedor> ordenes, List<DocumentoPago> documentoPagos, ReporteDto reporte)
+        private async Task<string> GetHtmlReporteMensual(Usuario usuario,  ReporteDto reporte)
         {
+            var ordenes = await _proveedorBl.ObtenerTodosAsync();
+            var documentoPagos = await _documentoPagoBl.ObtenerTodosAsync();
+
+            ordenes = ordenes.Where(x => x.FechaHora.Date >= reporte.FechaDesde.Date && x.FechaHora.Date <= reporte.FechaHasta.Date).ToList();
+            documentoPagos = documentoPagos.Where(x => x.FechaHora.Date >= reporte.FechaDesde.Date && x.FechaHora.Date <= reporte.FechaHasta.Date).ToList();
+
             var fecha = $"{reporte.FechaDesde.Date:dd-MM-yyyy} al {reporte.FechaHasta.Date:dd-MM-yyyy}";
             var solicitante = $"{usuario.Persona.Nombre} {usuario.Persona.Apellido}";
             var cantOrdenes = ordenes.Count;
@@ -156,6 +173,195 @@ namespace RestaurantServices.Restaurant.BLL.Negocio
 
             return
                 @"<!DOCTYPE html><html><head><meta charset='utf-8'><title></title><style type='text/css'> table{page-break-inside:auto}tr{page-break-inside:avoid; page-break-after:auto}thead{display:table-header-group}tfoot{display:table-footer-group}body{font-family: 'Arial', 'Verdana', 'Helvetica', Sans-serif;font-size: 13px;}h1{color: #22776b;}h3{color: #383838;}.center{margin: 0 auto;}.w-100{width: 100%;}.w-50{width: 49%;}.logo{width: 100px;}.text-center{text-align: center;}.text-left{text-align: left;}.text-right{text-align: right;}.d-inline-block{display: inline-block;vertical-align: top;}.tabla-estilizada{width: 100%;margin: 25px 0;}.tabla-estilizada thead tr{background-color: #009879;color: #ffffff;text-align: left;}.tabla-estilizada thead tr th.transparente{background-color: #ffffff !important;}.tabla-estilizada th,.tabla-estilizada td{padding: 12px 15px;}.tabla-estilizada tbody tr{border-bottom: 1px solid #dddddd;}.tabla-estilizada tbody tr:nth-of-type(even){background-color: #f3f3f3;}.tabla-estilizada tbody tr:last:child{border-bottom: 2px solid #009879;}.tabla-estilizada.tabla-estilizada-resumen th:nth-child(even){background-color: #efefef;color: #2d2d2d;}.tabla-estilizada.tabla-estilizada-resumen th{padding: 12px 12px;}.tabla-estilizada.egresos thead tr{background-color: #d49292;}.tabla-estilizada.ingresos thead tr{background-color: #71a2a5;}.tabla-estilizada.egresos td, .tabla-estilizada.ingresos td{text-align: center;}.tabla-estilizada.egresos td:last-child, .tabla-estilizada.ingresos td:last-child{text-align: right;}</style></head><body><div id='container'><div class='w-100'><img class='logo' src='" + rutaImagen + "'/></div><div class='w-100 text-center'><h1>Reporte de utilidad mensual</h1></div><div class='w-100'><div class='w-50 d-inline-block' style='margin-bottom: 68px;'><table class='tabla-estilizada tabla-estilizada-resumen'><thead><tr><th>Fecha:</th><th>" + fecha + "</th><th class='transparente'></th><th class='transparente'></th></tr><tr><th>Solicitante:</th><th>" + solicitante + "</th><th class='transparente'></th><th class='transparente'></th></tr></thead></table></div><div class='w-50 d-inline-block'><table class='tabla-estilizada tabla-estilizada-resumen'><thead><tr><th>N° órdenes</th><th>" + cantOrdenes + "</th><th>Egresos</th><th>" + montoEgresos.ToString("#,##0") + "</th></tr><tr><th>N° pedidos</th><th>" + cantPedidos + "</th><th>Ingresos</th><th>" + montoIngresos.ToString("#,##0") + "</th></tr><tr><th colspan='4' class='transparente'></th><tr><th class='transparente'></th><th class='transparente'></th><th>Utilidades</th><th>" + montoBalance.ToString("#,##0") + "</th></tr></thead></table></div></div><div><div><h3>Detalle de Egresos</h3><table class='tabla-estilizada egresos text-left'><thead><tr><th class='text-center'>Fecha</th><th class='text-center'>Cantidad órdenes</th><th class='text-right'>Total</th></tr></thead><tbody>" + detalleEgresos + "</tbody></table></div><div><h3>Detalle de Ingresos</h3><table class='tabla-estilizada ingresos text-left'><thead><tr><th class='text-center'>Fecha</th><th class='text-center'>Cantidad pedidos</th><th class='text-right'>Total</th></tr></thead><tbody>" + detalleIngresos + "</tbody></table></div></div></div></div></body></html>";
+        }
+
+        private async Task<string> GetHtmlReporteClientes(Usuario usuario, ReporteDto reporte)
+        {
+            var pedidos = await _pedidoBl.ObtenerTodosAsync();
+            pedidos = pedidos.Where(x => x.FechaHoraInicio.Date >= reporte.FechaDesde.Date && x.FechaHoraInicio.Date <= reporte.FechaHasta.Date)
+                .OrderBy(x => x.FechaHoraInicio)
+                .ToList();
+
+            var pedidosGroup = pedidos.GroupBy(x => x.FechaHoraInicio.Date).ToList();
+
+            var fecha = $"{reporte.FechaDesde.Date:dd-MM-yyyy} al {reporte.FechaHasta.Date:dd-MM-yyyy}";
+            var solicitante = $"{usuario.Persona.Nombre} {usuario.Persona.Apellido}";
+
+            var rutaImagen = "C:\\Storage\\logo_sxxi.png";
+            var detalleAtenciones = "";
+
+            var clientesDiarios = new List<int>();
+
+            pedidosGroup.ForEach(a =>
+            {
+                var atendidos = 0;
+                var atendidosPorMesa = new List<int>();
+
+                pedidos.ForEach(b =>
+                {
+                    if (a.Key.Date == b.FechaHoraInicio.Date)
+                    {
+                        atendidos += b.Reserva.CantidadComensales;
+                        atendidosPorMesa.Add(b.Reserva.CantidadComensales);
+                    }
+                });
+                
+                detalleAtenciones += "<tr>";
+                detalleAtenciones += $"<td>{a.Key.Date:dd-MM-yyyy}</td>";
+                detalleAtenciones += $"<td>{atendidos}</td>";
+                detalleAtenciones += $"<td>{Math.Round(atendidosPorMesa.Average(), 1)}</td>";
+                detalleAtenciones += "</tr>";
+
+                clientesDiarios.Add(atendidos);
+            });
+
+            var totalAtendidos = clientesDiarios.Sum();
+            var promedioDiario = Math.Round(clientesDiarios.Average(), 1);
+            var minAtendidos = clientesDiarios.Min();
+            var maxAtendidos = clientesDiarios.Max();
+
+            return
+                @"<!DOCTYPE html><html><head><meta charset='utf-8'></meta><style>table{page-break-inside:auto}tr{page-break-inside:avoid; page-break-after:auto}thead{display:table-header-group}tfoot{display:table-footer-group}body{font-family: 'Arial', 'Verdana', 'Helvetica', Sans-serif;font-size: 13px;}h1{color: #22776b;}h3{color: #383838;}.center{margin: 0 auto;}.w-100{width: 100%;}.w-50{width: 49%;}.logo{width: 100px;}.text-center{text-align: center;}.text-left{text-align: left;}.text-right{text-align: right;}.d-inline-block{display: inline-block;vertical-align: top;}.tabla-estilizada{width: 100%;margin: 25px 0;}.tabla-estilizada thead tr{background-color: #009879;color: #ffffff;text-align: left;}.tabla-estilizada thead tr th.transparente{background-color: #ffffff !important;}.tabla-estilizada th,.tabla-estilizada td{padding: 12px 15px;}.tabla-estilizada tbody tr{border-bottom: 1px solid #dddddd;}.tabla-estilizada tbody tr:nth-of-type(even){background-color: #f3f3f3;}.tabla-estilizada tbody tr:last:child{border-bottom: 2px solid #009879;}.tabla-estilizada.tabla-estilizada-resumen th:nth-child(even){background-color: #efefef;color: #2d2d2d;}.tabla-estilizada.egresos thead tr{background-color: #d49292;}.tabla-estilizada.ingresos thead tr{background-color: #71a2a5;}.tabla-estilizada.egresos td, .tabla-estilizada.ingresos td{text-align: center;}.tabla-estilizada.egresos td:last-child, .tabla-estilizada.ingresos td:last-child{text-align: right;}</style></head><body><div id='container'><div class='w-100'><img class='logo' src='" + rutaImagen + "'/></div><div class='w-100 text-center'><h1>Reporte de clientes atendidos</h1></div><div class='w-100'><div class='w-50 d-inline-block' style='margin-bottom: 29px;'><table class='tabla-estilizada tabla-estilizada-resumen'><thead><tr><th>Fecha:</th><th>" + fecha + "</th><th class='transparente'></th><th class='transparente'></th></tr><tr><th>Solicitante:</th><th>" + solicitante + "</th><th class='transparente'></th><th class='transparente'></th></tr></thead></table></div><div class='w-50 d-inline-block'><table class='tabla-estilizada tabla-estilizada-resumen'><thead><tr><th>Total</th><th class='text-right'>" + totalAtendidos + "</th><th>Mínimo diario</th><th class='text-right'>" + minAtendidos + "</th></tr><tr><th>Promedio diario</th><th class='text-right'>" + promedioDiario + "</th><th>Máximo diario</th><th class='text-right'>" + maxAtendidos + "</th></tr></thead></table></div><div><h3>Detalle de atenciones</h3><table class='tabla-estilizada egresos text-left'><thead><tr><th class='text-center'>Fecha</th><th class='text-center'>Clientes atendidos</th><th class='text-right'>Promedio por atención</th></tr></thead><tbody>" + detalleAtenciones + "</tbody></table></div></div></div></body></html>";
+        }
+
+        private async Task<string> GetHtmlReportePlatos(Usuario usuario, ReporteDto reporte)
+        {
+            var fecha = $"{reporte.FechaDesde.Date:dd-MM-yyyy} al {reporte.FechaHasta.Date:dd-MM-yyyy}";
+            var solicitante = $"{usuario.Persona.Nombre} {usuario.Persona.Apellido}";
+            var rutaImagen = "C:\\Storage\\logo_sxxi.png";
+            var detallePlatos = "";
+
+            var pedidos = await _pedidoBl.ObtenerTodosAsync();
+            pedidos = pedidos.Where(x => x.FechaHoraInicio.Date >= reporte.FechaDesde.Date && x.FechaHoraInicio.Date <= reporte.FechaHasta.Date)
+                .OrderBy(x => x.FechaHoraInicio)
+                .ToList();
+
+            var articulos = new List<ArticuloPedido>();
+
+            foreach (var x in pedidos)
+            {
+                var articulosPedidos = await _articuloPedidoBl.ObtenerPorIdPedidoAsync(x.Id);
+                articulos.AddRange(articulosPedidos);
+            }
+
+            articulos = articulos.OrderBy(x => x.Id).ToList();
+
+            var articulosGroup = articulos.GroupBy(x => x.Articulo.Id).ToList();
+
+            var articuloConMasVentas = new ArticuloPedido
+            {
+                Cantidad = 0,
+                Articulo = new Articulo
+                {
+                    Nombre = string.Empty
+                }
+            };
+
+            var articuloConMenosVentas = new ArticuloPedido
+            {
+                Cantidad = 100,
+                Articulo = new Articulo
+                {
+                    Nombre = string.Empty
+                }
+            };
+
+            articulosGroup.ForEach(x =>
+            {
+                var cantidad = 0;
+                var nombrePlato = string.Empty;
+                var tipoPlato = string.Empty;
+
+                articulos.ForEach(b =>
+                {
+                    if (x.Key == b.Articulo.Id)
+                    {
+                        cantidad += b.Cantidad;
+                        nombrePlato = b.Articulo.Nombre;
+                        tipoPlato = b.Articulo.TipoConsumo.Nombre;
+                    }
+                });
+
+                detallePlatos += "<tr>";
+                detallePlatos += $"<td>{nombrePlato}</td>";
+                detallePlatos += $"<td>{tipoPlato}</td>";
+                detallePlatos += $"<td>{cantidad}</td>";
+                detallePlatos += "</tr>";
+
+                if (cantidad > articuloConMasVentas.Cantidad)
+                {
+                    articuloConMasVentas.Cantidad = cantidad;
+                    articuloConMasVentas.Articulo.Nombre = nombrePlato;
+                }
+
+                if (cantidad < articuloConMenosVentas.Cantidad)
+                {
+                    articuloConMenosVentas.Cantidad = cantidad;
+                    articuloConMenosVentas.Articulo.Nombre = nombrePlato;
+                }
+            });
+
+            var platoMasPedido = articuloConMasVentas.Articulo.Nombre;
+            var platoMenosPedido = articuloConMenosVentas.Articulo.Nombre;
+            var unidadesMasPedido = articuloConMasVentas.Cantidad;
+            var unidadesMenosPedido = articuloConMenosVentas.Cantidad;
+            
+            return
+                @"<!DOCTYPE html><html><head><meta charset='utf-8'></meta><style>table{page-break-inside:auto}tr{page-break-inside:avoid; page-break-after:auto}thead{display:table-header-group}tfoot{display:table-footer-group}body{font-family: 'Arial', 'Verdana', 'Helvetica', Sans-serif;font-size: 13px;}h1{color: #22776b;}h3{color: #383838;}.center{margin: 0 auto;}.w-100{width: 100%;}.w-50{width: 49%;}.logo{width: 100px;}.text-center{text-align: center;}.text-left{text-align: left;}.text-right{text-align: right;}.d-inline-block{display: inline-block;vertical-align: top;}.tabla-estilizada{width: 100%;margin: 25px 0;}.tabla-estilizada thead tr{background-color: #009879;color: #ffffff;text-align: left;}.tabla-estilizada thead tr th.transparente{background-color: #ffffff !important;}.tabla-estilizada th,.tabla-estilizada td{padding: 12px 15px;}.tabla-estilizada tbody tr{border-bottom: 1px solid #dddddd;}.tabla-estilizada tbody tr:nth-of-type(even){background-color: #f3f3f3;}.tabla-estilizada tbody tr:last:child{border-bottom: 2px solid #009879;}.tabla-estilizada.tabla-estilizada-resumen th:nth-child(even){background-color: #efefef;color: #2d2d2d;}.tabla-estilizada.egresos thead tr{background-color: #d49292;}.tabla-estilizada.ingresos thead tr{background-color: #71a2a5;}.tabla-estilizada.egresos td, .tabla-estilizada.ingresos td{text-align: center;}.tabla-estilizada.egresos td:last-child, .tabla-estilizada.ingresos td:last-child{text-align: right;}</style></head><body><div id='container'><div class='w-100'><img class='logo' src='" + rutaImagen + "'/></div><div class='w-100 text-center'><h1>Reporte de platos consumidos</h1></div><div class='w-100'><div class='w-50 d-inline-block' style='margin-bottom: 29px;'><table class='tabla-estilizada tabla-estilizada-resumen'><thead><tr><th>Fecha:</th><th>" + fecha + "</th><th class='transparente'></th><th class='transparente'></th></tr><tr><th>Solicitante:</th><th>" + solicitante + "</th><th class='transparente'></th><th class='transparente'></th></tr></thead></table></div><div class='w-50 d-inline-block'><table class='tabla-estilizada tabla-estilizada-resumen'><thead><tr><th>Más pedido</th><th class='text-right'>" + platoMasPedido + "</th><th>Unidades</th><th class='text-right'>" + unidadesMasPedido + "</th></tr><tr><th>Menos pedido</th><th class='text-right'>" + platoMenosPedido + "</th><th>Unidades</th><th class='text-right'>" + unidadesMenosPedido + "</th></tr></thead></table></div><div><h3>Detalle de platos pedidos</h3><table class='tabla-estilizada egresos text-left'><thead><tr><th class='text-center'>Nombre del plato</th><th class='text-center'>Tipo de plato</th><th class='text-right'>Unidades pedidas</th></tr></thead><tbody>" + detallePlatos + "</tbody></table></div></div></div></body></html>";
+        }
+
+        private async Task<string> GetHtmlReporteTiempos(Usuario usuario, ReporteDto reporte)
+        {
+            var fecha = $"{reporte.FechaDesde.Date:dd-MM-yyyy} al {reporte.FechaHasta.Date:dd-MM-yyyy}";
+            var solicitante = $"{usuario.Persona.Nombre} {usuario.Persona.Apellido}";
+            var rutaImagen = "C:\\Storage\\logo_sxxi.png";
+
+            var pedidos = await _pedidoBl.ObtenerTodosAsync();
+            pedidos = pedidos.Where(x => x.FechaHoraInicio.Date >= reporte.FechaDesde.Date && x.FechaHoraInicio.Date <= reporte.FechaHasta.Date)
+                .OrderBy(x => x.FechaHoraInicio)
+                .ToList();
+
+            var pedidosGroup = pedidos.GroupBy(x => x.FechaHoraInicio.Date).ToList();
+
+            var detalleAtenciones = "";
+
+            var minutosAtencionTotal = new List<double>();
+
+            pedidosGroup.ForEach(a =>
+            {
+                var cantidadComensales = new List<int>();
+                var minutosAtencion = new List<double>();
+
+                pedidos.ForEach(b =>
+                {
+                    if (a.Key.Date == b.FechaHoraInicio.Date)
+                    {
+                        cantidadComensales.Add(b.Reserva.CantidadComensales);
+                        var timespan = b.FechaHoraFin - b.FechaHoraInicio;
+                        minutosAtencion.Add(timespan.TotalMinutes);
+                    }
+                });
+
+                var promedioMinutos = minutosAtencion.Average();
+                var timeSpan = TimeSpan.FromMinutes(promedioMinutos);
+                var time = DateTime.Today.Add(timeSpan);
+
+                detalleAtenciones += "<tr>";
+                detalleAtenciones += $"<td>{a.Key.Date:dd-MM-yyyy}</td>";
+                detalleAtenciones += $"<td>{GetDayName((int)a.Key.DayOfWeek)}</td>";
+                detalleAtenciones += $"<td>{Math.Round(cantidadComensales.Average(), 1)}</td>";
+                detalleAtenciones += $"<td>{time:t}</td>";
+                detalleAtenciones += "</tr>";
+
+                minutosAtencionTotal.AddRange(minutosAtencion);
+            });
+
+            var duracionPromedio = DateTime.Today.Add(TimeSpan.FromMinutes(minutosAtencionTotal.Average()));
+            var atencionMasLarga = DateTime.Today.Add(TimeSpan.FromMinutes(minutosAtencionTotal.Max()));
+            var atencionMasCorta = DateTime.Today.Add(TimeSpan.FromMinutes(minutosAtencionTotal.Min()));
+
+            return
+                @"<!DOCTYPE html><html><head><meta charset='utf-8'></meta><style>table{page-break-inside:auto}tr{page-break-inside:avoid; page-break-after:auto}thead{display:table-header-group}tfoot{display:table-footer-group}body{font-family: 'Arial', 'Verdana', 'Helvetica', Sans-serif;font-size: 13px;}h1{color: #22776b;}h3{color: #383838;}.center{margin: 0 auto;}.w-100{width: 100%;}.w-50{width: 49%;}.logo{width: 100px;}.text-center{text-align: center;}.text-left{text-align: left;}.text-right{text-align: right;}.d-inline-block{display: inline-block;vertical-align: top;}.tabla-estilizada{width: 100%;margin: 25px 0;}.tabla-estilizada thead tr{background-color: #009879;color: #ffffff;text-align: left;}.tabla-estilizada thead tr th.transparente{background-color: #ffffff !important;}.tabla-estilizada th,.tabla-estilizada td{padding: 12px 15px;}.tabla-estilizada tbody tr{border-bottom: 1px solid #dddddd;}.tabla-estilizada tbody tr:nth-of-type(even){background-color: #f3f3f3;}.tabla-estilizada tbody tr:last:child{border-bottom: 2px solid #009879;}.tabla-estilizada.tabla-estilizada-resumen{font-size: 0.9em;}.tabla-estilizada.tabla-estilizada-resumen th{padding: 12px 11px;}.tabla-estilizada.tabla-estilizada-resumen th:nth-child(even){background-color: #efefef;color: #2d2d2d;}.tabla-estilizada.egresos thead tr{background-color: #d49292;}.tabla-estilizada.ingresos thead tr{background-color: #71a2a5;}.tabla-estilizada.egresos td, .tabla-estilizada.ingresos td{text-align: center;}.tabla-estilizada.egresos td:last-child, .tabla-estilizada.ingresos td:last-child{text-align: right;}</style></head><body><div id='container'><div class='w-100'><img class='logo' src='" + rutaImagen + "'/></div><div class='w-100 text-center'><h1>Reporte de tiempos de atención</h1></div><div class='w-100'><div class='w-50 d-inline-block' style='margin-bottom: 29px;'><table class='tabla-estilizada tabla-estilizada-resumen'><thead><tr><th>Fecha:</th><th>" + fecha + "</th><th class='transparente'></th><th class='transparente'></th></tr><tr><th>Solicitante:</th><th>" + solicitante + "</th><th class='transparente'></th><th class='transparente'></th></tr></thead></table></div><div class='w-50 d-inline-block'><table class='tabla-estilizada tabla-estilizada-resumen'><thead><tr><th>Duración promedio</th><th class='text-right'>" + duracionPromedio.ToString("t") + "</th><th>Atención más larga</th><th class='text-right'>" + atencionMasLarga.ToString("t") + "</th></tr><tr><th class='transparente'></th><th class='transparente'></th><th>Atención más corta</th><th class='text-right'>" + atencionMasCorta.ToString("t") + "</th></tr></thead></table></div><div><h3>Detalle de tiempos de atención</h3><table class='tabla-estilizada egresos text-left'><thead><tr><th class='text-center'>Fecha</th><th class='text-center'>Día de la semana</th><th class='text-center'>Promedio comensales</th><th class='text-right'>Duración promedio</th></tr></thead><tbody>" + detalleAtenciones + "</tbody></table></div></div></div></body></html>";
         }
 
         private string GetDayName(int dayNumber)
