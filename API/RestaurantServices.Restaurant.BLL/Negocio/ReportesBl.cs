@@ -37,7 +37,7 @@ namespace RestaurantServices.Restaurant.BLL.Negocio
             switch (reporte.IdReporte)
             {
                 case 1:
-                    html = await GetHtmlReporteDiario(usuario);
+                    html = await GetHtmlReporteDiario(usuario, reporte);
                     break;
                 case 2:
                     html = await GetHtmlReporteMensual(usuario, reporte);
@@ -58,15 +58,15 @@ namespace RestaurantServices.Restaurant.BLL.Negocio
             return _itextSharpClient.CreatePdfBase64(html);
         }
 
-        private async Task<string> GetHtmlReporteDiario(Usuario usuario)
+        private async Task<string> GetHtmlReporteDiario(Usuario usuario, ReporteDto reporte)
         {
             var ordenes = await _proveedorBl.ObtenerTodosAsync();
             var documentoPagos = await _documentoPagoBl.ObtenerTodosAsync();
 
-            ordenes = ordenes.Where(x => x.FechaHora.Date == DateTime.Now.Date).ToList();
-            documentoPagos = documentoPagos.Where(x => x.FechaHora.Date == DateTime.Now.Date).ToList();
+            ordenes = ordenes.Where(x => x.FechaHora.Date == reporte.FechaDesde.Date).ToList();
+            documentoPagos = documentoPagos.Where(x => x.FechaHora.Date == reporte.FechaDesde.Date).ToList();
 
-            var fecha = $"{GetDayName((int)DateTime.Now.DayOfWeek)}, {DateTime.Now.Date:dd-MM-yyyy}";
+            var fecha = $"{GetDayName((int)reporte.FechaDesde.DayOfWeek)}, {reporte.FechaDesde.Date:dd-MM-yyyy}";
             var solicitante = $"{usuario.Persona.Nombre} {usuario.Persona.Apellido}";
             var cantOrdenes = ordenes.Count;
             var montoEgresos = ordenes.Sum(x => x.Total);
