@@ -88,7 +88,10 @@ namespace RestaurantServices.Restaurant.BLL.Negocio
                 detalleEgresos += $"<td>$ {x.Total:#,##0}</td>";
                 detalleEgresos += "</tr>";
             });
-
+            if (detalleEgresos == string.Empty)
+            {
+                detalleEgresos = "<tr><td colspan='4'><p class='lead no-encontrado text-center font-weight-bold'>No se encontraron órdenes en el periodo seleccionado</p></td></tr>";
+            }
             documentoPagos.ForEach(x =>
             {
                 detalleIngresos += "<tr>";
@@ -98,7 +101,10 @@ namespace RestaurantServices.Restaurant.BLL.Negocio
                 detalleIngresos += $"<td>$ {x.Total}</td>";
                 detalleIngresos += "</tr>";
             });
-
+            if (detalleIngresos == string.Empty)
+            {
+                detalleIngresos = "<tr><td colspan='4'><p class='lead no-encontrado text-center font-weight-bold'>No se encontraron atenciones en el periodo seleccionado</p></td></tr>";
+            }
             return
                 @"<!DOCTYPE html><html><head><meta charset='utf-8'></meta><style>table{page-break-inside:auto}tr{page-break-inside:avoid; page-break-after:auto}thead{display:table-header-group}tfoot{display:table-footer-group}body{font-family: 'Arial', 'Verdana', 'Helvetica', Sans-serif;font-size: 13px;}h1{color: #22776b;}h3{color: #383838;}.center{margin: 0 auto;}.w-100{width: 100%;}.w-50{width: 49%;}.logo{width: 100px;}.text-center{text-align: center;}.text-left{text-align: left;}.text-right{text-align: right;}.d-inline-block{display: inline-block;vertical-align: top;}.tabla-estilizada{width: 100%;margin: 25px 0;}.tabla-estilizada thead tr{background-color: #009879;color: #ffffff;text-align: left;}.tabla-estilizada thead tr th.transparente{background-color: #ffffff !important;}.tabla-estilizada th,.tabla-estilizada td{padding: 12px 15px;}.tabla-estilizada tbody tr{border-bottom: 1px solid #dddddd;}.tabla-estilizada tbody tr:nth-of-type(even){background-color: #f3f3f3;}.tabla-estilizada tbody tr:last:child{border-bottom: 2px solid #009879;}.tabla-estilizada.tabla-estilizada-resumen th:nth-child(even){background-color: #efefef;color: #2d2d2d;}.tabla-estilizada.egresos thead tr{background-color: #d49292;}.tabla-estilizada.ingresos thead tr{background-color: #71a2a5;}.tabla-estilizada.egresos td, .tabla-estilizada.ingresos td{text-align: center;}.tabla-estilizada.egresos td:last-child, .tabla-estilizada.ingresos td:last-child{text-align: right;}</style></head><body><div id='container'><div class='w-100'><img class='logo' src='" + rutaImagen + "'/></div><div class='w-100 text-center'><h1>Reporte de utilidad diaria</h1></div><div class='w-100'><div class='w-50 d-inline-block' style='margin-bottom: 68px;'><table class='tabla-estilizada tabla-estilizada-resumen'><thead><tr><th>Fecha:</th><th>" + fecha + "</th><th class='transparente'></th><th class='transparente'></th></tr><tr><th>Solicitante:</th><th>" + solicitante + "</th><th class='transparente'></th><th class='transparente'></th></tr></thead></table></div><div class='w-50 d-inline-block'><table class='tabla-estilizada tabla-estilizada-resumen'><thead><tr><th>N° órdenes</th><th>" + cantOrdenes + "</th><th>Egresos</th><th class='text-right'>" + montoEgresos + "</th></tr><tr><th>N° pedidos</th><th>" + cantPedidos + "</th><th>Ingresos</th><th class='text-right'>" + montoIngresos + "</th></tr><tr><th colspan='4' class='transparente'></th><tr><th class='transparente'></th><th class='transparente'></th><th>Utilidades</th><th class='text-right'>" + montoBalance + "</th></tr></thead></table></div></div><div><h3>Detalle de Egresos</h3><table class='tabla-estilizada egresos text-left'><thead><tr><th>Id Orden</th><th class='text-center'>Hora</th><th class='text-center'>Estado</th><th class='text-center'>Total</th></tr></thead><tbody>" + detalleEgresos + "</tbody></table></div><div><h3>Detalle de Ingresos</h3><table class='tabla-estilizada ingresos text-left'><thead><tr><th>Id Pedido</th><th class='text-center'>Hora</th><th class='text-center'>Medio de pago</th><th class='text-center'>Total</th></tr></thead><tbody>" + detalleIngresos + "</tbody></table></div></div></div></body></html>";
         }
@@ -149,7 +155,10 @@ namespace RestaurantServices.Restaurant.BLL.Negocio
                 detalleEgresos += $"<td>$ {total:#,##0}</td>";
                 detalleEgresos += "</tr>";
             });
-
+            if (detalleEgresos == string.Empty)
+            {
+                detalleEgresos = "<tr><td colspan='4'><p class='lead no-encontrado text-center font-weight-bold'>No se encontraron órdenes en el periodo seleccionado</p></td></tr>";
+            }
             documentosGroup.ForEach(a =>
             {
                 var numeroPedidos = 0;
@@ -170,7 +179,10 @@ namespace RestaurantServices.Restaurant.BLL.Negocio
                 detalleIngresos += $"<td>$ {total:#,##0}</td>";
                 detalleIngresos += "</tr>";
             });
-
+            if (detalleIngresos == string.Empty)
+            {
+                detalleIngresos = "<tr><td colspan='3'><p class='lead no-encontrado text-center font-weight-bold'>No se encontraron atenciones en el periodo seleccionado</p></td></tr>";
+            }
             return
                 @"<!DOCTYPE html><html><head><meta charset='utf-8'><title></title><style type='text/css'> table{page-break-inside:auto}tr{page-break-inside:avoid; page-break-after:auto}thead{display:table-header-group}tfoot{display:table-footer-group}body{font-family: 'Arial', 'Verdana', 'Helvetica', Sans-serif;font-size: 13px;}h1{color: #22776b;}h3{color: #383838;}.center{margin: 0 auto;}.w-100{width: 100%;}.w-50{width: 49%;}.logo{width: 100px;}.text-center{text-align: center;}.text-left{text-align: left;}.text-right{text-align: right;}.d-inline-block{display: inline-block;vertical-align: top;}.tabla-estilizada{width: 100%;margin: 25px 0;}.tabla-estilizada thead tr{background-color: #009879;color: #ffffff;text-align: left;}.tabla-estilizada thead tr th.transparente{background-color: #ffffff !important;}.tabla-estilizada th,.tabla-estilizada td{padding: 12px 15px;}.tabla-estilizada tbody tr{border-bottom: 1px solid #dddddd;}.tabla-estilizada tbody tr:nth-of-type(even){background-color: #f3f3f3;}.tabla-estilizada tbody tr:last:child{border-bottom: 2px solid #009879;}.tabla-estilizada.tabla-estilizada-resumen th:nth-child(even){background-color: #efefef;color: #2d2d2d;}.tabla-estilizada.tabla-estilizada-resumen th{padding: 12px 12px;}.tabla-estilizada.egresos thead tr{background-color: #d49292;}.tabla-estilizada.ingresos thead tr{background-color: #71a2a5;}.tabla-estilizada.egresos td, .tabla-estilizada.ingresos td{text-align: center;}.tabla-estilizada.egresos td:last-child, .tabla-estilizada.ingresos td:last-child{text-align: right;}</style></head><body><div id='container'><div class='w-100'><img class='logo' src='" + rutaImagen + "'/></div><div class='w-100 text-center'><h1>Reporte de utilidad mensual</h1></div><div class='w-100'><div class='w-50 d-inline-block' style='margin-bottom: 68px;'><table class='tabla-estilizada tabla-estilizada-resumen'><thead><tr><th>Fecha:</th><th>" + fecha + "</th><th class='transparente'></th><th class='transparente'></th></tr><tr><th>Solicitante:</th><th>" + solicitante + "</th><th class='transparente'></th><th class='transparente'></th></tr></thead></table></div><div class='w-50 d-inline-block'><table class='tabla-estilizada tabla-estilizada-resumen'><thead><tr><th>N° órdenes</th><th>" + cantOrdenes + "</th><th>Egresos</th><th>" + montoEgresos.ToString("#,##0") + "</th></tr><tr><th>N° pedidos</th><th>" + cantPedidos + "</th><th>Ingresos</th><th>" + montoIngresos.ToString("#,##0") + "</th></tr><tr><th colspan='4' class='transparente'></th><tr><th class='transparente'></th><th class='transparente'></th><th>Utilidades</th><th>" + montoBalance.ToString("#,##0") + "</th></tr></thead></table></div></div><div><div><h3>Detalle de Egresos</h3><table class='tabla-estilizada egresos text-left'><thead><tr><th class='text-center'>Fecha</th><th class='text-center'>Cantidad órdenes</th><th class='text-right'>Total</th></tr></thead><tbody>" + detalleEgresos + "</tbody></table></div><div><h3>Detalle de Ingresos</h3><table class='tabla-estilizada ingresos text-left'><thead><tr><th class='text-center'>Fecha</th><th class='text-center'>Cantidad pedidos</th><th class='text-right'>Total</th></tr></thead><tbody>" + detalleIngresos + "</tbody></table></div></div></div></div></body></html>";
         }
@@ -188,7 +200,7 @@ namespace RestaurantServices.Restaurant.BLL.Negocio
             var solicitante = $"{usuario.Persona.Nombre} {usuario.Persona.Apellido}";
 
             var rutaImagen = "C:\\Storage\\logo_sxxi.png";
-            var detalleAtenciones = "";
+            var detalleAtenciones = string.Empty;
 
             var clientesDiarios = new List<int>();
 
@@ -215,13 +227,30 @@ namespace RestaurantServices.Restaurant.BLL.Negocio
                 clientesDiarios.Add(atendidos);
             });
 
-            var totalAtendidos = clientesDiarios.Sum();
-            var promedioDiario = Math.Round(clientesDiarios.Average(), 1);
-            var minAtendidos = clientesDiarios.Min();
-            var maxAtendidos = clientesDiarios.Max();
+            if(detalleAtenciones == string.Empty)
+            {
+                detalleAtenciones = "<tr><td colspan='3'><p class='lead no-encontrado text-center font-weight-bold'>No se encontraron atenciones en el periodo seleccionado</p></td></tr>";
+            }
+            var totalAtendidos = 0;
+            var promedioDiario = 0.0;
+            var minAtendidos = 0;
+            var maxAtendidos = 0;
+            if (clientesDiarios.Count > 0)
+            {
+                totalAtendidos = clientesDiarios.Sum();
+                promedioDiario = Math.Round(clientesDiarios.Average(), 1);
+                minAtendidos = clientesDiarios.Min();
+                maxAtendidos = clientesDiarios.Max();
+            }
+
+            string estiloMargen = "";
+            if(totalAtendidos >= 1000 && maxAtendidos >= 1000)
+            {
+                estiloMargen = "margen-tabla-resumen";
+            }
 
             return
-                @"<!DOCTYPE html><html><head><meta charset='utf-8'></meta><style>table{page-break-inside:auto}tr{page-break-inside:avoid; page-break-after:auto}thead{display:table-header-group}tfoot{display:table-footer-group}body{font-family: 'Arial', 'Verdana', 'Helvetica', Sans-serif;font-size: 13px;}h1{color: #22776b;}h3{color: #383838;}.center{margin: 0 auto;}.w-100{width: 100%;}.w-50{width: 49%;}.logo{width: 100px;}.text-center{text-align: center;}.text-left{text-align: left;}.text-right{text-align: right;}.d-inline-block{display: inline-block;vertical-align: top;}.tabla-estilizada{width: 100%;margin: 25px 0;}.tabla-estilizada thead tr{background-color: #009879;color: #ffffff;text-align: left;}.tabla-estilizada thead tr th.transparente{background-color: #ffffff !important;}.tabla-estilizada th,.tabla-estilizada td{padding: 12px 15px;}.tabla-estilizada tbody tr{border-bottom: 1px solid #dddddd;}.tabla-estilizada tbody tr:nth-of-type(even){background-color: #f3f3f3;}.tabla-estilizada tbody tr:last:child{border-bottom: 2px solid #009879;}.tabla-estilizada.tabla-estilizada-resumen th:nth-child(even){background-color: #efefef;color: #2d2d2d;}.tabla-estilizada.egresos thead tr{background-color: #d49292;}.tabla-estilizada.ingresos thead tr{background-color: #71a2a5;}.tabla-estilizada.egresos td, .tabla-estilizada.ingresos td{text-align: center;}.tabla-estilizada.egresos td:last-child, .tabla-estilizada.ingresos td:last-child{text-align: right;}</style></head><body><div id='container'><div class='w-100'><img class='logo' src='" + rutaImagen + "'/></div><div class='w-100 text-center'><h1>Reporte de clientes atendidos</h1></div><div class='w-100'><div class='w-50 d-inline-block' style='margin-bottom: 29px;'><table class='tabla-estilizada tabla-estilizada-resumen'><thead><tr><th>Fecha:</th><th>" + fecha + "</th><th class='transparente'></th><th class='transparente'></th></tr><tr><th>Solicitante:</th><th>" + solicitante + "</th><th class='transparente'></th><th class='transparente'></th></tr></thead></table></div><div class='w-50 d-inline-block'><table class='tabla-estilizada tabla-estilizada-resumen'><thead><tr><th>Total</th><th class='text-right'>" + totalAtendidos + "</th><th>Mínimo diario</th><th class='text-right'>" + minAtendidos + "</th></tr><tr><th>Promedio diario</th><th class='text-right'>" + promedioDiario + "</th><th>Máximo diario</th><th class='text-right'>" + maxAtendidos + "</th></tr></thead></table></div><div><h3>Detalle de atenciones</h3><table class='tabla-estilizada egresos text-left'><thead><tr><th class='text-center'>Fecha</th><th class='text-center'>Clientes atendidos</th><th class='text-right'>Promedio por atención</th></tr></thead><tbody>" + detalleAtenciones + "</tbody></table></div></div></div></body></html>";
+                @"<!DOCTYPE html><html><head><meta charset='utf-8'></meta><style>table{page-break-inside:auto}tr{page-break-inside:avoid;page-break-after:auto}thead{display:table-header-group}tfoot{display:table-footer-group}body{font-family:'Arial','Verdana','Helvetica',Sans-serif;font-size:13px}h1{color:#22776b}h3{color:#383838}.center{margin:0 auto}.w-100{width:100%}.w-50{width:49%}.logo{width:100px}.text-center{text-align:center}.text-left{text-align:left}.text-right{text-align:right}.d-inline-block{display:inline-block;vertical-align:top}.tabla-estilizada{width:100%;margin:25px 0}.tabla-estilizada thead tr{background-color:#009879;color:#fff;text-align:left}.tabla-estilizada thead tr th.transparente{background-color:#fff !important}.tabla-estilizada th, .tabla-estilizada td{padding:12px 15px}.tabla-estilizada tbody tr{border-bottom:1px solid #ddd}.tabla-estilizada tbody tr:nth-of-type(even){background-color:#f3f3f3}.tabla-estilizada tbody tr:last:child{border-bottom:2px solid #009879}.tabla-estilizada.tabla-estilizada-resumen th:nth-child(even){background-color:#efefef;color:#2d2d2d}.tabla-estilizada.tabla-estilizada-resumen th{padding:12px 11px}.tabla-estilizada.egresos thead tr{background-color:#d49292}.tabla-estilizada.ingresos thead tr{background-color:#71a2a5}.tabla-estilizada.egresos td, .tabla-estilizada.ingresos td{text-align:center}.tabla-estilizada.egresos td:last-child, .tabla-estilizada.ingresos td:last-child{text-align:right}.no-encontrado{color:#d49292;font-weight:600}.p-1{padding:5px!important}</style></head><body><div id='container'><div class='w-100'> <img class='logo' src='" + rutaImagen + "'/></div><div class='w-100 text-center'><h1>Reporte de clientes atendidos</h1></div><div class='w-100'><table class='tabla-estilizada tabla-estilizada-resumen'><thead><tr><th>Fecha:</th><th>" + fecha + "</th><th class='transparente p-1'></th><th class='transparente p-1'></th><th>Total</th><th class='text-right'>" + totalAtendidos + "</th><th>Mínimo diario</th><th class='text-right'>" + minAtendidos + "</th></tr><tr><th>Solicitante:</th><th>" + solicitante + "</th><th class='transparente p-1'></th><th class='transparente p-1'></th><th>Promedio diario</th><th class='text-right'>" + promedioDiario + "</th><th>Máximo diario</th><th class='text-right'>" + maxAtendidos + "</th></tr></thead></table></div><div class='w-100'><h3>Detalle de atenciones</h3><table class='tabla-estilizada egresos text-left'><thead><tr><th class='text-center'>Fecha</th><th class='text-center'>Clientes atendidos</th><th class='text-right'>Promedio por atención</th></tr></thead><tbody>" + detalleAtenciones + "</tbody></table></div></div></body></html>";
         }
 
         private async Task<string> GetHtmlReportePlatos(Usuario usuario, ReporteDto reporte)
@@ -300,14 +329,27 @@ namespace RestaurantServices.Restaurant.BLL.Negocio
                     articuloConMenosVentas.Articulo.Nombre = nombrePlato;
                 }
             });
+            if (detallePlatos == string.Empty)
+            {
+                detallePlatos = "<tr><td colspan='3'><p class='no-encontrado text-center'>No se encontraron platos consumidos en el periodo seleccionado</p></td></tr>";
+            }
+            var platoMasPedido = "-";
+            var platoMenosPedido = "-";
+            var unidadesMasPedido = 0;
+            var unidadesMenosPedido = 0;
+            if (articuloConMasVentas.Articulo.Nombre != string.Empty)
+            {
+                platoMasPedido = articuloConMasVentas.Articulo.Nombre;
+                unidadesMasPedido = articuloConMasVentas.Cantidad;
+            }
+            if (articuloConMenosVentas.Articulo.Nombre != string.Empty)
+            {
+                platoMenosPedido = articuloConMenosVentas.Articulo.Nombre;
+                unidadesMenosPedido = articuloConMenosVentas.Cantidad;
+            }
 
-            var platoMasPedido = articuloConMasVentas.Articulo.Nombre;
-            var platoMenosPedido = articuloConMenosVentas.Articulo.Nombre;
-            var unidadesMasPedido = articuloConMasVentas.Cantidad;
-            var unidadesMenosPedido = articuloConMenosVentas.Cantidad;
-            
             return
-                @"<!DOCTYPE html><html><head><meta charset='utf-8'></meta><style>table{page-break-inside:auto}tr{page-break-inside:avoid; page-break-after:auto}thead{display:table-header-group}tfoot{display:table-footer-group}body{font-family: 'Arial', 'Verdana', 'Helvetica', Sans-serif;font-size: 13px;}h1{color: #22776b;}h3{color: #383838;}.center{margin: 0 auto;}.w-100{width: 100%;}.w-50{width: 49%;}.logo{width: 100px;}.text-center{text-align: center;}.text-left{text-align: left;}.text-right{text-align: right;}.d-inline-block{display: inline-block;vertical-align: top;}.tabla-estilizada{width: 100%;margin: 25px 0;}.tabla-estilizada thead tr{background-color: #009879;color: #ffffff;text-align: left;}.tabla-estilizada thead tr th.transparente{background-color: #ffffff !important;}.tabla-estilizada th,.tabla-estilizada td{padding: 12px 15px;}.tabla-estilizada tbody tr{border-bottom: 1px solid #dddddd;}.tabla-estilizada tbody tr:nth-of-type(even){background-color: #f3f3f3;}.tabla-estilizada tbody tr:last:child{border-bottom: 2px solid #009879;}.tabla-estilizada.tabla-estilizada-resumen th:nth-child(even){background-color: #efefef;color: #2d2d2d;}.tabla-estilizada.egresos thead tr{background-color: #d49292;}.tabla-estilizada.ingresos thead tr{background-color: #71a2a5;}.tabla-estilizada.egresos td, .tabla-estilizada.ingresos td{text-align: center;}.tabla-estilizada.egresos td:last-child, .tabla-estilizada.ingresos td:last-child{text-align: right;}</style></head><body><div id='container'><div class='w-100'><img class='logo' src='" + rutaImagen + "'/></div><div class='w-100 text-center'><h1>Reporte de platos consumidos</h1></div><div class='w-100'><div class='w-50 d-inline-block' style='margin-bottom: 29px;'><table class='tabla-estilizada tabla-estilizada-resumen'><thead><tr><th>Fecha:</th><th>" + fecha + "</th><th class='transparente'></th><th class='transparente'></th></tr><tr><th>Solicitante:</th><th>" + solicitante + "</th><th class='transparente'></th><th class='transparente'></th></tr></thead></table></div><div class='w-50 d-inline-block'><table class='tabla-estilizada tabla-estilizada-resumen'><thead><tr><th>Más pedido</th><th class='text-right'>" + platoMasPedido + "</th><th>Unidades</th><th class='text-right'>" + unidadesMasPedido + "</th></tr><tr><th>Menos pedido</th><th class='text-right'>" + platoMenosPedido + "</th><th>Unidades</th><th class='text-right'>" + unidadesMenosPedido + "</th></tr></thead></table></div><div><h3>Detalle de platos pedidos</h3><table class='tabla-estilizada egresos text-left'><thead><tr><th class='text-center'>Nombre del plato</th><th class='text-center'>Tipo de plato</th><th class='text-right'>Unidades pedidas</th></tr></thead><tbody>" + detallePlatos + "</tbody></table></div></div></div></body></html>";
+                @"<!DOCTYPE html><html><head><meta charset='utf-8'></meta><style>table{page-break-inside:auto}tr{page-break-inside:avoid;page-break-after:auto}thead{display:table-header-group}tfoot{display:table-footer-group}body{font-family:'Arial','Verdana','Helvetica',Sans-serif;font-size:13px}h1{color:#22776b}h3{color:#383838}.center{margin:0 auto}.w-100{width:100%}.w-50{width:49%}.logo{width:100px}.text-center{text-align:center}.text-left{text-align:left}.text-right{text-align:right}.d-inline-block{display:inline-block;vertical-align:top}.tabla-estilizada{width:100%;margin:25px 0}.tabla-estilizada thead tr{background-color:#009879;color:#fff;text-align:left}.tabla-estilizada thead tr th.transparente{background-color:#fff !important}.tabla-estilizada th, .tabla-estilizada td{padding:12px 15px}.tabla-estilizada tbody tr{border-bottom:1px solid #ddd}.tabla-estilizada tbody tr:nth-of-type(even){background-color:#f3f3f3}.tabla-estilizada tbody tr:last:child{border-bottom:2px solid #009879}.tabla-estilizada.tabla-estilizada-resumen th:nth-child(even){background-color:#efefef;color:#2d2d2d}.tabla-estilizada.egresos thead tr{background-color:#d49292}.tabla-estilizada.ingresos thead tr{background-color:#71a2a5}.tabla-estilizada.egresos td, .tabla-estilizada.ingresos td{text-align:center}.tabla-estilizada.egresos td:last-child, .tabla-estilizada.ingresos td:last-child{text-align:right}.no-encontrado{color:#d49292;font-weight:600}.margen-tabla-resumen{margin-bottom:29px}.p-1{padding:5px!important}</style></head><body><div id='container'><div class='w-100'> <img class='logo' src='" + rutaImagen + "'/></div><div class='w-100 text-center'><h1>Reporte de platos consumidos</h1></div><div class='w-100'><table class='tabla-estilizada tabla-estilizada-resumen'><thead><tr><th>Fecha:</th><th>" + fecha + "</th><th class='transparente p-1'></th><th class='transparente p-1'></th><th>Más pedido</th><th class='text-right'>" + platoMasPedido + "</th><th>Unidades</th><th class='text-right'>" + unidadesMasPedido + "</th></tr><tr><th>Solicitante:</th><th>" + solicitante + "</th><th class='transparente p-1'></th><th class='transparente p-1'></th><th>Menos pedido</th><th class='text-right'>" + platoMenosPedido + "</th><th>Unidades</th><th class='text-right'>" + unidadesMenosPedido + "</th></tr></thead></table></div><div class='w-100'><h3>Detalle de platos pedidos</h3><table class='tabla-estilizada egresos text-left'><thead><tr><th class='text-center'>Nombre del plato</th><th class='text-center'>Tipo de plato</th><th class='text-right'>Unidades pedidas</th></tr></thead><tbody>" + detallePlatos + "</tbody></table></div></div></body></html>";
         }
 
         private async Task<string> GetHtmlReporteTiempos(Usuario usuario, ReporteDto reporte)
@@ -355,13 +397,24 @@ namespace RestaurantServices.Restaurant.BLL.Negocio
 
                 minutosAtencionTotal.AddRange(minutosAtencion);
             });
+            if (detalleAtenciones == string.Empty)
+            {
+                detalleAtenciones = "<tr><td colspan='4'><p class='no-encontrado text-center font-weight-bold'>No se encontraron atenciones en el periodo seleccionado</p></td></tr>";
+            }
 
-            var duracionPromedio = DateTime.Today.Add(TimeSpan.FromMinutes(minutosAtencionTotal.Average()));
-            var atencionMasLarga = DateTime.Today.Add(TimeSpan.FromMinutes(minutosAtencionTotal.Max()));
-            var atencionMasCorta = DateTime.Today.Add(TimeSpan.FromMinutes(minutosAtencionTotal.Min()));
+            var duracionPromedio = DateTime.Today.Add(TimeSpan.FromMinutes(0));
+            var atencionMasLarga = DateTime.Today.Add(TimeSpan.FromMinutes(0));
+            var atencionMasCorta = DateTime.Today.Add(TimeSpan.FromMinutes(0));
+
+            if (minutosAtencionTotal.Count > 0)
+            {
+                duracionPromedio = DateTime.Today.Add(TimeSpan.FromMinutes(minutosAtencionTotal.Average()));
+                atencionMasLarga = DateTime.Today.Add(TimeSpan.FromMinutes(minutosAtencionTotal.Max()));
+                atencionMasCorta = DateTime.Today.Add(TimeSpan.FromMinutes(minutosAtencionTotal.Min()));
+            }
 
             return
-                @"<!DOCTYPE html><html><head><meta charset='utf-8'></meta><style>table{page-break-inside:auto}tr{page-break-inside:avoid; page-break-after:auto}thead{display:table-header-group}tfoot{display:table-footer-group}body{font-family: 'Arial', 'Verdana', 'Helvetica', Sans-serif;font-size: 13px;}h1{color: #22776b;}h3{color: #383838;}.center{margin: 0 auto;}.w-100{width: 100%;}.w-50{width: 49%;}.logo{width: 100px;}.text-center{text-align: center;}.text-left{text-align: left;}.text-right{text-align: right;}.d-inline-block{display: inline-block;vertical-align: top;}.tabla-estilizada{width: 100%;margin: 25px 0;}.tabla-estilizada thead tr{background-color: #009879;color: #ffffff;text-align: left;}.tabla-estilizada thead tr th.transparente{background-color: #ffffff !important;}.tabla-estilizada th,.tabla-estilizada td{padding: 12px 15px;}.tabla-estilizada tbody tr{border-bottom: 1px solid #dddddd;}.tabla-estilizada tbody tr:nth-of-type(even){background-color: #f3f3f3;}.tabla-estilizada tbody tr:last:child{border-bottom: 2px solid #009879;}.tabla-estilizada.tabla-estilizada-resumen{font-size: 0.9em;}.tabla-estilizada.tabla-estilizada-resumen th{padding: 12px 11px;}.tabla-estilizada.tabla-estilizada-resumen th:nth-child(even){background-color: #efefef;color: #2d2d2d;}.tabla-estilizada.egresos thead tr{background-color: #d49292;}.tabla-estilizada.ingresos thead tr{background-color: #71a2a5;}.tabla-estilizada.egresos td, .tabla-estilizada.ingresos td{text-align: center;}.tabla-estilizada.egresos td:last-child, .tabla-estilizada.ingresos td:last-child{text-align: right;}</style></head><body><div id='container'><div class='w-100'><img class='logo' src='" + rutaImagen + "'/></div><div class='w-100 text-center'><h1>Reporte de tiempos de atención</h1></div><div class='w-100'><div class='w-50 d-inline-block' style='margin-bottom: 29px;'><table class='tabla-estilizada tabla-estilizada-resumen'><thead><tr><th>Fecha:</th><th>" + fecha + "</th><th class='transparente'></th><th class='transparente'></th></tr><tr><th>Solicitante:</th><th>" + solicitante + "</th><th class='transparente'></th><th class='transparente'></th></tr></thead></table></div><div class='w-50 d-inline-block'><table class='tabla-estilizada tabla-estilizada-resumen'><thead><tr><th>Duración promedio</th><th class='text-right'>" + duracionPromedio.ToString("t") + "</th><th>Atención más larga</th><th class='text-right'>" + atencionMasLarga.ToString("t") + "</th></tr><tr><th class='transparente'></th><th class='transparente'></th><th>Atención más corta</th><th class='text-right'>" + atencionMasCorta.ToString("t") + "</th></tr></thead></table></div><div><h3>Detalle de tiempos de atención</h3><table class='tabla-estilizada egresos text-left'><thead><tr><th class='text-center'>Fecha</th><th class='text-center'>Día de la semana</th><th class='text-center'>Promedio comensales</th><th class='text-right'>Duración promedio</th></tr></thead><tbody>" + detalleAtenciones + "</tbody></table></div></div></div></body></html>";
+                @"<!DOCTYPE html><html><head><meta charset='utf-8'></meta><style>table{page-break-inside:auto}tr{page-break-inside:avoid;page-break-after:auto}thead{display:table-header-group}tfoot{display:table-footer-group}body{font-family:'Arial','Verdana','Helvetica',Sans-serif;font-size:13px}h1{color:#22776b}h3{color:#383838}.center{margin:0 auto}.w-100{width:100%}.w-50{width:49%}.logo{width:100px}.text-center{text-align:center}.text-left{text-align:left}.text-right{text-align:right}.d-inline-block{display:inline-block;vertical-align:top}.tabla-estilizada{width:100%;margin:25px 0}.tabla-estilizada thead tr{background-color:#009879;color:#fff;text-align:left}.tabla-estilizada thead tr th.transparente{background-color:#fff !important}.tabla-estilizada th, .tabla-estilizada td{padding:12px 15px}.tabla-estilizada tbody tr{border-bottom:1px solid #ddd}.tabla-estilizada tbody tr:nth-of-type(even){background-color:#f3f3f3}.tabla-estilizada tbody tr:last:child{border-bottom:2px solid #009879}.tabla-estilizada.tabla-estilizada-resumen{font-size:0.9em}.tabla-estilizada.tabla-estilizada-resumen th{padding:12px 11px}.tabla-estilizada.tabla-estilizada-resumen th:nth-child(even){background-color:#efefef;color:#2d2d2d}.tabla-estilizada.egresos thead tr{background-color:#d49292}.tabla-estilizada.ingresos thead tr{background-color:#71a2a5}.tabla-estilizada.egresos td, .tabla-estilizada.ingresos td{text-align:center}.tabla-estilizada.egresos td:last-child, .tabla-estilizada.ingresos td:last-child{text-align:right}.no-encontrado{color:#d49292;font-weight:600}.margen-tabla-resumen{margin-bottom:29px}.p-1{padding:5px!important}</style></head><body><div id='container'><div class='w-100'> <img class='logo' src='" + rutaImagen + "'/></div><div class='w-100 text-center'><h1>Reporte de tiempos de atención</h1></div><div class='w-100'><table class='tabla-estilizada tabla-estilizada-resumen'><thead><tr><th>Fecha:</th><th>" + fecha + "</th><th class='transparente p-1'></th><th class='transparente p-1'></th><th>Duración promedio</th><th class='text-right'>" + duracionPromedio + "</th><th>Atención más larga</th><th class='text-right'>" + atencionMasLarga + "</th></tr><tr><th>Solicitante:</th><th>" + solicitante + "</th><th class='transparente p-1'></th><th class='transparente p-1'></th><th class='transparente'></th><th class='transparente'></th><th>Atención más corta</th><th class='text-right'>" + atencionMasCorta + "</th></tr></thead></table></div><div class='w-100'><h3>Detalle de tiempos de atención</h3><table class='tabla-estilizada egresos text-left'><thead><tr><th class='text-center'>Fecha</th><th class='text-center'>Día de la semana</th><th class='text-center'>Promedio comensales</th><th class='text-right'>Duración promedio</th></tr></thead><tbody>" + detalleAtenciones + "</tbody></table></div></div></body></html>";
         }
 
         private string GetDayName(int dayNumber)
