@@ -122,12 +122,28 @@ namespace RestaurantServices.Restaurant.BLL.Negocio
                 throw new Exception($"La mesa solo acepta {mesa.CantidadComensales} comensales");
 
             var reservas = await ObtenerTodosAsync();
+            reservas = reservas
+                .Where(z => z.IdMesa == reserva.IdMesa)
+                .ToList();
+
             var reservaOcupada = false;
 
             foreach (var x in reservas)
             {
-                if (x.IdMesa != reserva.IdMesa) continue;
+                var estado = x.EstadosReserva.OrderBy(z => z.Fecha).LastOrDefault();
 
+                if (estado == null)
+                {
+                    throw new Exception("Aún no se inicia la reserva");
+                }
+                else
+                {
+                    if (estado.Id == 3 || estado.Id == 4)
+                    {
+                        continue;
+                    }
+                }
+                
                 if (reserva.FechaReserva == x.FechaReserva)
                     reservaOcupada = true;
 
