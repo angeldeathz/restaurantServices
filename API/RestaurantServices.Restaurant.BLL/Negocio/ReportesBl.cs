@@ -216,9 +216,9 @@ namespace RestaurantServices.Restaurant.BLL.Negocio
             });
 
             var totalAtendidos = clientesDiarios.Sum();
-            var promedioDiario = Math.Round(clientesDiarios.Count > 0 ? clientesDiarios.Average() : 0, 1);
-            var minAtendidos = clientesDiarios.Count > 0 ? clientesDiarios.Min() : 0;
-            var maxAtendidos = clientesDiarios.Count > 0 ?clientesDiarios.Max() : 0;
+            var promedioDiario = Math.Round(clientesDiarios.Average(), 1);
+            var minAtendidos = clientesDiarios.Min();
+            var maxAtendidos = clientesDiarios.Max();
 
             return
                 @"<!DOCTYPE html><html><head><meta charset='utf-8'></meta><style>table{page-break-inside:auto}tr{page-break-inside:avoid; page-break-after:auto}thead{display:table-header-group}tfoot{display:table-footer-group}body{font-family: 'Arial', 'Verdana', 'Helvetica', Sans-serif;font-size: 13px;}h1{color: #22776b;}h3{color: #383838;}.center{margin: 0 auto;}.w-100{width: 100%;}.w-50{width: 49%;}.logo{width: 100px;}.text-center{text-align: center;}.text-left{text-align: left;}.text-right{text-align: right;}.d-inline-block{display: inline-block;vertical-align: top;}.tabla-estilizada{width: 100%;margin: 25px 0;}.tabla-estilizada thead tr{background-color: #009879;color: #ffffff;text-align: left;}.tabla-estilizada thead tr th.transparente{background-color: #ffffff !important;}.tabla-estilizada th,.tabla-estilizada td{padding: 12px 15px;}.tabla-estilizada tbody tr{border-bottom: 1px solid #dddddd;}.tabla-estilizada tbody tr:nth-of-type(even){background-color: #f3f3f3;}.tabla-estilizada tbody tr:last:child{border-bottom: 2px solid #009879;}.tabla-estilizada.tabla-estilizada-resumen th:nth-child(even){background-color: #efefef;color: #2d2d2d;}.tabla-estilizada.egresos thead tr{background-color: #d49292;}.tabla-estilizada.ingresos thead tr{background-color: #71a2a5;}.tabla-estilizada.egresos td, .tabla-estilizada.ingresos td{text-align: center;}.tabla-estilizada.egresos td:last-child, .tabla-estilizada.ingresos td:last-child{text-align: right;}</style></head><body><div id='container'><div class='w-100'><img class='logo' src='" + rutaImagen + "'/></div><div class='w-100 text-center'><h1>Reporte de clientes atendidos</h1></div><div class='w-100'><div class='w-50 d-inline-block' style='margin-bottom: 29px;'><table class='tabla-estilizada tabla-estilizada-resumen'><thead><tr><th>Fecha:</th><th>" + fecha + "</th><th class='transparente'></th><th class='transparente'></th></tr><tr><th>Solicitante:</th><th>" + solicitante + "</th><th class='transparente'></th><th class='transparente'></th></tr></thead></table></div><div class='w-50 d-inline-block'><table class='tabla-estilizada tabla-estilizada-resumen'><thead><tr><th>Total</th><th class='text-right'>" + totalAtendidos + "</th><th>Mínimo diario</th><th class='text-right'>" + minAtendidos + "</th></tr><tr><th>Promedio diario</th><th class='text-right'>" + promedioDiario + "</th><th>Máximo diario</th><th class='text-right'>" + maxAtendidos + "</th></tr></thead></table></div><div><h3>Detalle de atenciones</h3><table class='tabla-estilizada egresos text-left'><thead><tr><th class='text-center'>Fecha</th><th class='text-center'>Clientes atendidos</th><th class='text-right'>Promedio por atención</th></tr></thead><tbody>" + detalleAtenciones + "</tbody></table></div></div></div></body></html>";
@@ -342,23 +342,23 @@ namespace RestaurantServices.Restaurant.BLL.Negocio
                     }
                 });
 
-                var promedioMinutos = minutosAtencion.Count > 0 ? minutosAtencion.Average() : 0;
+                var promedioMinutos = minutosAtencion.Average();
                 var timeSpan = TimeSpan.FromMinutes(promedioMinutos);
                 var time = DateTime.Today.Add(timeSpan);
 
                 detalleAtenciones += "<tr>";
                 detalleAtenciones += $"<td>{a.Key.Date:dd-MM-yyyy}</td>";
                 detalleAtenciones += $"<td>{GetDayName((int)a.Key.DayOfWeek)}</td>";
-                detalleAtenciones += $"<td>{Math.Round(cantidadComensales.Count > 0 ? cantidadComensales.Average() : 0, 1)}</td>";
+                detalleAtenciones += $"<td>{Math.Round(cantidadComensales.Average(), 1)}</td>";
                 detalleAtenciones += $"<td>{time:t}</td>";
                 detalleAtenciones += "</tr>";
 
                 minutosAtencionTotal.AddRange(minutosAtencion);
             });
 
-            var duracionPromedio = DateTime.Today.Add(TimeSpan.FromMinutes(minutosAtencionTotal.Count > 0 ? minutosAtencionTotal.Average() : 0));
-            var atencionMasLarga = DateTime.Today.Add(TimeSpan.FromMinutes(minutosAtencionTotal.Count > 0 ? minutosAtencionTotal.Max() : 0));
-            var atencionMasCorta = DateTime.Today.Add(TimeSpan.FromMinutes(minutosAtencionTotal.Count > 0 ? minutosAtencionTotal.Min() : 0));
+            var duracionPromedio = DateTime.Today.Add(TimeSpan.FromMinutes(minutosAtencionTotal.Average()));
+            var atencionMasLarga = DateTime.Today.Add(TimeSpan.FromMinutes(minutosAtencionTotal.Max()));
+            var atencionMasCorta = DateTime.Today.Add(TimeSpan.FromMinutes(minutosAtencionTotal.Min()));
 
             return
                 @"<!DOCTYPE html><html><head><meta charset='utf-8'></meta><style>table{page-break-inside:auto}tr{page-break-inside:avoid; page-break-after:auto}thead{display:table-header-group}tfoot{display:table-footer-group}body{font-family: 'Arial', 'Verdana', 'Helvetica', Sans-serif;font-size: 13px;}h1{color: #22776b;}h3{color: #383838;}.center{margin: 0 auto;}.w-100{width: 100%;}.w-50{width: 49%;}.logo{width: 100px;}.text-center{text-align: center;}.text-left{text-align: left;}.text-right{text-align: right;}.d-inline-block{display: inline-block;vertical-align: top;}.tabla-estilizada{width: 100%;margin: 25px 0;}.tabla-estilizada thead tr{background-color: #009879;color: #ffffff;text-align: left;}.tabla-estilizada thead tr th.transparente{background-color: #ffffff !important;}.tabla-estilizada th,.tabla-estilizada td{padding: 12px 15px;}.tabla-estilizada tbody tr{border-bottom: 1px solid #dddddd;}.tabla-estilizada tbody tr:nth-of-type(even){background-color: #f3f3f3;}.tabla-estilizada tbody tr:last:child{border-bottom: 2px solid #009879;}.tabla-estilizada.tabla-estilizada-resumen{font-size: 0.9em;}.tabla-estilizada.tabla-estilizada-resumen th{padding: 12px 11px;}.tabla-estilizada.tabla-estilizada-resumen th:nth-child(even){background-color: #efefef;color: #2d2d2d;}.tabla-estilizada.egresos thead tr{background-color: #d49292;}.tabla-estilizada.ingresos thead tr{background-color: #71a2a5;}.tabla-estilizada.egresos td, .tabla-estilizada.ingresos td{text-align: center;}.tabla-estilizada.egresos td:last-child, .tabla-estilizada.ingresos td:last-child{text-align: right;}</style></head><body><div id='container'><div class='w-100'><img class='logo' src='" + rutaImagen + "'/></div><div class='w-100 text-center'><h1>Reporte de tiempos de atención</h1></div><div class='w-100'><div class='w-50 d-inline-block' style='margin-bottom: 29px;'><table class='tabla-estilizada tabla-estilizada-resumen'><thead><tr><th>Fecha:</th><th>" + fecha + "</th><th class='transparente'></th><th class='transparente'></th></tr><tr><th>Solicitante:</th><th>" + solicitante + "</th><th class='transparente'></th><th class='transparente'></th></tr></thead></table></div><div class='w-50 d-inline-block'><table class='tabla-estilizada tabla-estilizada-resumen'><thead><tr><th>Duración promedio</th><th class='text-right'>" + duracionPromedio.ToString("t") + "</th><th>Atención más larga</th><th class='text-right'>" + atencionMasLarga.ToString("t") + "</th></tr><tr><th class='transparente'></th><th class='transparente'></th><th>Atención más corta</th><th class='text-right'>" + atencionMasCorta.ToString("t") + "</th></tr></thead></table></div><div><h3>Detalle de tiempos de atención</h3><table class='tabla-estilizada egresos text-left'><thead><tr><th class='text-center'>Fecha</th><th class='text-center'>Día de la semana</th><th class='text-center'>Promedio comensales</th><th class='text-right'>Duración promedio</th></tr></thead><tbody>" + detalleAtenciones + "</tbody></table></div></div></div></body></html>";
