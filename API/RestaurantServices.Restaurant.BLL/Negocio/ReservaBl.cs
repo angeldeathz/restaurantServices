@@ -211,6 +211,7 @@ namespace RestaurantServices.Restaurant.BLL.Negocio
             foreach (var x in reservas)
             {
                 if (x.IdMesa != reserva.IdMesa) continue;
+                if (reserva.IdEstadoReserva == 3 || reserva.IdEstadoReserva == 4) continue;
 
                 if (reserva.FechaReserva == x.FechaReserva)
                     reservaOcupada = true;
