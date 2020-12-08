@@ -204,6 +204,8 @@ namespace RestaurantServices.Restaurant.BLL.Negocio
                 throw new Exception($"La mesa solo acepta {mesa.CantidadComensales} comensales");
 
             var reservas = await ObtenerTodosAsync();
+            reservas = reservas.Where(x => x.Id != reserva.Id).ToList();
+
             var reservaOcupada = false;
 
             foreach (var x in reservas)
