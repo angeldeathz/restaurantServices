@@ -118,5 +118,24 @@ namespace RestaurantServices.Restaurant.DAL.Tablas
                 {"@Fecha", DateTime.Now}
             });
         }
+
+        public async Task<int> DeleteAsync(int id)
+        {
+            var query =
+                @"  delete from cambio_estado_articulo_pedido where articulo_pedido_id = :id";
+
+            await _repository.DeleteAsync(query, new Dictionary<string, object>
+            {
+                {"@id", id}
+            });
+
+            query = 
+                @"  delete from articulo_pedido where id = :id";
+
+            return await _repository.DeleteAsync(query, new Dictionary<string, object>
+            {
+                {"@id", id}
+            });
+        }
     }
 }

@@ -66,5 +66,12 @@ namespace RestaurantServices.Restaurant.API.Controllers
             await _articuloPedidoBl.AgregarEstadoAsync(estado);
             return Ok(true);
         }
+
+        [HttpDelete, Route("{id}")]
+        public async Task<IHttpActionResult> Delete(int id)
+        {
+            await _articuloPedidoBl.EliminarAsync(id);
+            return Ok(true);
+        }
     }
 }

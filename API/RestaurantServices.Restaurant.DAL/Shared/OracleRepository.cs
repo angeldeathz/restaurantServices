@@ -112,5 +112,18 @@ namespace RestaurantServices.Restaurant.DAL.Shared
         }
 
         #endregion
+
+        #region Delete
+
+        public async Task<int> DeleteAsync(string sqlQuery, Dictionary<string, object> parameters)
+        {
+            GetConnection.Open();
+            var dynamicParameters = new DynamicParameters(parameters);
+            var result = await GetConnection.ExecuteScalarAsync<int>(sqlQuery, dynamicParameters);
+            GetConnection.Close();
+            return result;
+        }
+
+        #endregion
     }
 }

@@ -76,5 +76,10 @@ namespace RestaurantServices.Restaurant.BLL.Negocio
         {
             return _unitOfWork.ArticuloPedidoDal.InsertEstadoAsync(estado);
         }
+
+        public Task<int> EliminarAsync(int id)
+        {
+            return _unitOfWork.ArticuloPedidoDal.DeleteAsync(id);
+        }
     }
 }

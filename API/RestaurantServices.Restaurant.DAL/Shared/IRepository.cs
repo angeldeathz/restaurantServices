@@ -12,5 +12,6 @@ namespace RestaurantServices.Restaurant.DAL.Shared
         Task<T> GetAsync<T>(string query);
         Task<T> GetAsync<T>(string query, Dictionary<string, object> parameters);
         Task<T> ExecuteProcedureAsync<T>(string spName, Dictionary<string, object> parameters, CommandType commandType);
+        Task<int> DeleteAsync(string sqlQuery, Dictionary<string, object> parameters);
     }
 }
