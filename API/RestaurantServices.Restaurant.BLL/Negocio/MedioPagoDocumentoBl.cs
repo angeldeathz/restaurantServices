@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using RestaurantServices.Restaurant.DAL.Shared;
 using RestaurantServices.Restaurant.Modelo.Clases;
+using RestaurantServices.Restaurant.Modelo.Dto;
 using RestaurantServices.Restaurant.Shared.Itextsharp;
 using RestaurantServices.Restaurant.Shared.Mail;
 
@@ -16,6 +17,7 @@ namespace RestaurantServices.Restaurant.BLL.Negocio
         private readonly EmailClient _emailClient;
         private readonly ItextSharpClient _itextSharpClient;
         private readonly ArticuloPedidoBl _articuloPedidoBl;
+        private readonly MesaBl _mesaBl;
 
         public MedioPagoDocumentoBl()
         {
@@ -25,6 +27,7 @@ namespace RestaurantServices.Restaurant.BLL.Negocio
             _emailClient = new EmailClient();
             _itextSharpClient = new ItextSharpClient();
             _articuloPedidoBl = new ArticuloPedidoBl();
+            _mesaBl = new MesaBl();
         }
 
         public async Task<List<MedioPagoDocumento>> ObtenerTodosAsync()
@@ -93,6 +96,21 @@ namespace RestaurantServices.Restaurant.BLL.Negocio
                            Atte, <br/>
                            Restaurante Siglo XXI. <br/>"
             });
+
+
+            var articuloPedidos = await _articuloPedidoBl.ObtenerPorIdPedidoAsync(documentoPago.IdPedido);
+
+            foreach (var x in articuloPedidos)
+            {
+                await _articuloPedidoBl.AgregarEstadoAsync(new ArticuloPedidoEstado
+                {
+                    IdArticuloPedido = x.Id,
+                    IdEstadoArticuloPedido = 4
+                });
+            }
+
+            documentoPago.Pedido.Reserva.Mesa.IdEstadoMesa = 1;
+            await _mesaBl.ModificarAsync(documentoPago.Pedido.Reserva.Mesa);
 
             return id;
         }
