@@ -15,6 +15,7 @@ namespace RestaurantServices.Restaurant.BLL.Negocio
         private readonly EstadoMesaBl _estadoMesaBl;
         private readonly EmailClient _emailClient;
         private readonly ClienteBl _clienteBl;
+        private readonly HorarioReservaBl _horarioReservaBl;
 
         public ReservaBl()
         {
@@ -22,6 +23,7 @@ namespace RestaurantServices.Restaurant.BLL.Negocio
             _estadoMesaBl = new EstadoMesaBl();
             _emailClient = new EmailClient();
             _clienteBl = new ClienteBl();
+            _horarioReservaBl = new HorarioReservaBl();
         }
 
         public async Task<List<Reserva>> ObtenerTodosAsync()
@@ -121,6 +123,11 @@ namespace RestaurantServices.Restaurant.BLL.Negocio
             if (reserva.CantidadComensales > mesa.CantidadComensales)
                 throw new Exception($"La mesa solo acepta {mesa.CantidadComensales} comensales");
 
+            var esReservable = await _horarioReservaBl.EsReservableAsync(reserva.FechaReserva);
+
+            if (!esReservable)
+                throw new Exception("La fecha-hora de la reserva no está disponible, favor busque otra disponibilidad horaria.");
+
             var reservas = await ObtenerTodosAsync();
             reservas = reservas
                 .Where(z => z.IdMesa == reserva.IdMesa)
@@ -202,6 +209,11 @@ namespace RestaurantServices.Restaurant.BLL.Negocio
             // Validación OK
             if (reserva.CantidadComensales > mesa.CantidadComensales)
                 throw new Exception($"La mesa solo acepta {mesa.CantidadComensales} comensales");
+
+            var esReservable = await _horarioReservaBl.EsReservableAsync(reserva.FechaReserva);
+
+            if (!esReservable)
+                throw new Exception("La fecha-hora de la reserva no está disponible, favor busque otra disponibilidad horaria.");
 
             var reservas = await ObtenerTodosAsync();
             reservas = reservas.Where(x => x.Id != reserva.Id).ToList();

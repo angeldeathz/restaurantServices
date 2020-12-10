@@ -1,4 +1,6 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using RestaurantServices.Restaurant.DAL.Shared;
 using RestaurantServices.Restaurant.Modelo.Clases;
@@ -22,6 +24,17 @@ namespace RestaurantServices.Restaurant.BLL.Negocio
         public Task<HorarioReserva> ObtenerPorIdAsync(int id)
         {
             return _unitOfWork.HorarioReservaDal.GetAsync(id);
+        }
+
+        public async Task<bool> EsReservableAsync(DateTime fechaReserva)
+        {
+            var diaSemanaReserva = (int) fechaReserva.DayOfWeek;
+            var horaReserva = fechaReserva.TimeOfDay;
+            var horarios = await ObtenerTodosAsync();
+
+            var diaReserva = horarios.FirstOrDefault(x => x.DiaSemana == diaSemanaReserva);
+
+            return horaReserva >= diaReserva.HoraInicio.TimeOfDay && horaReserva <= diaReserva.HoraFin.TimeOfDay;
         }
 
         public Task<int> GuardarAsync(HorarioReserva horarioReserva)
