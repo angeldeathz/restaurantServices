@@ -47,7 +47,8 @@ namespace RestaurantServices.Restaurant.DAL.Tablas
                     c.fecha
                 from estado_orden_proveedor ee
                 join cambio_estado_orden_proveedor c on ee.id = c.estado_orden_proveedor_id
-                where c.orden_proveedor_id = :idOrdenProveedor";
+                where c.orden_proveedor_id = :idOrdenProveedor
+                order by c.fecha desc";
 
             return _repository.GetListAsync<EstadoOrdenProveedor>(query, new Dictionary<string, object>
             {
