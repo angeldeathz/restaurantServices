@@ -32,7 +32,13 @@ namespace RestaurantServices.Restaurant.BLL.Negocio
             var horaReserva = fechaReserva.TimeOfDay;
             var horarios = await ObtenerTodosAsync();
 
+            if (horarios == null || horarios.Count == 0)
+                throw new Exception("No hay horarios de reservas configurados en la base de datos");
+
             var diaReserva = horarios.FirstOrDefault(x => x.DiaSemana == diaSemanaReserva);
+
+            if (diaReserva == null)
+                return false;
 
             return horaReserva >= diaReserva.HoraInicio.TimeOfDay && horaReserva <= diaReserva.HoraFin.TimeOfDay;
         }
