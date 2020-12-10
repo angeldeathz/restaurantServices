@@ -8,10 +8,10 @@ using System.Web.Http.ExceptionHandling;
 using FluentValidation.WebApi;
 using Microsoft.Owin;
 using Microsoft.Owin.Cors;
+using Microsoft.Owin.Security.OAuth;
 using Newtonsoft.Json.Serialization;
 using Owin;
 using RestaurantServices.Restaurant.API;
-using RestaurantServices.Restaurant.API.Config;
 using RestaurantServices.Restaurant.Shared.WebApiConfig;
 using Swashbuckle.Application;
 
@@ -29,11 +29,11 @@ namespace RestaurantServices.Restaurant.API
             app.UseExternalSignInCookie();
 
             // se documenta para no pedir token en swagger
-            //var oAuthServerOptions = new OAuthBearerAuthenticationOptions();
-            //app.UseOAuthBearerAuthentication(oAuthServerOptions);
+            var oAuthServerOptions = new OAuthBearerAuthenticationOptions();
+            app.UseOAuthBearerAuthentication(oAuthServerOptions);
 
             // comentar esto para usar correctamente los token
-            config.Filters.Add(new AuthFilter());
+            //config.Filters.Add(new AuthFilter());
 
             Register(config);
             app.UseCors(CorsOptions.AllowAll);
