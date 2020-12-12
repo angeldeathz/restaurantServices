@@ -47,7 +47,7 @@ namespace RestaurantServices.Restaurant.DAL.Tablas
                     c.fecha
                 from estado_reserva e
                 join cambio_estado_reserva c on e.id = c.estado_reserva_id
-                where c.reserva_id = :idReserva";
+                where c.reserva_id = :idReserva order by c.fecha asc";
 
             return _repository.GetListAsync<EstadoReserva>(query, new Dictionary<string, object>
             {
