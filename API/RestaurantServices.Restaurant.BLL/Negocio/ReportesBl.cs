@@ -275,7 +275,7 @@ namespace RestaurantServices.Restaurant.BLL.Negocio
 
             articulos = articulos.OrderBy(x => x.Id).ToList();
 
-            var articulosGroup = articulos.GroupBy(x => x.Articulo.Id).ToList();
+            var articulosGroup = articulos.OrderByDescending(x => x.Cantidad).GroupBy(x => x.Articulo.Id).ToList();
 
             var articuloConMasVentas = new ArticuloPedido
             {
@@ -329,19 +329,23 @@ namespace RestaurantServices.Restaurant.BLL.Negocio
                     articuloConMenosVentas.Articulo.Nombre = nombrePlato;
                 }
             });
+
             if (detallePlatos == string.Empty)
             {
                 detallePlatos = "<tr><td colspan='3'><p class='no-encontrado text-center'>No se encontraron platos consumidos en el periodo seleccionado</p></td></tr>";
             }
+
             var platoMasPedido = "-";
             var platoMenosPedido = "-";
             var unidadesMasPedido = 0;
             var unidadesMenosPedido = 0;
+
             if (articuloConMasVentas.Articulo.Nombre != string.Empty)
             {
                 platoMasPedido = articuloConMasVentas.Articulo.Nombre;
                 unidadesMasPedido = articuloConMasVentas.Cantidad;
             }
+
             if (articuloConMenosVentas.Articulo.Nombre != string.Empty)
             {
                 platoMenosPedido = articuloConMenosVentas.Articulo.Nombre;
