@@ -132,7 +132,7 @@ namespace RestaurantServices.Restaurant.BLL.Negocio
             foreach (var x in articulos)
             {
                 detalles += "<tr>";
-                detalles += $"<td>{x.Articulo.Descripcion}</td>";
+                detalles += $"<td>{x.Articulo.Nombre}</td>";
                 detalles += $"<td>$ {x.Articulo.Precio}</td>";
                 detalles += $"<td>{x.Cantidad}</td>";
                 detalles += $"<td>$ {x.Cantidad * x.Articulo.Precio}</td>";
