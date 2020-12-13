@@ -66,7 +66,7 @@ namespace RestaurantServices.Restaurant.BLL.Negocio
             var id = await _unitOfWork.MedioPagoDocumentoDal.InsertAsync(medioPagoDocumento);
             var medioPago = await ObtenerPorIdAsync(id);
 
-            var url = _itextSharpClient.CreatePdf(GetHtmlBoleta(documentoPago, medioPago, articulos), "Boleta_consumo.pdf");
+            var url = _itextSharpClient.CreatePdf(GetHtmlBoleta(documentoPago, medioPago, articulos), $"Boleta_pedido_{documentoPago.IdPedido}_{DateTime.Now:dd-MM-yyyy}.pdf");
 
             _emailClient.Send(new Email
             {
