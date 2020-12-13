@@ -192,7 +192,7 @@ namespace RestaurantServices.Restaurant.BLL.Negocio
                            Su reserva es la N° {idReserva} <br/>
                            Cantidad Comensales: {reserva.CantidadComensales} <br/>
                            {mesa.NombreMesa} <br/>
-                           Fecha de la Reserva: {reserva.FechaReserva:dd-MM-yyyy hh:mm} <br/><br/>
+                           Fecha de la Reserva: {reserva.FechaReserva:dd-MM-yyyy HH:mm} <br/><br/>
 
                            Atte, <br/>
                            Restaurante Siglo XXI. <br/>"
@@ -265,7 +265,7 @@ namespace RestaurantServices.Restaurant.BLL.Negocio
                            El estado de la reserva ahora es {estadoReserva.Nombre} <br/>
                            Cantidad Comensales: {reserva.CantidadComensales} <br/>
                            {mesa.NombreMesa} <br/>
-                           Fecha de la Reserva: {reserva.FechaReserva:dd-MM-yyyy hh:mm} <br/><br/>
+                           Fecha de la Reserva: {reserva.FechaReserva:dd-MM-yyyy HH:mm} <br/><br/>
 
                            Atte, <br/>
                            Restaurante Siglo XXI. <br/>"
@@ -289,7 +289,7 @@ namespace RestaurantServices.Restaurant.BLL.Negocio
                 Asunto = $"Reserva N° {estado.IdReserva} {estadoReserva.Nombre}",
                 Contenido =
                     $@"{cabeceraNombre} <br/><br/>
-                           Su reserva N° {estado.IdReserva} con fecha {reserva.FechaReserva:dd-MM-yyyy hh:mm},
+                           Su reserva N° {estado.IdReserva} con fecha {reserva.FechaReserva:dd-MM-yyyy HH:mm},
                            cambió de estado a {estadoReserva.Nombre}. <br/><br/>
 
                            Atte, <br/>
