@@ -273,9 +273,9 @@ namespace RestaurantServices.Restaurant.BLL.Negocio
                 articulos.AddRange(articulosPedidos);
             }
 
-            articulos = articulos.OrderBy(x => x.Id).ToList();
+            articulos = articulos.OrderByDescending(x => x.Cantidad).ToList();
 
-            var articulosGroup = articulos.OrderByDescending(x => x.Cantidad).GroupBy(x => x.Articulo.Id).ToList();
+            var articulosGroup = articulos.GroupBy(x => x.Articulo.Id).ToList();
 
             var articuloConMasVentas = new ArticuloPedido
             {
@@ -295,6 +295,8 @@ namespace RestaurantServices.Restaurant.BLL.Negocio
                 }
             };
 
+            var articulosTemp = new List<ArticuloPedido>();
+
             articulosGroup.ForEach(x =>
             {
                 var cantidad = 0;
@@ -311,11 +313,18 @@ namespace RestaurantServices.Restaurant.BLL.Negocio
                     }
                 });
 
-                detallePlatos += "<tr>";
-                detallePlatos += $"<td>{nombrePlato}</td>";
-                detallePlatos += $"<td>{tipoPlato}</td>";
-                detallePlatos += $"<td>{cantidad}</td>";
-                detallePlatos += "</tr>";
+                articulosTemp.Add(new ArticuloPedido
+                {
+                    Cantidad = cantidad,
+                    Articulo = new Articulo
+                    {
+                        Nombre = nombrePlato,
+                        TipoConsumo = new TipoConsumo
+                        {
+                            Nombre = tipoPlato
+                        }
+                    }
+                });
 
                 if (cantidad > articuloConMasVentas.Cantidad)
                 {
@@ -329,6 +338,17 @@ namespace RestaurantServices.Restaurant.BLL.Negocio
                     articuloConMenosVentas.Articulo.Nombre = nombrePlato;
                 }
             });
+
+            articulosTemp = articulosTemp.OrderByDescending(x => x.Cantidad).ToList();
+
+            foreach (var x in articulosTemp)
+            {
+                detallePlatos += "<tr>";
+                detallePlatos += $"<td>{x.Articulo.Nombre}</td>";
+                detallePlatos += $"<td>{x.Articulo.TipoConsumo.Nombre}</td>";
+                detallePlatos += $"<td>{x.Cantidad}</td>";
+                detallePlatos += "</tr>";
+            }
 
             if (detallePlatos == string.Empty)
             {
